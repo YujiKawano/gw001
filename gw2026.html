@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>gw2026</title>
+
+<style>
+  :root{
+    --bg:#0a0f1a;
+    --panel:#0f1726;
+    --panel2:#121d31;
+    --line:#29405f;
+    --text:#e8f0ff;
+    --muted:#91a6c8;
+    --accent:#62b0ff;
+    --ok:#6ee7b7;
+    --warn:#fbbf24;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family:Consolas, "Courier New", monospace, "Yu Gothic", Meiryo, sans-serif;
+    color:var(--text);
+    background:
+      radial-gradient(circle at top, rgba(98,176,255,.12), transparent 28%),
+      linear-gradient(180deg, #070b13, #0a0f1a 45%, #0d1320);
+    min-height:100vh;
+  }
+  .wrap{
+    max-width:1040px;
+    margin:0 auto;
+    padding:28px 20px 40px;
+  }
+  .terminal{
+    background:rgba(15,23,38,.96);
+    border:1px solid var(--line);
+    border-radius:18px;
+    overflow:hidden;
+    box-shadow:0 18px 50px rgba(0,0,0,.45);
+  }
+  .terminal-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    padding:12px 16px;
+    background:linear-gradient(180deg,#162238,#111b2d);
+    border-bottom:1px solid var(--line);
+  }
+  .lights{
+    display:flex;
+    gap:8px;
+  }
+  .light{
+    width:12px;
+    height:12px;
+    border-radius:50%;
+    display:inline-block;
+  }
+  .red{background:#ff6b6b}
+  .yellow{background:#ffd166}
+  .green{background:#4ade80}
+  .head-title{
+    color:var(--muted);
+    font-size:13px;
+  }
+  .terminal-body{
+    padding:22px 22px 18px;
+  }
+  .prompt{
+    color:var(--ok);
+    font-size:14px;
+    margin-bottom:6px;
+  }
+  h1{
+    margin:0 0 10px;
+    font-size:30px;
+  }
+  .status{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-size:13px;
+    color:var(--muted);
+    padding:8px 12px;
+    border:1px solid var(--line);
+    border-radius:999px;
+    background:rgba(98,176,255,.06);
+    margin-bottom:22px;
+  }
+  .dot{
+    width:8px;
+    height:8px;
+    border-radius:50%;
+    background:var(--ok);
+  }
+  .log-panel{
+    background:linear-gradient(180deg, rgba(18,29,49,.95), rgba(15,23,38,.95));
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:18px;
+  }
+  .log-header{
+    color:var(--warn);
+    font-size:13px;
+    margin-bottom:14px;
+  }
+  .menu{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:12px;
+  }
+  a.card{
+    display:block;
+    text-decoration:none;
+    color:var(--text);
+    border:1px solid #35537c;
+    border-radius:14px;
+    padding:16px;
+    background:linear-gradient(180deg, rgba(33,49,84,.92), rgba(24,36,64,.92));
+    transition:.15s;
+  }
+  a.card:hover{
+    transform:translateY(-1px);
+    border-color:var(--accent);
+  }
+  .row{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+  }
+  .symbol{
+    color:var(--ok);
+    font-size:16px;
+  }
+  .label{
+    font-size:17px;
+    font-weight:700;
+  }
+  @media (max-width:760px){
+    .menu{grid-template-columns:1fr}
+  }
+</style>
+</head>
+
+<body>
+
+<script>
+(function () {
+  const pass = prompt("パスワードを入力してください");
+  if (pass !== "aip") {
+    document.body.innerHTML =
+      "<div style='background:#08101d;color:#fff;display:flex;align-items:center;justify-content:center;height:100vh;font-family:Consolas,monospace'>アクセスできません</div>";
+    throw new Error("Unauthorized");
+  }
+})();
+</script>
+
+<div class="wrap">
+  <section class="terminal">
+    <div class="terminal-head">
+      <div class="lights">
+        <span class="light red"></span>
+        <span class="light yellow"></span>
+        <span class="light green"></span>
+      </div>
+      <div class="head-title">gw2026 / training-portal</div>
+    </div>
+
+    <div class="terminal-body">
+      <div class="prompt">user@aip-training:~$ open gw2026</div>
+      <h1>2026年度 グループワーク</h1>
+      <div class="status"><span class="dot"></span>メニューを表示</div>
+
+      <div class="log-panel">
+        <div class="log-header">[ menu ]</div>
+
+        <div class="menu">
+
+          <a class="card" href="groupwork001.html">
+            <div class="row">
+              <div class="symbol">&gt;</div>
+              <div class="label">グループワークその１</div>
+            </div>
+          </a>
+
+          <a class="card" href="groupwork001_answer.html">
+            <div class="row">
+              <div class="symbol">&gt;</div>
+              <div class="label">グループワークその１（正解一覧）</div>
+            </div>
+          </a>
+
+          <a class="card" href="groupwork002.html">
+            <div class="row">
+              <div class="symbol">&gt;</div>
+              <div class="label">グループワークその２</div>
+            </div>
+          </a>
+
+          <a class="card" href="groupwork002_answer.html">
+            <div class="row">
+              <div class="symbol">&gt;</div>
+              <div class="label">グループワークその２（正解一覧）</div>
+            </div>
+          </a>
+
+          <a class="card" href="groupwork003.html">
+            <div class="row">
+              <div class="symbol">&gt;</div>
+              <div class="label">グループワークその３</div>
+            </div>
+          </a>
+
+          <a class="card" href="groupwork003_answer.html">
+            <div class="row">
+              <div class="symbol">&gt;</div>
+              <div class="label">グループワークその３（正解一覧）</div>
+            </div>
+          </a>
+
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+</body>
+</html>
