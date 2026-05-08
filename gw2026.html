@@ -7,83 +7,410 @@
 
 <style>
   :root{
-    --bg:#0a0f1a;
-    --panel:#0f1726;
-    --line:#29405f;
-    --text:#e8f0ff;
-    --accent:#62b0ff;
+    --bg:#050816;
+    --text:#eaf3ff;
+    --muted:#a9bddc;
+    --cyan:#38aaff;
+    --cyan2:#62b0ff;
+    --green:#6ee7b7;
+    --gold:#ffd166;
+    --red:#ff6b6b;
   }
+
   *{box-sizing:border-box}
+
+  html,body{min-height:100%}
+
   body{
     margin:0;
-    font-family:Consolas, "Courier New", monospace, "Yu Gothic", Meiryo, sans-serif;
+    font-family:Consolas, "Courier New", "Yu Gothic", "Yu Gothic UI", Meiryo, sans-serif;
     color:var(--text);
     background:
-      radial-gradient(circle at top, rgba(98,176,255,.12), transparent 28%),
-      linear-gradient(180deg, #070b13, #0a0f1a 45%, #0d1320);
-    min-height:100vh;
+      linear-gradient(rgba(98,176,255,.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(98,176,255,.045) 1px, transparent 1px),
+      radial-gradient(circle at 20% 10%, rgba(98,176,255,.20), transparent 26%),
+      radial-gradient(circle at 80% 20%, rgba(110,231,183,.10), transparent 26%),
+      linear-gradient(180deg, #040711 0%, #08101d 45%, #0b1020 100%);
+    background-size:42px 42px,42px 42px,auto,auto,auto;
+    overflow-x:hidden;
+  }
+
+  body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    background:linear-gradient(90deg, transparent, rgba(98,176,255,.08), transparent);
+    transform:translateX(-100%);
+    animation:scan 8s linear infinite;
+    opacity:.55;
+  }
+
+  @keyframes scan{
+    0%{transform:translateX(-100%)}
+    55%{transform:translateX(100%)}
+    100%{transform:translateX(100%)}
   }
 
   .wrap{
-    max-width:1040px;
+    width:min(1500px, calc(100vw - 56px));
     margin:0 auto;
-    padding:28px 20px 40px;
+    padding:28px 0 34px;
   }
 
   .terminal{
-    background:rgba(15,23,38,.96);
-    border:1px solid var(--line);
-    border-radius:18px;
+    position:relative;
+    min-height:calc(100vh - 62px);
+    border:1px solid rgba(56,170,255,.72);
+    border-radius:28px;
+    background:
+      radial-gradient(circle at 32% 10%, rgba(56,170,255,.10), transparent 34%),
+      linear-gradient(180deg, rgba(8,16,29,.93), rgba(5,11,21,.96));
+    box-shadow:
+      0 24px 80px rgba(0,0,0,.45),
+      0 0 34px rgba(56,170,255,.10),
+      inset 0 0 0 1px rgba(255,255,255,.025);
     overflow:hidden;
   }
 
-  .terminal-head{
-    display:flex;
-    justify-content:space-between;
-    padding:12px 16px;
-    background:#111b2d;
-    border-bottom:1px solid var(--line);
+  .terminal::before,
+  .terminal::after{
+    content:"";
+    position:absolute;
+    pointer-events:none;
+    border-color:rgba(56,170,255,.82);
   }
 
-  .lights{display:flex;gap:8px;}
-  .light{width:12px;height:12px;border-radius:50%;}
-  .red{background:#ff6b6b}
-  .yellow{background:#ffd166}
-  .green{background:#4ade80}
+  .terminal::before{
+    left:20px;
+    bottom:20px;
+    width:60px;
+    height:60px;
+    border-left:2px solid;
+    border-bottom:2px solid;
+    clip-path:polygon(0 0,100% 100%,0 100%);
+    opacity:.75;
+  }
 
-  .terminal-body{padding:22px;}
-  .prompt{color:#6ee7b7;margin-bottom:6px;}
-  h1{margin:0 0 20px;font-size:30px;}
+  .terminal::after{
+    right:20px;
+    top:20px;
+    width:60px;
+    height:60px;
+    border-right:2px solid;
+    border-top:2px solid;
+    clip-path:polygon(0 0,100% 0,100% 100%);
+    opacity:.75;
+  }
+
+  .terminal-head{
+    height:58px;
+    display:flex;
+    align-items:center;
+    padding:0 28px;
+    border-bottom:1px solid rgba(56,170,255,.45);
+    background:rgba(7,14,27,.64);
+  }
+
+  .lights{
+    display:flex;
+    gap:14px;
+  }
+
+  .light{
+    width:15px;
+    height:15px;
+    border-radius:50%;
+    box-shadow:0 0 14px currentColor;
+  }
+
+  .red{background:var(--red);color:var(--red)}
+  .yellow{background:var(--gold);color:var(--gold)}
+  .green{background:var(--green);color:var(--green)}
+
+  .terminal-body{
+    position:relative;
+    padding:34px 72px 32px;
+  }
+
+  .terminal-body::before,
+  .terminal-body::after{
+    content:"";
+    position:absolute;
+    top:34px;
+    bottom:78px;
+    width:1px;
+    background:linear-gradient(180deg, rgba(56,170,255,.7), rgba(56,170,255,.08), rgba(56,170,255,.7));
+    opacity:.45;
+  }
+
+  .terminal-body::before{left:24px}
+  .terminal-body::after{right:24px}
+
+  .eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:14px;
+    color:var(--green);
+    font-weight:800;
+    letter-spacing:.16em;
+    font-size:16px;
+    margin-bottom:12px;
+    text-shadow:0 0 16px rgba(110,231,183,.35);
+  }
+
+  .eyebrow::before{
+    content:"";
+    width:10px;
+    height:10px;
+    border-radius:50%;
+    background:var(--green);
+    box-shadow:0 0 18px var(--green);
+  }
+
+  h1{
+    margin:0;
+    font-size:clamp(56px, 6.2vw, 88px);
+    line-height:1;
+    letter-spacing:.10em;
+    font-weight:900;
+    text-shadow:0 0 24px rgba(98,176,255,.22);
+  }
+
+  .lead{
+    margin:28px 0 0;
+    color:var(--muted);
+    font-size:18px;
+    letter-spacing:.02em;
+  }
 
   .menu{
     display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:12px;
+    grid-template-columns:repeat(3, minmax(0, 390px));
+    gap:38px;
+    justify-content:center;
+    margin:38px auto 0;
+    padding:0 28px;
   }
 
-  button.card{
+  .mission{
+    position:relative;
+    min-height:445px;
+    border:1px solid rgba(56,170,255,.85);
+    border-radius:22px;
+    padding:34px 34px 28px;
+    background:
+      radial-gradient(circle at 22% 12%, rgba(98,176,255,.16), transparent 35%),
+      linear-gradient(180deg, rgba(15,31,55,.92), rgba(7,14,27,.96));
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,.025) inset,
+      0 16px 36px rgba(0,0,0,.25);
+    overflow:hidden;
+  }
+
+  .mission:hover{
+    transform:translateY(-4px);
+    box-shadow:
+      0 20px 44px rgba(0,0,0,.36),
+      0 0 24px rgba(56,170,255,.17);
+  }
+
+  .mission,
+  .mission *{
+    transition:.18s ease;
+  }
+
+  .mission::before{
+    content:"CLASSIFIED";
+    position:absolute;
+    top:16px;
+    right:-32px;
+    transform:rotate(35deg);
+    border-top:1px solid rgba(255,209,102,.56);
+    border-bottom:1px solid rgba(255,209,102,.56);
+    color:rgba(255,209,102,.84);
+    padding:4px 44px;
+    font-size:12px;
+    letter-spacing:.18em;
+    background:rgba(255,209,102,.04);
+  }
+
+  .mission::after{
+    content:"";
+    position:absolute;
+    right:18px;
+    top:54px;
+    width:120px;
+    height:1px;
+    background:linear-gradient(90deg, transparent, rgba(56,170,255,.48));
+    transform:rotate(35deg);
+  }
+
+  .mission-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    position:relative;
+    z-index:1;
+  }
+
+  .mission-label{
+    color:#b9d7f7;
+    font-size:18px;
+    font-weight:800;
+    letter-spacing:.18em;
+  }
+
+  .level{
+    color:var(--green);
+    font-size:14px;
+    border:1px solid rgba(110,231,183,.45);
+    border-radius:999px;
+    padding:7px 10px;
+    background:rgba(110,231,183,.07);
+  }
+
+  .num{
+    position:relative;
+    z-index:1;
+    margin:44px 0 20px;
+    font-size:clamp(120px, 10vw, 178px);
+    line-height:.82;
+    font-weight:900;
+    letter-spacing:-.08em;
+    color:rgba(234,243,255,.95);
+    text-shadow:
+      0 0 24px rgba(98,176,255,.38),
+      4px 0 0 rgba(98,176,255,.12);
+  }
+
+  .num-line{
+    position:relative;
+    z-index:1;
     width:100%;
-    border:1px solid #35537c;
-    border-radius:14px;
-    padding:16px;
-    background:#182440;
-    color:#fff;
+    height:1px;
+    margin:0 0 24px;
+    background:linear-gradient(90deg, rgba(98,176,255,.82), rgba(98,176,255,.18));
+  }
+
+  .mission-title{
+    position:relative;
+    z-index:1;
+    margin:0 0 30px;
+    font-family:"Yu Gothic", "Yu Gothic UI", Meiryo, sans-serif;
+    font-size:26px;
+    font-weight:900;
+    letter-spacing:.02em;
+  }
+
+  .actions{
+    position:relative;
+    z-index:1;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px;
+    margin-top:auto;
+  }
+
+  button{font-family:inherit}
+
+  .btn{
+    border:1px solid rgba(98,176,255,.75);
+    border-radius:13px;
+    padding:16px 10px;
     cursor:pointer;
-    text-align:left;
-    transition:.15s;
+    color:#eaf3ff;
+    background:linear-gradient(180deg, rgba(98,176,255,.22), rgba(98,176,255,.06));
+    font-weight:900;
+    font-size:18px;
+    letter-spacing:.11em;
   }
 
-  button.card:hover{
-    border-color:var(--accent);
-    transform:translateY(-1px);
+  .btn:hover{
+    background:linear-gradient(180deg, rgba(98,176,255,.36), rgba(98,176,255,.12));
+    box-shadow:0 0 20px rgba(98,176,255,.22);
   }
 
-  .row{display:flex;gap:10px;}
-  .symbol{color:#6ee7b7;}
-  .label{font-size:17px;font-weight:700;}
+  .btn.answer{
+    border-color:rgba(255,209,102,.68);
+    background:linear-gradient(180deg, rgba(255,209,102,.17), rgba(255,209,102,.05));
+    color:#fff0bd;
+  }
 
-  @media (max-width:760px){
-    .menu{grid-template-columns:1fr}
+  .btn.answer:hover{
+    box-shadow:0 0 20px rgba(255,209,102,.18);
+  }
+
+  .footer{
+    margin-top:30px;
+    color:#416f9d;
+    font-size:15px;
+    letter-spacing:.14em;
+    text-align:center;
+  }
+
+  .footer span{
+    display:inline-flex;
+    align-items:center;
+    gap:18px;
+  }
+
+  .footer span::before,
+  .footer span::after{
+    content:"";
+    display:block;
+    width:130px;
+    height:1px;
+    background:linear-gradient(90deg, transparent, rgba(56,170,255,.45));
+  }
+
+  .footer span::after{
+    background:linear-gradient(90deg, rgba(56,170,255,.45), transparent);
+  }
+
+  @media (max-width:1100px){
+    .menu{
+      grid-template-columns:1fr;
+      max-width:520px;
+      padding:0;
+    }
+    .terminal-body{
+      padding:32px 48px 30px;
+    }
+  }
+
+  @media (max-width:640px){
+    .wrap{
+      width:calc(100vw - 24px);
+      padding:12px 0 18px;
+    }
+    .terminal-body{
+      padding:24px 22px 28px;
+    }
+    .terminal-body::before,
+    .terminal-body::after{
+      display:none;
+    }
+    h1{
+      font-size:44px;
+    }
+    .lead{
+      font-size:14px;
+    }
+    .blue-line{
+      max-width:100%;
+    }
+    .mission{
+      min-height:auto;
+      padding:24px;
+    }
+    .actions{
+      grid-template-columns:1fr;
+    }
+    .footer span::before,
+    .footer span::after{
+      width:34px;
+    }
   }
 </style>
 </head>
@@ -95,7 +422,7 @@
   const pass = prompt("パスワードを入力してください");
   if (pass !== "aip") {
     document.body.innerHTML =
-      "<div style='display:flex;align-items:center;justify-content:center;height:100vh'>アクセスできません</div>";
+      "<div style='display:flex;align-items:center;justify-content:center;height:100vh;background:#050816;color:#eaf3ff;font-family:Consolas,&quot;Yu Gothic&quot;,Meiryo,sans-serif'>アクセスできません</div>";
     throw new Error("Unauthorized");
   }
 })();
@@ -109,40 +436,58 @@
         <span class="light yellow"></span>
         <span class="light green"></span>
       </div>
-      <div>gw2026</div>
     </div>
 
     <div class="terminal-body">
-      <div class="prompt">user@aip-training:~$ open portal</div>
-      <h1>グループワーク ポータル</h1>
+      <div class="eyebrow">AIP TRAINING 2026</div>
+      <h1>グループワーク</h1>
+            <p class="lead">各グループワークを選択してください。内容は開始後に表示されます。</p>
 
       <div class="menu">
+        <article class="mission">
+          <div class="mission-top">
+            <div class="mission-label">GROUP WORK</div>
+            <div class="level">MISSION:01</div>
+          </div>
+          <div class="num">01</div>
+          <div class="num-line"></div>
+          <h2 class="mission-title">グループワークその１</h2>
+          <div class="actions">
+            <button class="btn" onclick="openPage('groupwork001.html')">START</button>
+            <button class="btn answer" onclick="openPage('groupwork001_answer.html')">ANSWER</button>
+          </div>
+        </article>
 
-        <button class="card" onclick="openPage('groupwork001.html')">
-          <div class="row"><div class="symbol">&gt;</div><div class="label">グループワークその１</div></div>
-        </button>
+        <article class="mission">
+          <div class="mission-top">
+            <div class="mission-label">GROUP WORK</div>
+            <div class="level">MISSION:02</div>
+          </div>
+          <div class="num">02</div>
+          <div class="num-line"></div>
+          <h2 class="mission-title">グループワークその２</h2>
+          <div class="actions">
+            <button class="btn" onclick="openPage('groupwork002.html')">START</button>
+            <button class="btn answer" onclick="openPage('groupwork002_answer.html')">ANSWER</button>
+          </div>
+        </article>
 
-        <button class="card" onclick="openPage('groupwork001_answer.html')">
-          <div class="row"><div class="symbol">&gt;</div><div class="label">グループワークその１（正解一覧）</div></div>
-        </button>
-
-        <button class="card" onclick="openPage('groupwork002.html')">
-          <div class="row"><div class="symbol">&gt;</div><div class="label">グループワークその２</div></div>
-        </button>
-
-        <button class="card" onclick="openPage('groupwork002_answer.html')">
-          <div class="row"><div class="symbol">&gt;</div><div class="label">グループワークその２（正解一覧）</div></div>
-        </button>
-
-        <button class="card" onclick="openPage('groupwork003.html')">
-          <div class="row"><div class="symbol">&gt;</div><div class="label">グループワークその３</div></div>
-        </button>
-
-        <button class="card" onclick="openPage('groupwork003_answer.html')">
-          <div class="row"><div class="symbol">&gt;</div><div class="label">グループワークその３（正解一覧）</div></div>
-        </button>
-
+        <article class="mission">
+          <div class="mission-top">
+            <div class="mission-label">GROUP WORK</div>
+            <div class="level">MISSION:03</div>
+          </div>
+          <div class="num">03</div>
+          <div class="num-line"></div>
+          <h2 class="mission-title">グループワークその３</h2>
+          <div class="actions">
+            <button class="btn" onclick="openPage('groupwork003.html')">START</button>
+            <button class="btn answer" onclick="openPage('groupwork003_answer.html')">ANSWER</button>
+          </div>
+        </article>
       </div>
+
+      <div class="footer"><span>INTERNAL USE ONLY</span></div>
     </div>
   </section>
 </div>
@@ -152,6 +497,6 @@ function openPage(url){
   window.open(url, "_blank");
 }
 </script>
-　
+
 </body>
 </html>
