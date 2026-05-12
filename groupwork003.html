@@ -3,523 +3,632 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>グループワークその３（プリキュア）</title>
+<title>グループワークその３</title>
 <style>
-  :root {
-    --panel: rgba(255,255,255,0.88);
-    --panel2: rgba(255,247,253,0.96);
-    --panel3: rgba(255,255,255,0.72);
-    --line: #f49bd1;
-    --line2: #ffd166;
-    --text: #65325f;
-    --muted: #a15b93;
-    --accent: #ff6fbd;
-    --accent2: #7edcff;
-    --star: #fff2a8;
+  :root{
+    --text:#67315f;
+    --muted:#a45d96;
+    --panel:rgba(255,255,255,.88);
+    --panel2:rgba(255,245,252,.94);
+    --line:#f5a3d3;
+    --line2:#ffd166;
+    --accent:#ff6fbd;
+    --blue:#7edcff;
+    --green:#68d8b6;
   }
-  * { box-sizing: border-box; }
-  html, body { height: 100%; }
-  body {
-    margin: 0;
-    font-family: Arial, "Helvetica Neue", Helvetica, "Yu Gothic", "Yu Gothic UI", Meiryo, sans-serif;
-    line-height: 1.4;
+
+  *{box-sizing:border-box}
+  html,body{min-height:100%}
+  body{
+    margin:0;
+    font-family:Arial, "Helvetica Neue", Helvetica, "Yu Gothic", "Yu Gothic UI", Meiryo, sans-serif;
+    line-height:1.5;
+    color:var(--text);
     background:
-      radial-gradient(circle at 12% 14%, rgba(255,255,255,.95) 0 2%, transparent 5%),
-      radial-gradient(circle at 88% 10%, rgba(255,255,255,.9) 0 2%, transparent 5%),
-      radial-gradient(circle at 20% 10%, #fff6bd 0 8%, transparent 24%),
-      radial-gradient(circle at 82% 14%, #c8f4ff 0 7%, transparent 22%),
-      radial-gradient(circle at 50% 100%, #ffe2f3 0 20%, transparent 45%),
-      linear-gradient(135deg, #ffe0f2 0%, #fff8cf 45%, #dff8ff 100%);
-    color: var(--text);
-    -webkit-text-size-adjust: 100%;
-    text-size-adjust: 100%;
-    overflow: hidden;
+      radial-gradient(circle at 14% 12%, rgba(255,255,255,.95) 0 2%, transparent 5%),
+      radial-gradient(circle at 88% 10%, rgba(255,255,255,.92) 0 2%, transparent 5%),
+      radial-gradient(circle at 20% 8%, #fff4b8 0 8%, transparent 25%),
+      radial-gradient(circle at 84% 14%, #c9f4ff 0 7%, transparent 24%),
+      radial-gradient(circle at 50% 100%, #ffe2f3 0 22%, transparent 48%),
+      linear-gradient(135deg,#ffe0f2 0%, #fff8cf 46%, #dff8ff 100%);
+    background-attachment:fixed;
   }
-  body::before {
-    content: "♡ ★ ✦ ♡ ★ ✦ ♡";
-    position: fixed;
-    inset: 10px 0 auto 0;
-    text-align: center;
-    font-size: 22px;
-    letter-spacing: 18px;
-    color: rgba(255, 105, 180, .32);
-    pointer-events: none;
-    z-index: 0;
+
+  body::before{
+    content:"♡ ★ ✦ ♡ ★ ✦ ♡ ★";
+    position:fixed;
+    inset:10px 0 auto 0;
+    text-align:center;
+    font-size:22px;
+    letter-spacing:20px;
+    color:rgba(255,105,180,.24);
+    pointer-events:none;
+    z-index:0;
   }
-  .app { position: relative; z-index: 1; }
-  .app {
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    min-height: 0;
+
+  .app{
+    position:relative;
+    z-index:1;
+    max-width:1440px;
+    margin:0 auto;
+    padding:18px 20px 44px;
   }
-  .top {
-    flex: 1;
-    min-height: 0;
-    display: flex;
-    flex-direction: column;
-    padding: 20px 20px 0;
-    overflow: hidden;
-  }
-  .title-wrap { flex: 0 0 auto; }
-  h1 {
-    margin: 0 0 12px;
-    font-size: 28px;
-    color: #7b2f72;
-    text-shadow: 0 2px 0 rgba(255,255,255,.8);
-  }
-  button, .answer-link-btn {
-    border: 2px solid rgba(244,155,209,.95);
-    background: linear-gradient(180deg, #fff, #fff0fa);
-    color: var(--text);
-    padding: 10px 14px;
-    border-radius: 999px;
-    cursor: pointer;
-    font-weight: 800;
-    font-family: inherit;
-    line-height: 1.2;
-    text-decoration: none;
-    display: inline-block;
-    box-shadow: 0 4px 12px rgba(255,111,189,.18);
-  }
-  button:hover, .answer-link-btn:hover {
-    filter: brightness(1.04);
-    transform: translateY(-1px);
-  }
-  .panel {
+
+  .header{
+    position:sticky;
+    top:0;
+    z-index:50;
+    margin:-18px -20px 18px;
+    padding:16px 20px;
     background:
-      linear-gradient(180deg, rgba(255,255,255,.94), rgba(255,247,253,.92));
-    border: 2px solid rgba(244,155,209,.95);
-    border-radius: 22px;
-    padding: 16px;
-    box-shadow: 0 12px 30px rgba(204,78,158,.20), inset 0 0 0 2px rgba(255,255,255,.7);
+      radial-gradient(circle at 12% 40%, rgba(255,111,189,.18), transparent 34%),
+      linear-gradient(180deg, rgba(255,255,255,.94), rgba(255,245,252,.92));
+    backdrop-filter:blur(8px);
+    border-bottom:2px solid rgba(245,163,211,.72);
+    box-shadow:0 10px 24px rgba(204,78,158,.14);
   }
-  .answer-panel {
-    flex: 1;
-    min-height: 0;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-  }
-  .answer-header {
+
+  .header-inner{
+    max-width:1440px;
+    margin:0 auto;
     display:flex;
     justify-content:space-between;
     align-items:center;
+    gap:16px;
+  }
+
+  h1{
+    margin:0;
+    font-size:clamp(22px, 3vw, 34px);
+    color:#7b2f72;
+    letter-spacing:.02em;
+    text-shadow:0 2px 0 rgba(255,255,255,.85);
+  }
+
+  .actions{
+    display:flex;
     gap:12px;
-    margin: 0 0 12px;
-    flex: 0 0 auto;
+    align-items:center;
+    flex-wrap:wrap;
+    flex:0 0 auto;
   }
-  .answer-actions {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    flex: 0 0 auto;
+
+  button,.answer-link-btn{
+    border:2px solid rgba(245,163,211,.92);
+    border-radius:999px;
+    padding:12px 20px;
+    background:linear-gradient(180deg,#fff,#fff0fa);
+    color:var(--text);
+    font-weight:900;
+    font-family:inherit;
+    font-size:15px;
+    cursor:pointer;
+    text-decoration:none;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    min-height:46px;
+    box-shadow:0 5px 14px rgba(255,111,189,.18);
   }
-  #answerLinkBtn {
-    background: linear-gradient(90deg,#ff6fbd,#ff9bd4,#ffd166);
-    border-color: #ff7bc8;
-    color: #fff;
-    text-shadow: 0 1px 1px rgba(128,35,104,.35);
+
+  button:hover,.answer-link-btn:hover{
+    filter:brightness(1.04);
+    transform:translateY(-1px);
   }
-  .answer-title {
-    display: flex;
-    align-items: baseline;
-    gap: 10px;
-    flex-wrap: wrap;
+
+  .answer-link-btn{
+    background:linear-gradient(90deg,#ff6fbd,#ff9bd4,#ffd166);
+    border-color:#ff7bc8;
+    color:#fff;
+    text-shadow:0 1px 1px rgba(128,35,104,.34);
   }
-  .answer-title h2,
-  .item-header h2 {
-    margin: 0;
-    font-size: 20px;
-    color: #7b2f72;
+
+  .layout{
+    display:grid;
+    grid-template-columns:minmax(360px, 440px) 1fr;
+    gap:20px;
+    align-items:start;
   }
-  .answer-note {
-    font-size: 12px;
-    color: var(--muted);
-    font-weight: 800;
+
+  .panel{
+    background:linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,245,252,.90));
+    border:2px solid rgba(245,163,211,.82);
+    border-radius:24px;
+    box-shadow:0 14px 34px rgba(204,78,158,.16), inset 0 0 0 2px rgba(255,255,255,.62);
   }
-  .answer-scroll {
-    flex: 1;
-    min-height: 0;
-    overflow: auto;
-    padding-right: 6px;
-    scrollbar-gutter: stable;
-  }
-  .answer-grid {
-    display: grid;
-    grid-template-columns: repeat(5, minmax(150px, 1fr));
-    gap: 12px;
-    min-width: 980px;
-    padding-bottom: 10px;
-  }
-  .slot-wrap {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-  .slot-no {
-    font-size: 12px;
-    color: #d94ca8;
-    font-weight: 900;
-    letter-spacing: .04em;
-  }
-  .slot {
-    background: linear-gradient(180deg, rgba(255,255,255,.76), rgba(255,242,250,.84));
-    border: 2px dashed rgba(244,155,209,.95);
-    border-radius: 16px;
-    padding: 8px;
-    transition: .15s ease;
+
+  .pool-panel{
+    position:sticky;
+    top:98px;
+    max-height:calc(100vh - 118px);
     display:flex;
     flex-direction:column;
-    min-height: 272px;
+    overflow:hidden;
   }
-  .slot.over {
-    border-color: var(--accent);
-    background: rgba(255,238,248,.98);
-    transform: scale(1.01);
-    box-shadow: 0 0 0 3px rgba(255,111,189,.16);
+
+  .panel-head{
+    padding:18px 18px 12px;
+    border-bottom:2px solid rgba(245,163,211,.45);
   }
-  .slot-body {
-    min-height: 126px;
-    height: 126px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    margin-bottom: 8px;
+
+  .panel-title{
+    margin:0;
+    font-size:20px;
+    color:#7b2f72;
   }
-  .slot-fields {
-    display: grid;
-    gap: 8px;
-    margin-top: auto;
+
+  .panel-note{
+    margin:5px 0 0;
+    color:var(--muted);
+    font-size:13px;
   }
-  .field label {
+
+  .selected-status{
+    margin-top:10px;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    border:1px solid rgba(104,216,182,.50);
+    background:rgba(104,216,182,.12);
+    color:#28705c;
+    border-radius:999px;
+    padding:6px 10px;
+    font-size:12px;
+    font-weight:900;
+  }
+
+  .pool-scroll{
+    overflow:auto;
+    padding:16px;
+  }
+
+  .pool{
+    display:grid;
+    grid-template-columns:repeat(2, minmax(0, 1fr));
+    gap:14px;
+  }
+
+  .card{
+    background:linear-gradient(180deg,#fff,#fff6fb);
+    border:2px solid rgba(245,163,211,.68);
+    border-radius:18px;
+    padding:8px;
+    min-height:154px;
+    cursor:grab;
+    user-select:none;
+    box-shadow:0 8px 18px rgba(204,78,158,.14);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+  }
+
+  .card:active{cursor:grabbing}
+  .card.dragging{opacity:.45; transform:scale(.98)}
+  .card.selected{
+    border-color:#ffd166;
+    box-shadow:0 0 0 4px rgba(255,209,102,.30), 0 10px 24px rgba(204,78,158,.18);
+  }
+
+  .card img{
+    width:100%;
+    height:100%;
+    max-height:150px;
+    object-fit:contain;
     display:block;
-    font-size: 11px;
-    color: var(--muted);
-    margin-bottom: 4px;
+    border-radius:12px;
+    background:transparent;
+  }
+
+  .answer-panel{
+    padding:18px;
+  }
+
+  .answer-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:14px;
+    margin-bottom:16px;
+  }
+
+  .answer-header h2{
+    margin:0;
+    font-size:24px;
+    color:#7b2f72;
+  }
+
+  .legend{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+    justify-content:flex-end;
+    color:var(--muted);
+    font-size:12px;
+  }
+
+  .legend span{
+    border:1px solid rgba(245,163,211,.50);
+    background:rgba(255,255,255,.55);
+    border-radius:999px;
+    padding:6px 9px;
     font-weight:800;
   }
-  .field input {
-    width: 100%;
-    height: 34px;
-    background: #fff;
-    border: 1px solid #efb1da;
-    color: var(--text);
-    border-radius: 999px;
-    padding: 8px 12px;
-    font-size: 12px;
-    line-height: 16px;
-    font-family: inherit;
-    appearance: none;
-    -webkit-appearance: none;
-    box-shadow: inset 0 1px 2px rgba(200,70,150,.08);
-  }
-  .field input::placeholder { color: #c88abc; }
-  .placeholder {
-    width: 100%;
-    font-size: 12px;
-    color: #c074b0;
-    text-align: center;
-    line-height: 1.5;
-    font-weight: 700;
+
+  .answer-group{
+    border:2px solid rgba(245,163,211,.55);
+    border-radius:22px;
+    overflow:hidden;
+    margin-bottom:18px;
+    background:rgba(255,255,255,.48);
   }
 
-  .bottom {
-    flex: 0 0 auto;
-    padding: 14px 20px 10px;
-    position: sticky;
-    bottom: 0;
-    z-index: 20;
-    background: linear-gradient(180deg, rgba(255,238,248,0), rgba(255,238,248,.92) 22%, rgba(255,247,253,.98));
-    backdrop-filter: blur(3px);
-  }
-  .item-panel {
-    border-top: 2px solid rgba(255,209,102,.95);
-    box-shadow: 0 -10px 22px rgba(204,78,158,.16), inset 0 0 0 2px rgba(255,255,255,.75);
-  }
-  .item-header {
-    margin: 0 0 10px;
-  }
-  .item-scroll {
-    overflow: auto;
-    max-height: 225px;
-    scrollbar-gutter: stable;
-    padding-right: 6px;
-  }
-  .pool {
-    display: grid;
-    grid-template-columns: repeat(8, minmax(120px, 1fr));
-    gap: 10px;
-    min-width: 1060px;
-  }
-  .card {
-    background: linear-gradient(180deg, #fff, #fff0fa);
-    border: 2px solid rgba(244,155,209,.9);
-    border-radius: 16px;
-    padding: 8px;
-    height: 146px;
-    cursor: grab;
-    user-select: none;
-    box-shadow: 0 6px 16px rgba(204,78,158,.16);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-  }
-  .card.dragging {
-    opacity: .45;
-    transform: scale(.98);
-  }
-  .card.selected {
-    border-color: #ffd166;
-    box-shadow: 0 0 0 3px rgba(255,209,102,.36), 0 8px 24px rgba(204,78,158,.20);
-  }
-  .card img {
-    width: 100%;
-    height: 100%;
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
-    object-position: center center;
-    border-radius: 12px;
-    display: block;
-    background: linear-gradient(135deg, #fff, #fff6fb);
-  }
-  .slot-body > .card { width: 100%; height: 100%; }
-  .pool > .card { width: 100%; }
-
-  .copyright {
-    text-align: center;
-    font-size: 12px;
-    color: #a15b93;
-    margin-top: 8px;
-    padding: 4px 0 2px;
-    opacity: 0.9;
+  .answer-group-title{
+    margin:0;
+    padding:12px 16px;
+    font-size:17px;
+    color:#7b2f72;
+    letter-spacing:.02em;
+    background:linear-gradient(90deg, rgba(255,111,189,.22), rgba(255,209,102,.18), rgba(126,220,255,.12));
+    border-bottom:2px solid rgba(245,163,211,.36);
   }
 
-  @media (max-width: 1200px) {
-    .pool {
-      grid-template-columns: repeat(6, minmax(120px, 1fr));
-      min-width: 900px;
-    }
-    .item-scroll { max-height: 205px; }
+  .answer-row{
+    display:grid;
+    grid-template-columns:repeat(5, minmax(0,1fr));
+    gap:14px;
+    padding:16px;
   }
-  @media (max-width: 900px) {
-    .pool {
-      grid-template-columns: repeat(4, minmax(120px, 1fr));
-      min-width: 620px;
-    }
-    .item-scroll { max-height: 185px; }
+
+  .slot-wrap{min-width:0}
+
+  .slot-no{
+    color:#d94ca8;
+    font-weight:900;
+    font-size:15px;
+    margin-bottom:8px;
+    letter-spacing:.04em;
+  }
+
+  .slot{
+    min-height:238px;
+    background:linear-gradient(180deg, rgba(255,255,255,.74), rgba(255,241,250,.86));
+    border:2px dashed rgba(245,163,211,.88);
+    border-radius:18px;
+    padding:10px;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    transition:.15s ease;
+  }
+
+  .slot.over{
+    border-color:#ff6fbd;
+    background:rgba(255,238,248,.96);
+    box-shadow:0 0 0 4px rgba(255,111,189,.16);
+  }
+
+  .slot-body{
+    height:150px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+    border-radius:14px;
+    background:rgba(255,255,255,.50);
+  }
+
+  .slot-body .card{
+    width:100%;
+    height:100%;
+    min-height:0;
+    box-shadow:none;
+    padding:6px;
+  }
+
+  .placeholder{
+    width:100%;
+    text-align:center;
+    color:#b66ca7;
+    font-size:13px;
+    font-weight:900;
+    line-height:1.7;
+    padding:12px;
+  }
+
+  .slot-fields{
+    display:grid;
+    gap:8px;
+    margin-top:auto;
+  }
+
+  .field input{
+    width:100%;
+    height:40px;
+    border:1px solid rgba(245,163,211,.65);
+    border-radius:999px;
+    background:rgba(255,255,255,.96);
+    color:#65325f;
+    padding:8px 12px;
+    font-family:inherit;
+    font-size:14px;
+    box-shadow:inset 0 1px 2px rgba(200,70,150,.08);
+  }
+
+  .field input::placeholder{color:#c88abc}
+
+  .hint{
+    margin:22px 0 0;
+    color:var(--muted);
+    font-size:12px;
+    text-align:center;
+    font-weight:800;
+  }
+
+  @media (max-width:1180px){
+    .layout{grid-template-columns:1fr}
+    .pool-panel{position:static; max-height:none}
+    .pool{grid-template-columns:repeat(4, minmax(130px,1fr))}
+    .answer-row{grid-template-columns:repeat(4, minmax(0,1fr))}
+  }
+
+  @media (max-width:760px){
+    .header-inner{align-items:flex-start; flex-direction:column}
+    .actions{width:100%}
+    button,.answer-link-btn{flex:1}
+    .pool{grid-template-columns:repeat(2, minmax(0,1fr))}
+    .answer-row{grid-template-columns:1fr}
+    .slot{min-height:230px}
   }
 </style>
 </head>
-<body>
 
-  <script>
-    (function () {
-      const pass = prompt("パスワードを入力してください");
-    
-      if (pass !== "max") {
-        document.body.innerHTML =
-          "<div style='background:#08101d;color:#fff;display:flex;align-items:center;justify-content:center;height:100vh;font-family:Arial,\"Yu Gothic\",Meiryo,sans-serif'>アクセスできません</div>";
-        throw new Error("Unauthorized");
-      }
-    })();
-    </script>
+<body>
+<script>
+(function () {
+  const pass = prompt("パスワードを入力してください");
+  if (pass !== "max") {
+    document.documentElement.innerHTML =
+      "<head><meta charset='UTF-8'><title>アクセス不可</title><style>body{margin:0;font-family:Arial,'Yu Gothic',Meiryo,sans-serif;background:linear-gradient(135deg,#ffe0f2,#fff8cf,#dff8ff);color:#65325f;display:flex;align-items:center;justify-content:center;height:100vh}div{padding:24px 28px;border:2px solid #f5a3d3;border-radius:18px;background:rgba(255,255,255,.88);font-weight:900}</style></head><body><div>アクセスできません。</div></body>";
+    throw new Error("Unauthorized");
+  }
+})();
+</script>
 
 <div class="app">
-  <div class="top">
-    <div class="title-wrap">
-      <h1>グループワークその３（プリキュア）　次のプリキュアの名前とタイトルを答え、シリーズ順に並べよ</h1>
+  <header class="header">
+    <div class="header-inner">
+      <div>
+        <h1>プリキュアを年代順に並べよ</h1>
+      </div>
+      <div class="actions">
+        <button id="resetBtn" type="button">リセット</button>
+        <a class="answer-link-btn" href="groupwork003_answer.html" target="_blank" rel="noopener">解答へ</a>
+      </div>
     </div>
+  </header>
+
+  <main class="layout">
+    <section class="panel pool-panel">
+      <div class="panel-head">
+        <h2 class="panel-title">プリキュア画像一覧</h2>
+        <p class="panel-note">クリックで選択 → 右側の配置先をクリックして配置できます。</p>
+        <div class="selected-status" id="selectedStatus">未選択</div>
+      </div>
+      <div class="pool-scroll">
+        <div class="pool" id="pool"></div>
+      </div>
+    </section>
 
     <section class="panel answer-panel">
       <div class="answer-header">
-        <div class="answer-title">
-          <h2>解答エリア</h2>
-          <span class="answer-note">※声優はわかる範囲でOK</span>
+        <div>
+          <h2>シリーズ順に並べる</h2>
         </div>
-        <div class="answer-actions">
-          <button id="resetBtn" type="button">リセット</button>
-          <a id="answerLinkBtn" class="answer-link-btn" href="groupwork003_answer.html" target="_blank" rel="noopener noreferrer">解答へ</a>
+        <div class="legend">
+          <span>クリック配置対応</span>
+          <span>ドラッグ対応</span>
+          <span>入れ替え対応</span>
         </div>
       </div>
 
-      <div class="answer-scroll">
-        <div id="answerGrid" class="answer-grid"></div>
-      </div>
+      <div id="answerGrid"></div>
+      <p class="hint">※ 配置済みの画像同士をドラッグすると、入れ替えることができます。</p>
     </section>
-  </div>
-
-  <div class="bottom">
-    <section class="panel item-panel">
-      <div class="item-header">
-        <h2>プリキュア一覧</h2>
-      </div>
-      <div class="item-scroll">
-        <div id="pool" class="pool"></div>
-      </div>
-    </section>
-  </div>
+  </main>
 </div>
 
 <script>
-const initialItems = [{"id":"p01","image":"gw03img/nagisa.png"},{"id":"p02","image":"gw03img/mnagisa.png"},{"id":"p03","image":"gw03img/saki.png"},{"id":"p04","image":"gw03img/nozomi.png"},{"id":"p05","image":"gw03img/ynozomi.png"},{"id":"p06","image":"gw03img/love.png"},{"id":"p07","image":"gw03img/tsubomi.png"},{"id":"p08","image":"gw03img/hibiki.png"},{"id":"p09","image":"gw03img/miyuki.png"},{"id":"p10","image":"gw03img/ayumi.png"},{"id":"p11","image":"gw03img/mana.png"},{"id":"p12","image":"gw03img/megumi.png"},{"id":"p13","image":"gw03img/haruka.png"},{"id":"p14","image":"gw03img/mirai.png"},{"id":"p15","image":"gw03img/ichika.png"},{"id":"p16","image":"gw03img/hana.png"},{"id":"p17","image":"gw03img/hikaru.png"},{"id":"p18","image":"gw03img/nodoka.png"},{"id":"p19","image":"gw03img/manatsu.png"},{"id":"p20","image":"gw03img/yui.png"},{"id":"p21","image":"gw03img/sora.png"},{"id":"p22","image":"gw03img/komugi.png"},{"id":"p23","image":"gw03img/uta.png"},{"id":"p24","image":"gw03img/annna.png"}];
+const initialItems = [{"id": "p01", "image": "gw03img/nagisa.png"}, {"id": "p02", "image": "gw03img/mnagisa.png"}, {"id": "p03", "image": "gw03img/saki.png"}, {"id": "p04", "image": "gw03img/nozomi.png"}, {"id": "p05", "image": "gw03img/ynozomi.png"}, {"id": "p06", "image": "gw03img/love.png"}, {"id": "p07", "image": "gw03img/tsubomi.png"}, {"id": "p08", "image": "gw03img/hibiki.png"}, {"id": "p09", "image": "gw03img/miyuki.png"}, {"id": "p10", "image": "gw03img/ayumi.png"}, {"id": "p11", "image": "gw03img/mana.png"}, {"id": "p12", "image": "gw03img/megumi.png"}, {"id": "p13", "image": "gw03img/haruka.png"}, {"id": "p14", "image": "gw03img/mirai.png"}, {"id": "p15", "image": "gw03img/ichika.png"}, {"id": "p16", "image": "gw03img/hana.png"}, {"id": "p17", "image": "gw03img/hikaru.png"}, {"id": "p18", "image": "gw03img/nodoka.png"}, {"id": "p19", "image": "gw03img/manatsu.png"}, {"id": "p20", "image": "gw03img/yui.png"}, {"id": "p21", "image": "gw03img/sora.png"}, {"id": "p22", "image": "gw03img/komugi.png"}, {"id": "p23", "image": "gw03img/uta.png"}, {"id": "p24", "image": "gw03img/annna.png"}];
 
-const answerGrid = document.getElementById('answerGrid');
-const pool = document.getElementById('pool');
-const resetBtn = document.getElementById('resetBtn');
+const groups = [
+  {title:"プリキュア年代順", start:1, end:24, cols:6}
+];
 
+const answerGrid = document.getElementById("answerGrid");
+const pool = document.getElementById("pool");
+const resetBtn = document.getElementById("resetBtn");
+const selectedStatus = document.getElementById("selectedStatus");
 let selectedCardId = null;
 
-function createCard(item) {
-  const card = document.createElement('div');
-  card.className = 'card';
+function updateSelectedStatus(){
+  selectedStatus.textContent = selectedCardId ? "画像を選択中" : "未選択";
+}
+
+function createCard(item){
+  const card = document.createElement("div");
+  card.className = "card";
   card.draggable = true;
   card.dataset.id = item.id;
 
-  const img = document.createElement('img');
+  const img = document.createElement("img");
   img.src = item.image;
   img.alt = item.id;
   card.appendChild(img);
 
-  card.addEventListener('dragstart', (e) => {
-    card.classList.add('dragging');
-    e.dataTransfer.setData('text/plain', item.id);
+  card.addEventListener("dragstart", e => {
+    card.classList.add("dragging");
+    e.dataTransfer.setData("text/plain", item.id);
   });
 
-  card.addEventListener('dragend', () => {
-    card.classList.remove('dragging');
+  card.addEventListener("dragend", () => {
+    card.classList.remove("dragging");
   });
 
-  card.addEventListener('click', () => {
-    document.querySelectorAll('.card.selected').forEach(el => el.classList.remove('selected'));
-    if (selectedCardId === item.id) {
+  card.addEventListener("click", e => {
+    e.stopPropagation();
+    document.querySelectorAll(".card.selected").forEach(el => el.classList.remove("selected"));
+    if(selectedCardId === item.id){
       selectedCardId = null;
+      updateSelectedStatus();
       return;
     }
     selectedCardId = item.id;
-    card.classList.add('selected');
+    card.classList.add("selected");
+    updateSelectedStatus();
   });
 
   return card;
 }
 
-function createPlaceholder() {
-  const p = document.createElement('div');
-  p.className = 'placeholder';
-  p.innerHTML = 'プリキュアを選択<br>→ 配置先をクリック';
+function createPlaceholder(){
+  const p = document.createElement("div");
+  p.className = "placeholder";
+  p.innerHTML = "画像を選択<br>またはドラッグ";
   return p;
 }
 
-function createSlot(index) {
-  const slot = document.createElement('div');
-  slot.className = 'slot';
+function createSlot(index){
+  const slot = document.createElement("div");
+  slot.className = "slot";
   slot.dataset.index = index;
 
   slot.innerHTML = `
     <div class="slot-body"></div>
     <div class="slot-fields">
       <div class="field">
-        <label>名前</label>
-        <input type="text" placeholder="ここに入力">
-      </div>
-      <div class="field">
-        <label>タイトル</label>
-        <input type="text" placeholder="ここに入力">
-      </div>
-      <div class="field">
-        <label>声優</label>
-        <input type="text" placeholder="ここに入力">
+        <input type="text" placeholder="名前を入力">
       </div>
     </div>
   `;
 
-  const body = slot.querySelector('.slot-body');
+  const body = slot.querySelector(".slot-body");
   body.appendChild(createPlaceholder());
 
-  slot.addEventListener('dragover', (e) => {
+  slot.addEventListener("dragover", e => {
     e.preventDefault();
-    slot.classList.add('over');
+    slot.classList.add("over");
   });
 
-  slot.addEventListener('dragleave', () => {
-    slot.classList.remove('over');
+  slot.addEventListener("dragleave", () => {
+    slot.classList.remove("over");
   });
 
-  slot.addEventListener('drop', (e) => {
+  slot.addEventListener("drop", e => {
     e.preventDefault();
-    slot.classList.remove('over');
-    const id = e.dataTransfer.getData('text/plain');
+    slot.classList.remove("over");
+    const id = e.dataTransfer.getData("text/plain");
     placeCardInSlot(id, slot);
   });
 
-  slot.addEventListener('click', (e) => {
-    if (e.target.tagName === 'INPUT') return;
-    if (selectedCardId) {
+  slot.addEventListener("click", e => {
+    if(e.target.tagName === "INPUT") return;
+    if(selectedCardId){
       placeCardInSlot(selectedCardId, slot);
-      document.querySelectorAll('.card.selected').forEach(el => el.classList.remove('selected'));
+      document.querySelectorAll(".card.selected").forEach(el => el.classList.remove("selected"));
       selectedCardId = null;
+      updateSelectedStatus();
     }
   });
 
   return slot;
 }
 
-function placeCardInSlot(cardId, slot) {
+function placeCardInSlot(cardId, slot){
   const card = document.querySelector(`.card[data-id="${cardId}"]`);
-  if (!card) return;
+  if(!card) return;
 
-  const slotBody = slot.querySelector('.slot-body');
-  const existingCard = slotBody.querySelector('.card');
-  if (existingCard) {
+  const targetBody = slot.querySelector(".slot-body");
+  const existingCard = targetBody.querySelector(".card");
+  const currentParentSlot = card.closest(".slot");
+  const currentBody = currentParentSlot ? currentParentSlot.querySelector(".slot-body") : null;
+
+  if(existingCard === card) return;
+
+  if(existingCard && currentBody){
+    targetBody.innerHTML = "";
+    targetBody.appendChild(card);
+
+    currentBody.innerHTML = "";
+    currentBody.appendChild(existingCard);
+    return;
+  }
+
+  if(existingCard){
     pool.appendChild(existingCard);
   }
 
-  const currentParentSlot = card.closest('.slot');
-  if (currentParentSlot) {
-    const currentBody = currentParentSlot.querySelector('.slot-body');
-    currentBody.innerHTML = '';
+  if(currentBody){
+    currentBody.innerHTML = "";
     currentBody.appendChild(createPlaceholder());
   }
 
-  slotBody.innerHTML = '';
-  slotBody.appendChild(card);
+  targetBody.innerHTML = "";
+  targetBody.appendChild(card);
 }
 
-function buildAnswerArea() {
-  answerGrid.innerHTML = '';
-  for (let i = 0; i < initialItems.length; i++) {
-    const wrap = document.createElement('div');
-    wrap.className = 'slot-wrap';
+function buildAnswerArea(){
+  answerGrid.innerHTML = "";
+  groups.forEach(group => {
+    const section = document.createElement("section");
+    section.className = "answer-group";
 
-    const no = document.createElement('div');
-    no.className = 'slot-no';
-    no.textContent = `【${i + 1}】`;
+    if(group.title){
+      const title = document.createElement("h3");
+      title.className = "answer-group-title";
+      title.textContent = group.title;
+      section.appendChild(title);
+    }
 
-    wrap.appendChild(no);
-    wrap.appendChild(createSlot(i));
-    answerGrid.appendChild(wrap);
-  }
+    const row = document.createElement("div");
+    row.className = "answer-row";
+
+    for(let i = group.start; i <= group.end; i++){
+      const wrap = document.createElement("div");
+      wrap.className = "slot-wrap";
+
+      const no = document.createElement("div");
+      no.className = "slot-no";
+      no.textContent = `【${i}】`;
+
+      wrap.appendChild(no);
+      wrap.appendChild(createSlot(i - 1));
+      row.appendChild(wrap);
+    }
+
+    section.appendChild(row);
+    answerGrid.appendChild(section);
+  });
 }
 
-function resetAll() {
-  answerGrid.querySelectorAll('.slot').forEach(slot => {
-    const body = slot.querySelector('.slot-body');
-    const card = body.querySelector('.card');
-    if (card) pool.appendChild(card);
-    body.innerHTML = '';
+function resetAll(){
+  answerGrid.querySelectorAll(".slot").forEach(slot => {
+    const body = slot.querySelector(".slot-body");
+    const card = body.querySelector(".card");
+    if(card) pool.appendChild(card);
+    body.innerHTML = "";
     body.appendChild(createPlaceholder());
   });
-  answerGrid.querySelectorAll('input').forEach(input => input.value = '');
-  document.querySelectorAll('.card.selected').forEach(el => el.classList.remove('selected'));
+  answerGrid.querySelectorAll("input").forEach(input => input.value = "");
+  document.querySelectorAll(".card.selected").forEach(el => el.classList.remove("selected"));
   selectedCardId = null;
+  updateSelectedStatus();
+  shufflePool();
 }
 
-function shufflePool() {
+function shufflePool(){
   const cards = Array.from(pool.children);
-  for (let i = cards.length - 1; i > 0; i--) {
+  for(let i = cards.length - 1; i > 0; i--){
     const j = Math.floor(Math.random() * (i + 1));
     [cards[i], cards[j]] = [cards[j], cards[i]];
   }
@@ -527,11 +636,10 @@ function shufflePool() {
 }
 
 buildAnswerArea();
-initialItems.forEach(item => {
-  pool.appendChild(createCard(item));
-});
+initialItems.forEach(item => pool.appendChild(createCard(item)));
 shufflePool();
-resetBtn.addEventListener('click', resetAll);
+updateSelectedStatus();
+resetBtn.addEventListener("click", resetAll);
 </script>
 </body>
 </html>

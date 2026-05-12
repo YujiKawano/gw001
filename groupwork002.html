@@ -3,510 +3,625 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>グループワークその２（仮面ライダー）</title>
+<title>グループワークその２</title>
 <style>
-  :root {
-    --panel: #121a30;
-    --panel2: #17223f;
-    --line: #31436d;
-    --text: #eaf0ff;
-    --muted: #9fb0d9;
-    --accent: #7cb7ff;
+  :root{
+    --bg:#08090d;
+    --panel:#141722;
+    --panel2:#1b2030;
+    --line:#4a536b;
+    --line2:#d73a31;
+    --text:#f4f7ff;
+    --muted:#aeb7cc;
+    --accent:#ff4b3f;
+    --gold:#ffd166;
+    --green:#6ee7b7;
   }
-  * { box-sizing: border-box; }
-  html, body {
-    height: 100%;
+
+  *{box-sizing:border-box}
+  html,body{min-height:100%}
+  body{
+    margin:0;
+    font-family:Arial, "Helvetica Neue", Helvetica, "Yu Gothic", "Yu Gothic UI", Meiryo, sans-serif;
+    line-height:1.5;
+    color:var(--text);
+    background:
+      radial-gradient(circle at 18% 12%, rgba(255,75,63,.30), transparent 25%),
+      radial-gradient(circle at 84% 18%, rgba(110,231,183,.18), transparent 23%),
+      linear-gradient(115deg, transparent 0 44%, rgba(255,75,63,.16) 44% 46%, transparent 46% 100%),
+      linear-gradient(245deg, transparent 0 53%, rgba(255,209,102,.10) 53% 55%, transparent 55% 100%),
+      repeating-linear-gradient(135deg, rgba(255,255,255,.035) 0 2px, transparent 2px 22px),
+      linear-gradient(180deg,#120606 0%, #17120e 46%, #08090d 100%);
+    background-size:auto,auto,auto,auto,42px 42px,auto;
+    background-attachment:fixed;
   }
-  body {
-    margin: 0;
-    font-family: Arial, "Helvetica Neue", Helvetica, "Yu Gothic", "Yu Gothic UI", Meiryo, sans-serif;
-    line-height: 1.4;
-    background: linear-gradient(180deg, #08101d, #10172d);
-    color: var(--text);
-    -webkit-text-size-adjust: 100%;
-    text-size-adjust: 100%;
-    overflow: hidden;
+
+  body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    background:
+      linear-gradient(90deg, rgba(255,75,63,.08), transparent 22%, transparent 78%, rgba(110,231,183,.06)),
+      repeating-linear-gradient(90deg, transparent 0 80px, rgba(255,255,255,.035) 80px 82px);
+    mix-blend-mode:screen;
+    opacity:.75;
   }
-  .app {
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    min-height: 0;
+
+  .app{
+    max-width:1480px;
+    margin:0 auto;
+    padding:18px 20px 44px;
   }
-  .top {
-    flex: 1;
-    min-height: 0;
-    display: flex;
-    flex-direction: column;
-    padding: 20px 20px 0;
-    overflow: hidden;
+
+  .header{
+    position:sticky;
+    top:0;
+    z-index:50;
+    margin:-18px -20px 18px;
+    padding:16px 20px;
+    background:
+      radial-gradient(circle at 20% 14%, rgba(255,75,63,.18), transparent 30%),
+      linear-gradient(115deg, transparent 0 44%, rgba(255,75,63,.12) 44% 46%, transparent 46% 100%),
+      repeating-linear-gradient(135deg, rgba(255,255,255,.03) 0 2px, transparent 2px 22px),
+      linear-gradient(180deg, rgba(20,23,34,.96), rgba(20,23,34,.92));
+    background-size:auto,auto,42px 42px,auto;
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid rgba(255,75,63,.25);
+    box-shadow:
+      0 14px 34px rgba(0,0,0,.34),
+      0 0 24px rgba(255,75,63,.08),
+      inset 0 0 0 1px rgba(255,255,255,.03);
   }
-  .title-wrap {
-    flex: 0 0 auto;
-  }
-  h1 {
-    margin: 0 0 8px;
-    font-size: 28px;
-  }
-  .lead {
-    margin: 0 0 18px;
-    color: var(--text);
-    line-height: 1.8;
-    font-size: 20px;
-    font-weight: 800;
-  }
-  .lead strong {
-    color: #ffffff;
-    font-size: 24px;
-    display: inline-block;
-    margin-bottom: 6px;
-  }
-  button, .answer-link-btn {
-    border: 1px solid var(--line);
-    background: var(--panel2);
-    color: var(--text);
-    padding: 10px 14px;
-    border-radius: 10px;
-    cursor: pointer;
-    font-weight: 700;
-    font-family: inherit;
-    line-height: 1.2;
-    text-decoration: none;
-    display: inline-block;
-  }
-  button:hover, .answer-link-btn:hover {
-    filter: brightness(1.08);
-  }
-  .panel {
-    background: rgba(18,26,48,.92);
-    border: 1px solid var(--line);
-    border-radius: 18px;
-    padding: 16px;
-    box-shadow: 0 10px 30px rgba(0,0,0,.25);
-  }
-  .answer-panel {
-    flex: 1;
-    min-height: 0;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-  }
-  .answer-header {
+
+  .header-inner{
+    max-width:1480px;
+    margin:0 auto;
     display:flex;
     justify-content:space-between;
     align-items:center;
+    gap:16px;
+  }
+
+  h1{
+    margin:0;
+    font-size:clamp(22px, 3vw, 34px);
+    letter-spacing:.02em;
+  }
+
+  .actions{
+    display:flex;
     gap:12px;
-    margin: 0 0 12px;
-    flex: 0 0 auto;
+    align-items:center;
+    flex-wrap:wrap;
+    flex:0 0 auto;
   }
 
-  .answer-actions {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    flex: 0 0 auto;
+  button,.answer-link-btn{
+    border:1px solid rgba(255,75,63,.55);
+    border-radius:14px;
+    padding:12px 18px;
+    background:linear-gradient(180deg, rgba(255,75,63,.24), rgba(255,75,63,.08));
+    color:var(--text);
+    font-weight:900;
+    font-family:inherit;
+    font-size:15px;
+    cursor:pointer;
+    text-decoration:none;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    min-height:46px;
   }
-  #answerLinkBtn {
-    background: #2f7df0;
-    border-color: #2f7df0;
-    color: #fff;
-  }
-  .answer-header h2,
-  .rider-header h2 {
-    margin: 0;
-    font-size: 20px;
-  }
-  .click-help {
-    margin-top: 10px;
-    padding: 10px 12px;
-    border: 1px solid #385486;
-    border-radius: 12px;
-    background: rgba(124,183,255,.08);
-    color: #d8e7ff;
-    font-size: 13px;
-    line-height: 1.6;
-    flex: 0 0 auto;
-  }
-  .answer-scroll {
-    flex: 1;
-    min-height: 0;
-    overflow: auto;
-    padding-right: 6px;
-    scrollbar-gutter: stable;
-  }
-  .answer-groups {
-    display: grid;
-    gap: 18px;
-    min-width: 1180px;
-    padding-bottom: 10px;
-  }
-  .answer-group {
-    display: grid;
-    gap: 10px;
-  }
-  .answer-group-title {
-    margin: 0;
-    font-size: 18px;
-    color: #ffffff;
-    font-weight: 800;
-  }
-  .answer-row {
-    display: grid;
-    gap: 12px;
-  }
-  .answer-row.cols-7 { grid-template-columns: repeat(7, minmax(150px, 1fr)); }
-  .answer-row.cols-8 { grid-template-columns: repeat(8, minmax(150px, 1fr)); }
-  .answer-row.cols-10 { grid-template-columns: repeat(10, minmax(150px, 1fr)); }
 
-  .slot-wrap {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
+  button:hover,.answer-link-btn:hover{
+    filter:brightness(1.12);
+    box-shadow:0 0 20px rgba(255,75,63,.20);
   }
-  .slot-no {
-    font-size: 12px;
-    color: var(--muted);
-    font-weight: 800;
-    letter-spacing: .04em;
+
+  .answer-link-btn{
+    background:linear-gradient(180deg, #e13b31, #a91f18);
+    border-color:#ff6b62;
+    color:#fff;
   }
-  .slot {
-    background: rgba(255,255,255,.03);
-    border: 2px dashed #3f5589;
-    border-radius: 14px;
-    padding: 8px;
-    transition: .15s ease;
+
+  .layout{
+    display:grid;
+    grid-template-columns:minmax(390px, 470px) 1fr;
+    gap:20px;
+    align-items:start;
+  }
+
+  .panel{
+    background:rgba(20,23,34,.94);
+    border:1px solid rgba(255,75,63,.34);
+    border-radius:22px;
+    box-shadow:0 14px 34px rgba(0,0,0,.34), 0 0 24px rgba(255,75,63,.08), inset 0 0 0 1px rgba(255,255,255,.03);
+  }
+
+  .pool-panel{
+    position:sticky;
+    top:98px;
+    max-height:calc(100vh - 118px);
     display:flex;
     flex-direction:column;
-    min-height: 188px;
-  }
-  .slot.over {
-    border-color: var(--accent);
-    background: rgba(124,183,255,.12);
-    transform: scale(1.01);
-  }
-  .slot-body {
-    min-height: 126px;
-    height: 126px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    margin-bottom: 8px;
-  }
-  .slot-fields {
-    display: grid;
-    gap: 8px;
-    margin-top: auto;
-  }
-  .field input {
-    width: 100%;
-    height: 34px;
-    background: rgba(8,16,29,.9);
-    border: 1px solid #4a6399;
-    color: var(--text);
-    border-radius: 8px;
-    padding: 8px 10px;
-    font-size: 12px;
-    line-height: 16px;
-    font-family: inherit;
-    appearance: none;
-    -webkit-appearance: none;
-  }
-  .field input::placeholder {
-    color: #6d81b3;
-  }
-  .placeholder {
-    width: 100%;
-    font-size: 12px;
-    color: #6d81b3;
-    text-align: center;
-    line-height: 1.5;
+    overflow:hidden;
   }
 
-  .bottom {
-    flex: 0 0 auto;
-    padding: 14px 20px 10px;
-    position: sticky;
-    bottom: 0;
-    z-index: 20;
-    background: linear-gradient(180deg, rgba(8,16,29,0.4), rgba(8,16,29,0.95) 18%, rgba(8,16,29,1));
-    backdrop-filter: blur(2px);
-  }
-  .rider-panel {
-    border-top: 2px solid #4a6399;
-    box-shadow: 0 -10px 20px rgba(0,0,0,.28);
-  }
-  .rider-header {
-    margin: 0 0 10px;
-  }
-  .rider-scroll {
-    overflow: auto;
-    max-height: 225px;
-    scrollbar-gutter: stable;
-    padding-right: 6px;
-  }
-  .pool {
-    display: grid;
-    grid-template-columns: repeat(8, minmax(120px, 1fr));
-    gap: 10px;
-    min-width: 1060px;
-  }
-  .card {
-    background: linear-gradient(180deg, #213154, #182440);
-    border: 1px solid #47639d;
-    border-radius: 14px;
-    padding: 8px;
-    height: 146px;
-    cursor: grab;
-    user-select: none;
-    box-shadow: 0 6px 18px rgba(0,0,0,.18);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-  }
-  .card.dragging {
-    opacity: .45;
-    transform: scale(.98);
-  }
-  .card.selected {
-    border-color: #7fffd4;
-    box-shadow: 0 0 0 3px rgba(127,255,212,.25), 0 8px 24px rgba(0,0,0,.22);
-  }
-  .card img {
-    width: 100%;
-    height: 100%;
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
-    object-position: center center;
-    border-radius: 10px;
-    display: block;
-    background: #0b1020;
-  }
-  .slot-body > .card {
-    width: 100%;
-    height: 100%;
-  }
-  .pool > .card {
-    width: 100%;
+  .panel-head{
+    padding:18px 18px 12px;
+    border-bottom:1px solid rgba(255,75,63,.18);
   }
 
-  .copyright {
-    text-align: center;
-    font-size: 12px;
-    color: #9fb0d9;
-    margin-top: 8px;
-    padding: 4px 0 2px;
-    opacity: 0.8;
+  .panel-title{
+    margin:0;
+    font-size:20px;
   }
 
-  @media (max-width: 1200px) {
-    .pool {
-      grid-template-columns: repeat(6, minmax(120px, 1fr));
-      min-width: 900px;
+  .panel-note{
+    margin:5px 0 0;
+    color:var(--muted);
+    font-size:13px;
+  }
+
+  .selected-status{
+    margin-top:10px;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    border:1px solid rgba(110,231,183,.35);
+    background:rgba(110,231,183,.08);
+    color:#bfffe8;
+    border-radius:999px;
+    padding:6px 10px;
+    font-size:12px;
+    font-weight:800;
+  }
+
+  .pool-scroll{
+    overflow:auto;
+    padding:16px;
+  }
+
+  .pool{
+    display:grid;
+    grid-template-columns:repeat(3, minmax(0, 1fr));
+    gap:12px;
+  }
+
+  .card{
+    background:linear-gradient(180deg, rgba(30,35,50,.94), rgba(16,20,30,.98));
+    border:2px solid rgba(255,75,63,.18);
+    border-radius:16px;
+    padding:7px;
+    min-height:136px;
+    cursor:grab;
+    user-select:none;
+    box-shadow:0 8px 18px rgba(0,0,0,.24);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+  }
+
+  .card:active{cursor:grabbing}
+  .card.dragging{opacity:.45; transform:scale(.98)}
+  .card.selected{
+    border-color:var(--gold);
+    box-shadow:0 0 0 4px rgba(255,209,102,.26), 0 10px 24px rgba(0,0,0,.30);
+  }
+
+  .card img{
+    width:100%;
+    height:100%;
+    max-height:132px;
+    object-fit:contain;
+    display:block;
+    border-radius:10px;
+    background:transparent;
+  }
+
+  .answer-panel{
+    padding:18px;
+  }
+
+  .answer-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:14px;
+    margin-bottom:16px;
+  }
+
+  .answer-header h2{
+    margin:0;
+    font-size:24px;
+  }
+
+  .legend{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+    justify-content:flex-end;
+    color:var(--muted);
+    font-size:12px;
+  }
+
+  .legend span{
+    border:1px solid rgba(255,75,63,.22);
+    background:rgba(255,75,63,.06);
+    border-radius:999px;
+    padding:6px 9px;
+  }
+
+  .answer-group{
+    border:1px solid rgba(255,75,63,.22);
+    border-radius:20px;
+    overflow:hidden;
+    margin-bottom:18px;
+    background:rgba(8,9,13,.34);
+  }
+
+  .answer-group-title{
+    margin:0;
+    padding:12px 16px;
+    font-size:17px;
+    letter-spacing:.02em;
+    background:linear-gradient(90deg, rgba(255,75,63,.22), rgba(255,75,63,.04));
+    border-bottom:1px solid rgba(255,75,63,.18);
+  }
+
+  .answer-row{
+    display:grid;
+    gap:12px;
+    padding:16px;
+  }
+
+  .answer-row.cols-4{grid-template-columns:repeat(4, minmax(0,1fr))}
+  .answer-row.cols-5{grid-template-columns:repeat(5, minmax(0,1fr))}
+  .answer-row.cols-6{grid-template-columns:repeat(6, minmax(0,1fr))}
+  .answer-row.cols-7{grid-template-columns:repeat(7, minmax(0,1fr))}
+  .answer-row.cols-8{grid-template-columns:repeat(8, minmax(0,1fr))}
+
+  .slot-wrap{min-width:0}
+
+  .slot-no{
+    color:#ffe1df;
+    font-weight:900;
+    font-size:15px;
+    margin-bottom:8px;
+    letter-spacing:.04em;
+  }
+
+  .slot{
+    min-height:230px;
+    background:linear-gradient(180deg, rgba(28,32,48,.82), rgba(12,14,22,.94));
+    border:2px dashed rgba(255,75,63,.30);
+    border-radius:18px;
+    padding:10px;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    transition:.15s ease;
+  }
+
+  .slot.over{
+    border-color:var(--gold);
+    background:rgba(255,209,102,.08);
+    box-shadow:0 0 0 4px rgba(255,209,102,.13);
+  }
+
+  .slot-body{
+    height:140px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+    border-radius:14px;
+    background:rgba(255,255,255,.035);
+  }
+
+  .slot-body .card{
+    width:100%;
+    height:100%;
+    min-height:0;
+    box-shadow:none;
+    padding:6px;
+  }
+
+  .placeholder{
+    width:100%;
+    text-align:center;
+    color:#c7cfdf;
+    font-size:13px;
+    font-weight:800;
+    line-height:1.7;
+    padding:12px;
+  }
+
+  .slot-fields{
+    display:grid;
+    gap:8px;
+    margin-top:auto;
+  }
+
+  .field input{
+    width:100%;
+    height:40px;
+    border:1px solid rgba(255,75,63,.22);
+    border-radius:10px;
+    background:rgba(255,255,255,.96);
+    color:#151820;
+    padding:8px 10px;
+    font-family:inherit;
+    font-size:14px;
+  }
+
+  .field input::placeholder{color:#75849b}
+
+  .hint{
+    margin:22px 0 0;
+    color:var(--muted);
+    font-size:12px;
+    text-align:center;
+  }
+
+  @media (max-width:1240px){
+    .layout{
+      grid-template-columns:1fr;
     }
-    .rider-scroll {
-      max-height: 205px;
+    .pool-panel{
+      position:static;
+      max-height:none;
+    }
+    .pool{
+      grid-template-columns:repeat(5, minmax(120px, 1fr));
+    }
+    .answer-row.cols-8,
+    .answer-row.cols-7,
+    .answer-row.cols-6,
+    .answer-row.cols-5{
+      grid-template-columns:repeat(4, minmax(0,1fr));
     }
   }
-  @media (max-width: 900px) {
-    .pool {
-      grid-template-columns: repeat(4, minmax(120px, 1fr));
-      min-width: 620px;
+
+  @media (max-width:760px){
+    .header-inner{
+      align-items:flex-start;
+      flex-direction:column;
     }
-    .rider-scroll {
-      max-height: 185px;
+    .actions{width:100%}
+    button,.answer-link-btn{flex:1}
+    .pool{grid-template-columns:repeat(2, minmax(0,1fr))}
+    .answer-row.cols-8,
+    .answer-row.cols-7,
+    .answer-row.cols-6,
+    .answer-row.cols-5,
+    .answer-row.cols-4{
+      grid-template-columns:1fr;
     }
+    .slot{min-height:230px}
   }
 </style>
 </head>
-  <body>
-    <script>
-      (function () {
-        const pass = prompt("パスワードを入力してください");
-      
-        if (pass !== "wbx") {
-          document.body.innerHTML =
-            "<div style='background:#08101d;color:#fff;display:flex;align-items:center;justify-content:center;height:100vh;font-family:Arial,\"Yu Gothic\",Meiryo,sans-serif'>アクセスできません</div>";
-          throw new Error("Unauthorized");
-        }
-      })();
-      </script>
+
+<body>
+<script>
+(function () {
+  const pass = prompt("パスワードを入力してください");
+  if (pass !== "wbx") {
+    document.documentElement.innerHTML =
+      "<head><meta charset='UTF-8'><title>アクセス不可</title><style>body{margin:0;font-family:Arial,'Yu Gothic',Meiryo,sans-serif;background:#08090d;color:#fff;display:flex;align-items:center;justify-content:center;height:100vh}div{padding:24px 28px;border:1px solid #4a536b;border-radius:14px;background:#141722}</style></head><body><div>アクセスできません。</div></body>";
+    throw new Error("Unauthorized");
+  }
+})();
+</script>
 
 <div class="app">
-  <div class="top">
-    <div class="title-wrap">
-      <h1>グループワークその２（仮面ライダー）　次の仮面ライダーの名前を答え、登場順に並べよ。</h1>
+  <header class="header">
+    <div class="header-inner">
+      <div>
+        <h1>仮面ライダーを年代順に並べよ</h1>
+      </div>
+      <div class="actions">
+        <button id="resetBtn" type="button">リセット</button>
+        <a class="answer-link-btn" href="groupwork002_answer.html" target="_blank" rel="noopener">解答へ</a>
+      </div>
     </div>
+  </header>
+
+  <main class="layout">
+    <section class="panel pool-panel">
+      <div class="panel-head">
+        <h2 class="panel-title">ライダー画像一覧</h2>
+        <p class="panel-note">クリックで選択 → 右側の配置先をクリックして配置できます。</p>
+        <div class="selected-status" id="selectedStatus">未選択</div>
+      </div>
+      <div class="pool-scroll">
+        <div class="pool" id="pool"></div>
+      </div>
+    </section>
 
     <section class="panel answer-panel">
       <div class="answer-header">
-        <h2>解答エリア</h2>
-        <div class="answer-actions">
-          <button id="resetBtn" type="button">リセット</button>
-          <a id="answerLinkBtn" class="answer-link-btn" href="groupwork002_answer.html" target="_blank" rel="noopener noreferrer">解答へ</a>
+        <div>
+          <h2>年代順に並べる</h2>
+        </div>
+        <div class="legend">
+          <span>クリック配置対応</span>
+          <span>ドラッグ対応</span>
+          <span>入れ替え対応</span>
         </div>
       </div>
 
-      <div class="answer-scroll">
-        <div id="answerGrid" class="answer-groups"></div>
-      </div>
-
-      
+      <div id="answerGrid"></div>
+      <p class="hint">※ 配置済みの画像同士をドラッグすると、入れ替えることができます。</p>
     </section>
-  </div>
-
-  <div class="bottom">
-    <section class="panel rider-panel">
-      <div class="rider-header">
-        <h2>ライダー一覧</h2>
-      </div>
-      <div class="rider-scroll">
-        <div id="pool" class="pool"></div>
-      </div>
-    </section>
-    <footer class="copyright">(C)石森プロ・テレビ朝日・ADK EM・東映</footer>
-  </div>
+  </main>
 </div>
 
 <script>
 const initialItems = [{"id": "r01", "image": "gw02img/hg.png"}, {"id": "r02", "image": "gw02img/im.png"}, {"id": "r03", "image": "gw02img/ks.png"}, {"id": "r04", "image": "gw02img/yj.png"}, {"id": "r05", "image": "gw02img/jk.png"}, {"id": "r06", "image": "gw02img/yd.png"}, {"id": "r07", "image": "gw02img/js.png"}, {"id": "r08", "image": "gw02img/th.png"}, {"id": "r09", "image": "gw02img/ok.png"}, {"id": "r10", "image": "gw02img/mr.png"}, {"id": "r11", "image": "gw02img/mk.png"}, {"id": "r12", "image": "gw02img/mk2.png"}, {"id": "r13", "image": "gw02img/kas.png"}, {"id": "r14", "image": "gw02img/am.png"}, {"id": "r15", "image": "gw02img/sk.png"}, {"id": "r16", "image": "gw02img/gy.png"}, {"id": "r17", "image": "gw02img/ts.png"}, {"id": "r18", "image": "gw02img/kis.png"}, {"id": "r19", "image": "gw02img/it.png"}, {"id": "r20", "image": "gw02img/kk.png"}, {"id": "r21", "image": "gw02img/hh.png"}, {"id": "r22", "image": "gw02img/tendo.png"}, {"id": "r23", "image": "gw02img/ny.png"}, {"id": "r24", "image": "gw02img/kw.png"}, {"id": "r25", "image": "gw02img/kt.png"}, {"id": "r26", "image": "gw02img/hf.png"}, {"id": "r27", "image": "gw02img/he.png"}, {"id": "r28", "image": "gw02img/kg.png"}, {"id": "r29", "image": "gw02img/sh.png"}, {"id": "r30", "image": "gw02img/kko.png"}, {"id": "r31", "image": "gw02img/tos.png"}, {"id": "r32", "image": "gw02img/tt.png"}, {"id": "r33", "image": "gw02img/hoe.png"}, {"id": "r34", "image": "gw02img/ksen.png"}, {"id": "r35", "image": "gw02img/tokis.png"}];
-const groups = [{"title": "昭和ライダー1期（栄光の7人ライダー）", "start": 1, "end": 7, "cols": 7}, {"title": "昭和ライダー2期 / 昭和ライダー3期 / 昭和ライダー4期（ネオライダー）", "start": 8, "end": 15, "cols": 8}, {"title": "平成ライダー1期", "start": 16, "end": 25, "cols": 10}, {"title": "平成ライダー2期", "start": 26, "end": 35, "cols": 10}];
 
-const answerGrid = document.getElementById('answerGrid');
-const pool = document.getElementById('pool');
-const resetBtn = document.getElementById('resetBtn');
+const groups = [
+  {title:"昭和ライダー1期（栄光の7人ライダー）", start:1, end:7, cols:5},
+  {title:"昭和ライダー2期 / 昭和ライダー3期 / 昭和ライダー4期（ネオライダー）", start:8, end:15, cols:5},
+  {title:"平成ライダー1期", start:16, end:25, cols:5},
+  {title:"平成ライダー2期", start:26, end:35, cols:5}
+];
 
+const answerGrid = document.getElementById("answerGrid");
+const pool = document.getElementById("pool");
+const resetBtn = document.getElementById("resetBtn");
+const selectedStatus = document.getElementById("selectedStatus");
 let selectedCardId = null;
 
-function createCard(item) {
-  const card = document.createElement('div');
-  card.className = 'card';
+function updateSelectedStatus(){
+  selectedStatus.textContent = selectedCardId ? "画像を選択中" : "未選択";
+}
+
+function createCard(item){
+  const card = document.createElement("div");
+  card.className = "card";
   card.draggable = true;
   card.dataset.id = item.id;
 
-  const img = document.createElement('img');
+  const img = document.createElement("img");
   img.src = item.image;
   img.alt = item.id;
   card.appendChild(img);
 
-  card.addEventListener('dragstart', (e) => {
-    card.classList.add('dragging');
-    e.dataTransfer.setData('text/plain', item.id);
+  card.addEventListener("dragstart", e => {
+    card.classList.add("dragging");
+    e.dataTransfer.setData("text/plain", item.id);
   });
 
-  card.addEventListener('dragend', () => {
-    card.classList.remove('dragging');
+  card.addEventListener("dragend", () => {
+    card.classList.remove("dragging");
   });
 
-  card.addEventListener('click', () => {
-    document.querySelectorAll('.card.selected').forEach(el => el.classList.remove('selected'));
-    if (selectedCardId === item.id) {
+  card.addEventListener("click", e => {
+    e.stopPropagation();
+    document.querySelectorAll(".card.selected").forEach(el => el.classList.remove("selected"));
+    if(selectedCardId === item.id){
       selectedCardId = null;
+      updateSelectedStatus();
       return;
     }
     selectedCardId = item.id;
-    card.classList.add('selected');
+    card.classList.add("selected");
+    updateSelectedStatus();
   });
 
   return card;
 }
 
-function createPlaceholder() {
-  const p = document.createElement('div');
-  p.className = 'placeholder';
-  p.innerHTML = 'ライダーを選択<br>→ 配置先をクリック';
+function createPlaceholder(){
+  const p = document.createElement("div");
+  p.className = "placeholder";
+  p.innerHTML = "画像を選択<br>またはドラッグ";
   return p;
 }
 
-function createSlot(index) {
-  const slot = document.createElement('div');
-  slot.className = 'slot';
+function createSlot(index){
+  const slot = document.createElement("div");
+  slot.className = "slot";
   slot.dataset.index = index;
 
   slot.innerHTML = `
     <div class="slot-body"></div>
     <div class="slot-fields">
       <div class="field">
-        <input type="text" placeholder="ここに入力">
+        <input type="text" placeholder="名前を入力">
       </div>
     </div>
   `;
 
-  const body = slot.querySelector('.slot-body');
+  const body = slot.querySelector(".slot-body");
   body.appendChild(createPlaceholder());
 
-  slot.addEventListener('dragover', (e) => {
+  slot.addEventListener("dragover", e => {
     e.preventDefault();
-    slot.classList.add('over');
+    slot.classList.add("over");
   });
 
-  slot.addEventListener('dragleave', () => {
-    slot.classList.remove('over');
+  slot.addEventListener("dragleave", () => {
+    slot.classList.remove("over");
   });
 
-  slot.addEventListener('drop', (e) => {
+  slot.addEventListener("drop", e => {
     e.preventDefault();
-    slot.classList.remove('over');
-    const id = e.dataTransfer.getData('text/plain');
+    slot.classList.remove("over");
+    const id = e.dataTransfer.getData("text/plain");
     placeCardInSlot(id, slot);
   });
 
-  slot.addEventListener('click', (e) => {
-    if (e.target.tagName === 'INPUT') return;
-    if (selectedCardId) {
+  slot.addEventListener("click", e => {
+    if(e.target.tagName === "INPUT") return;
+    if(selectedCardId){
       placeCardInSlot(selectedCardId, slot);
-      document.querySelectorAll('.card.selected').forEach(el => el.classList.remove('selected'));
+      document.querySelectorAll(".card.selected").forEach(el => el.classList.remove("selected"));
       selectedCardId = null;
+      updateSelectedStatus();
     }
   });
 
   return slot;
 }
 
-function placeCardInSlot(cardId, slot) {
+function placeCardInSlot(cardId, slot){
   const card = document.querySelector(`.card[data-id="${cardId}"]`);
-  if (!card) return;
+  if(!card) return;
 
-  const slotBody = slot.querySelector('.slot-body');
-  const existingCard = slotBody.querySelector('.card');
-  if (existingCard) {
+  const targetBody = slot.querySelector(".slot-body");
+  const existingCard = targetBody.querySelector(".card");
+  const currentParentSlot = card.closest(".slot");
+  const currentBody = currentParentSlot ? currentParentSlot.querySelector(".slot-body") : null;
+
+  if(existingCard === card) return;
+
+  if(existingCard && currentBody){
+    targetBody.innerHTML = "";
+    targetBody.appendChild(card);
+
+    currentBody.innerHTML = "";
+    currentBody.appendChild(existingCard);
+    return;
+  }
+
+  if(existingCard){
     pool.appendChild(existingCard);
   }
 
-  const currentParentSlot = card.closest('.slot');
-  if (currentParentSlot) {
-    const currentBody = currentParentSlot.querySelector('.slot-body');
-    currentBody.innerHTML = '';
+  if(currentBody){
+    currentBody.innerHTML = "";
     currentBody.appendChild(createPlaceholder());
   }
 
-  slotBody.innerHTML = '';
-  slotBody.appendChild(card);
+  targetBody.innerHTML = "";
+  targetBody.appendChild(card);
 }
 
-function buildAnswerArea() {
-  answerGrid.innerHTML = '';
-
+function buildAnswerArea(){
+  answerGrid.innerHTML = "";
   groups.forEach(group => {
-    const section = document.createElement('section');
-    section.className = 'answer-group';
+    const section = document.createElement("section");
+    section.className = "answer-group";
 
-    const title = document.createElement('h3');
-    title.className = 'answer-group-title';
+    const title = document.createElement("h3");
+    title.className = "answer-group-title";
     title.textContent = group.title;
     section.appendChild(title);
 
-    const row = document.createElement('div');
+    const row = document.createElement("div");
     row.className = `answer-row cols-${group.cols}`;
 
-    for (let i = group.start; i <= group.end; i++) {
-      const wrap = document.createElement('div');
-      wrap.className = 'slot-wrap';
+    for(let i = group.start; i <= group.end; i++){
+      const wrap = document.createElement("div");
+      wrap.className = "slot-wrap";
 
-      const no = document.createElement('div');
-      no.className = 'slot-no';
+      const no = document.createElement("div");
+      no.className = "slot-no";
       no.textContent = `【${i}】`;
 
       wrap.appendChild(no);
@@ -519,22 +634,24 @@ function buildAnswerArea() {
   });
 }
 
-function resetAll() {
-  answerGrid.querySelectorAll('.slot').forEach(slot => {
-    const body = slot.querySelector('.slot-body');
-    const card = body.querySelector('.card');
-    if (card) pool.appendChild(card);
-    body.innerHTML = '';
+function resetAll(){
+  answerGrid.querySelectorAll(".slot").forEach(slot => {
+    const body = slot.querySelector(".slot-body");
+    const card = body.querySelector(".card");
+    if(card) pool.appendChild(card);
+    body.innerHTML = "";
     body.appendChild(createPlaceholder());
   });
-  answerGrid.querySelectorAll('input').forEach(input => input.value = '');
-  document.querySelectorAll('.card.selected').forEach(el => el.classList.remove('selected'));
+  answerGrid.querySelectorAll("input").forEach(input => input.value = "");
+  document.querySelectorAll(".card.selected").forEach(el => el.classList.remove("selected"));
   selectedCardId = null;
+  updateSelectedStatus();
+  shufflePool();
 }
 
-function shufflePool() {
+function shufflePool(){
   const cards = Array.from(pool.children);
-  for (let i = cards.length - 1; i > 0; i--) {
+  for(let i = cards.length - 1; i > 0; i--){
     const j = Math.floor(Math.random() * (i + 1));
     [cards[i], cards[j]] = [cards[j], cards[i]];
   }
@@ -542,12 +659,10 @@ function shufflePool() {
 }
 
 buildAnswerArea();
-initialItems.forEach(item => {
-  pool.appendChild(createCard(item));
-});
+initialItems.forEach(item => pool.appendChild(createCard(item)));
 shufflePool();
-
-resetBtn.addEventListener('click', resetAll);
+updateSelectedStatus();
+resetBtn.addEventListener("click", resetAll);
 </script>
 </body>
 </html>
