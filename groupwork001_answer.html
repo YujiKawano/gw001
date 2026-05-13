@@ -1,321 +1,516 @@
 <!DOCTYPE html>
-
 <html lang="ja">
 <head>
-<meta charset="utf-8"/>
+<meta charset="UTF-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>グループワークその１　正解</title>
 <style>
+  :root {
+    --bg:#0b1020;
+    --card:#182440;
+    --line:#47639d;
+    --text:#fff;
+    --muted:#9fb0d9;
+    --hint-bg:#fff9e8;
+    --hint-line:#ffd166;
+    --hint-text:#7a2f14;
+  }
+  * { box-sizing:border-box; }
+  html,body { min-height:100%; overflow-x:hidden; }
   body {
-    background: #0b1020;
-    color: #fff;
-    font-family: Arial, "Helvetica Neue", Helvetica, "Yu Gothic", Meiryo, sans-serif;
-    margin: 0;
-    padding: 20px;
+    background:radial-gradient(circle at 15% 5%, rgba(98,176,255,.14), transparent 24%), linear-gradient(180deg,#07101f,var(--bg) 58%,#070b17);
+    color:var(--text);
+    font-family:Arial,"Helvetica Neue",Helvetica,"Yu Gothic",Meiryo,sans-serif;
+    margin:0;
+    padding:18px;
   }
-  h1 {
-    margin: 0 0 20px;
-    font-size: 28px;
-    line-height: 1.35;
-  }
-  h2 {
-    margin: 22px 0 10px;
-    font-size: 20px;
-  }
-  .group { margin-bottom: 8px; }
-  .grid {
-    display: grid;
-    gap: 12px;
-  }
-  .grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
-  .grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
-  .grid.cols-4 { grid-template-columns: repeat(4, 1fr); }
-  .grid.cols-5 { grid-template-columns: repeat(5, 1fr); }
+  .page { width:100%; max-width:1600px; margin:0 auto; }
+  h1 { margin:0 0 18px; font-size:clamp(22px,2.4vw,34px); line-height:1.35; }
+  h2 { margin:24px 0 12px; font-size:clamp(18px,1.8vw,26px); }
+  .group { margin-bottom:10px; }
+  .grid { display:grid; gap:12px; width:100%; }
+  .grid.cols-3 { grid-template-columns:repeat(3,minmax(0,1fr)); }
+  .grid.cols-4 { grid-template-columns:repeat(4,minmax(0,1fr)); }
+  .grid.cols-5 { grid-template-columns:repeat(5,minmax(0,1fr)); }
   .card {
-    background: #182440;
-    border: 1px solid #47639d;
-    border-radius: 12px;
-    padding: 8px;
+    position:relative;
+    min-width:0;
+    background:linear-gradient(180deg,#1a2a4c,#13213d);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:10px;
+    overflow:visible;
+    box-shadow:0 10px 22px rgba(0,0,0,.18);
   }
   .card img {
-    width: 100%;
-    height: 150px;
-    object-fit: contain;
-    background: #000;
-    border-radius: 8px;
-    display: block;
+    width:100%;
+    height:clamp(110px,10vw,155px);
+    object-fit:contain;
+    background:#000;
+    border-radius:8px;
+    display:block;
   }
-  .no {
-    font-size: 12px;
-    color: #9fb0d9;
-    margin-bottom: 6px;
-    font-weight: 700;
+  .no-row { display:flex; align-items:center; gap:10px; margin-bottom:8px; min-height:30px; }
+  .no { font-size:16px; color:#b8c7ee; font-weight:900; line-height:1; }
+  .hint-btn {
+    width:30px; height:30px; min-height:0; padding:0; border-radius:50%;
+    border:3px solid #8cc5ff; background:#f4f8ff; color:#0f1b31;
+    font-weight:900; font-size:19px; line-height:1; cursor:pointer;
+    box-shadow:0 3px 8px rgba(0,0,0,.22);
   }
-  .meta {
-    margin-top: 8px;
-    display: grid;
-    gap: 6px;
+  .hint-popover {
+    display:none;
+    position:fixed;
+    z-index:9999;
+    width:min(460px, calc(100vw - 32px));
+    max-height:min(360px, calc(100vh - 32px));
+    overflow:auto;
+    padding:14px 40px 14px 16px;
+    border:2px solid var(--hint-line);
+    border-radius:14px;
+    background:var(--hint-bg);
+    color:var(--hint-text);
+    box-shadow:0 14px 34px rgba(0,0,0,.34);
+    font-size:14px;
+    line-height:1.7;
   }
-  .label {
-    font-size: 11px;
-    color: #9fb0d9;
-    font-weight: 700;
+  .hint-popover.show { display:block; }
+  .hint-title { font-weight:900; font-size:15px; margin-bottom:6px; }
+  .hint-close {
+    position:absolute; right:10px; top:8px; border:0; background:transparent;
+    color:var(--hint-text); width:24px; height:24px; min-height:0; padding:0;
+    font-size:22px; line-height:1; font-weight:900; cursor:pointer;
   }
-  .value {
-    font-size: 13px;
-    font-weight: 700;
-    word-break: break-word;
+  .meta { margin-top:10px; display:grid; gap:6px; }
+  .label { font-size:12px; color:var(--muted); font-weight:900; }
+  .value { font-size:clamp(14px,1.35vw,18px); font-weight:900; word-break:break-word; }
+  .model { color:#eaf0ff; }
+  footer { text-align:center; margin-top:24px; font-size:12px; color:var(--muted); }
+  @media (max-width:1280px) {
+    .grid.cols-5,.grid.cols-4 { grid-template-columns:repeat(3,minmax(0,1fr)); }
   }
-  .model {
-    color: #eaf0ff;
+  @media (max-width:900px) {
+    body { padding:14px; }
+    .grid.cols-5,.grid.cols-4,.grid.cols-3 { grid-template-columns:repeat(2,minmax(0,1fr)); }
   }
-  footer {
-    text-align: center;
-    margin-top: 20px;
-    font-size: 12px;
-    color: #9fb0d9;
-  }
-  @media (max-width: 1000px) {
-    .grid, .grid.cols-3, .grid.cols-4, .grid.cols-5 { grid-template-columns: repeat(2, 1fr); }
+  @media (max-width:560px) {
+    .grid.cols-5,.grid.cols-4,.grid.cols-3 { grid-template-columns:1fr; }
+    .card img { height:150px; }
   }
 </style>
 </head>
 <body>
 <script>
-    (function () {
-      const pass = prompt("パスワードを入力してください");
-    
-      if (pass !== "0083") {
-        document.body.innerHTML =
-          "<div style='background:#08101d;color:#fff;display:flex;align-items:center;justify-content:center;height:100vh;font-family:Arial,\"Yu Gothic\",Meiryo,sans-serif'>アクセスできません</div>";
-        throw new Error("Unauthorized");
-      }
-    })();
-    </script>
-<h1>グループワークその１（ガンダム）　正解</h1>
-<section class="group">
-<h2>一年戦争〜デラーズ紛争</h2>
-<div class="grid cols-4">
+(function () {
+  const pass = prompt("パスワードを入力してください");
+  if (pass !== "0083") {
+    document.body.innerHTML = "<div style='background:#08101d;color:#fff;display:flex;align-items:center;justify-content:center;height:100vh;font-family:Arial,&quot;Yu Gothic&quot;,Meiryo,sans-serif'>アクセスできません</div>";
+    throw new Error("Unauthorized");
+  }
+})();
+</script>
+<div class="page">
+  <h1>グループワークその１（ガンダム）　正解</h1>
+  <section class="group"><h2>一年戦争〜デラーズ紛争</h2><div class="grid cols-4">
 <div class="card">
-<div class="no">【1】</div>
-<img alt="ガンダム" src="gw01img/78.png"/>
-<div class="meta">
-<div class="label">機体名</div>
-<div class="value">ガンダム</div>
-<div class="label">形式番号</div>
-<div class="value model">RX-78-2</div>
-</div>
-</div>
-<div class="card">
-<div class="no">【2】</div>
-<img alt="Ez8" src="gw01img/8z.png"/>
-<div class="meta">
-<div class="label">機体名</div>
-<div class="value">Ez8</div>
-<div class="label">形式番号</div>
-<div class="value model">RX-79[G]Ez-8</div>
-</div>
+  <div class="no-row">
+    <div class="no">【1】</div>
+    <button type="button" class="hint-btn" aria-label="ヒントを表示" data-no="1">?</button>
+  </div>
+  <div class="hint-popover" id="hint-1" role="dialog" aria-modal="false">
+    <button type="button" class="hint-close" aria-label="ヒントを閉じる">×</button>
+    <div class="hint-title">【1】ガンダム</div>
+    <div class="hint-text">アムロ・レイの最初の搭乗機。<br>地球連邦軍のV作戦によって製造されたモビルスーツ。<br>ジオン軍からは「白い悪魔」と呼ばれ恐れられた。<br>ジークアクスではなんかでかくなった。<br>横浜の動くガンダム見たかった・・・。</div>
+  </div>
+  <img alt="ガンダム" src="gw01img/78.png"/>
+  <div class="meta">
+    <div class="label">機体名</div>
+    <div class="value">ガンダム</div>
+    <div class="label">形式番号</div>
+    <div class="value model">RX-78-2</div>
+  </div>
 </div>
 <div class="card">
-<div class="no">【3】</div>
-<img alt="アレックス" src="gw01img/ax.png"/>
-<div class="meta">
-<div class="label">機体名</div>
-<div class="value">アレックス</div>
-<div class="label">形式番号</div>
-<div class="value model">RX-78NT-1</div>
-</div>
-</div>
-<div class="card">
-<div class="no">【4】</div>
-<img alt="ゼフィランサス" src="gw01img/fb.png"/>
-<div class="meta">
-<div class="label">機体名</div>
-<div class="value">ゼフィランサス</div>
-<div class="label">形式番号</div>
-<div class="value model">RX-78GP01(RX-78GP01Fb)</div>
-</div>
-</div>
-</div>
-</section>
-<section class="group">
-<h2>グリプス戦役〜第二次ネオ・ジオン抗争</h2>
-<div class="grid cols-5">
-<div class="card">
-<div class="no">【5】</div>
-<img alt="ガンダムMk-II" src="gw01img/t2.png"/>
-<div class="meta">
-<div class="label">機体名</div>
-<div class="value">ガンダムMk-II</div>
-<div class="label">形式番号</div>
-<div class="value model">RX-178</div>
-</div>
+  <div class="no-row">
+    <div class="no">【2】</div>
+    <button type="button" class="hint-btn" aria-label="ヒントを表示" data-no="2">?</button>
+  </div>
+  <div class="hint-popover" id="hint-2" role="dialog" aria-modal="false">
+    <button type="button" class="hint-close" aria-label="ヒントを閉じる">×</button>
+    <div class="hint-title">【2】Ez8</div>
+    <div class="hint-text">シロー・アマダの搭乗機。<br>陸戦型ガンダム等のパーツを現地で改修した特別指揮官機。<br>モビルスーツ量産計画の初期に製造されており、こと地上戦においてはガンダムにも匹敵する性能。<br>ノリスのグフカスタムとの一騎打ちは胸が熱くなる。<br>嵐の中で輝くガンダムでテンイヤーズアフター。</div>
+  </div>
+  <img alt="Ez8" src="gw01img/8z.png"/>
+  <div class="meta">
+    <div class="label">機体名</div>
+    <div class="value">Ez8</div>
+    <div class="label">形式番号</div>
+    <div class="value model">RX-79[G]Ez-8</div>
+  </div>
 </div>
 <div class="card">
-<div class="no">【6】</div>
-<img alt="Zガンダム" src="gw01img/km.png"/>
-<div class="meta">
-<div class="label">機体名</div>
-<div class="value">Zガンダム</div>
-<div class="label">形式番号</div>
-<div class="value model">MSZ-006</div>
-</div>
-</div>
-<div class="card">
-<div class="no">【7】</div>
-<img alt="ZZガンダム" src="gw01img/jd.png"/>
-<div class="meta">
-<div class="label">機体名</div>
-<div class="value">ZZガンダム</div>
-<div class="label">形式番号</div>
-<div class="value model">MSZ-010</div>
-</div>
+  <div class="no-row">
+    <div class="no">【3】</div>
+    <button type="button" class="hint-btn" aria-label="ヒントを表示" data-no="3">?</button>
+  </div>
+  <div class="hint-popover" id="hint-3" role="dialog" aria-modal="false">
+    <button type="button" class="hint-close" aria-label="ヒントを閉じる">×</button>
+    <div class="hint-title">【3】アレックス</div>
+    <div class="hint-text">クリスチーナ・マッケンジーの搭乗機。<br>ニュータイプに覚醒したアムロだが、反面ガンダム自体がアムロの操作反応に追いつけなくなってきていた。<br>そのため、連邦軍はアムロが登場することを前提としたニュータイプ専用機を開発。<br>リボー・コロニーでテストされていたが、サイクロプス隊の襲撃によりアムロの手に渡ることはなかった。<br>クリスマスの時期に観ると鬱になるガンダム。嘘だと言ってよバーニィ。</div>
+  </div>
+  <img alt="アレックス" src="gw01img/ax.png"/>
+  <div class="meta">
+    <div class="label">機体名</div>
+    <div class="value">アレックス</div>
+    <div class="label">形式番号</div>
+    <div class="value model">RX-78NT-1</div>
+  </div>
 </div>
 <div class="card">
-<div class="no">【8】</div>
-<img alt="Sガンダム" src="gw01img/al.png"/>
-<div class="meta">
-<div class="label">機体名</div>
-<div class="value">Sガンダム</div>
-<div class="label">形式番号</div>
-<div class="value model">MSA-0011</div>
-</div>
+  <div class="no-row">
+    <div class="no">【4】</div>
+    <button type="button" class="hint-btn" aria-label="ヒントを表示" data-no="4">?</button>
+  </div>
+  <div class="hint-popover" id="hint-4" role="dialog" aria-modal="false">
+    <button type="button" class="hint-close" aria-label="ヒントを閉じる">×</button>
+    <div class="hint-title">【4】ゼフィランサス</div>
+    <div class="hint-text">コウ・ウラキの搭乗機。<br>ガンダム開発計画で製造された試作機3機のうちの1機。<br>汎用型であったが、アナベル・ガトーによって強奪されたGP02サイサリスを追う過程で、シーマ・ガラハウによって大破し、宇宙での活動に最適化したフルバーニアンタイプに改修された。<br>ニンジンいらないよ→この海は…地獄だ！</div>
+  </div>
+  <img alt="ゼフィランサス" src="gw01img/fb.png"/>
+  <div class="meta">
+    <div class="label">機体名</div>
+    <div class="value">ゼフィランサス</div>
+    <div class="label">形式番号</div>
+    <div class="value model">RX-78GP01(RX-78GP01Fb)</div>
+  </div>
+</div></div></section><section class="group"><h2>グリプス戦役〜第二次ネオ・ジオン抗争</h2><div class="grid cols-5">
+<div class="card">
+  <div class="no-row">
+    <div class="no">【5】</div>
+    <button type="button" class="hint-btn" aria-label="ヒントを表示" data-no="5">?</button>
+  </div>
+  <div class="hint-popover" id="hint-5" role="dialog" aria-modal="false">
+    <button type="button" class="hint-close" aria-label="ヒントを閉じる">×</button>
+    <div class="hint-title">【5】ガンダムMk-II</div>
+    <div class="hint-text">カミーユ・ビダンの最初の搭乗機。<br>ティターンズがフラグシップ機として開発した黒っぽいガンダム。<br>エゥーゴが奪取したあとはいつものトリコロールカラーに塗り替えられた。<br>ガンダムの中でも一番多搭乗者が多いガンダム。<br>強奪後に笑いながらティターンズの人たちを踏み潰そうとするカミーユのアレっぷりは今でもドン引きレベル。</div>
+  </div>
+  <img alt="ガンダムMk-II" src="gw01img/t2.png"/>
+  <div class="meta">
+    <div class="label">機体名</div>
+    <div class="value">ガンダムMk-II</div>
+    <div class="label">形式番号</div>
+    <div class="value model">RX-178</div>
+  </div>
 </div>
 <div class="card">
-<div class="no">【9】</div>
-<img alt="νガンダム" src="gw01img/am.png"/>
-<div class="meta">
-<div class="label">機体名</div>
-<div class="value">νガンダム</div>
-<div class="label">形式番号</div>
-<div class="value model">RX-93</div>
-</div>
-</div>
-</div>
-</section>
-<section class="group">
-<h2>ラプラス事変〜マフティー動乱</h2>
-<div class="grid cols-4">
-<div class="card">
-<div class="no">【10】</div>
-<img alt="ユニコーンガンダム" src="gw01img/bn.png"/>
-<div class="meta">
-<div class="label">機体名</div>
-<div class="value">ユニコーンガンダム</div>
-<div class="label">形式番号</div>
-<div class="value model">RX-0</div>
-</div>
-</div><div class="card">
-<div class="no">【11】</div>
-<img alt="ナラティブガンダム" src="gw01img/ntc.png"/>
-<div class="meta">
-<div class="label">機体名</div>
-<div class="value">ナラティブガンダム</div>
-<div class="label">形式番号</div>
-<div class="value model">RX-9(RX-9/C)</div>
-</div>
-</div><div class="card">
-<div class="no">【12】</div>
-<img alt="ペーネロペー" src="gw01img/ren.png"/>
-<div class="meta">
-<div class="label">機体名</div>
-<div class="value">ペーネロペー</div>
-<div class="label">形式番号</div>
-<div class="value model">RX-104FF</div>
-</div>
+  <div class="no-row">
+    <div class="no">【6】</div>
+    <button type="button" class="hint-btn" aria-label="ヒントを表示" data-no="6">?</button>
+  </div>
+  <div class="hint-popover" id="hint-6" role="dialog" aria-modal="false">
+    <button type="button" class="hint-close" aria-label="ヒントを閉じる">×</button>
+    <div class="hint-title">【6】Zガンダム</div>
+    <div class="hint-text">カミーユ・ビダンの搭乗機。<br>Z計画によって開発されたエゥーゴの可変モビルスーツ。<br>ムーバブルフレーム＆ガンダリムγの性能とカミーユのニュータイプ能力も相まって最強クラスのガンダムに。<br>ゲームでは最強クラスだがアニメでは結構苦戦してた場面も多い。<br>差し替えなしで完全変形でき、かつMS形態もWR形態も最適なプロポーションを保つことができるか？がガンプラにおける永遠のテーマになっているガンダム。</div>
+  </div>
+  <img alt="Zガンダム" src="gw01img/km.png"/>
+  <div class="meta">
+    <div class="label">機体名</div>
+    <div class="value">Zガンダム</div>
+    <div class="label">形式番号</div>
+    <div class="value model">MSZ-006</div>
+  </div>
 </div>
 <div class="card">
-<div class="no">【13】</div>
-<img alt="Ξガンダム" src="gw01img/hs.png"/>
-<div class="meta">
-<div class="label">機体名</div>
-<div class="value">Ξガンダム</div>
-<div class="label">形式番号</div>
-<div class="value model">RX-105</div>
-</div>
-</div>
-</div>
-</section>
-<section class="group">
-<h2>コスモ・バビロニア建国戦争〜ザンスカール戦争</h2>
-<div class="grid cols-3">
-<div class="card">
-<div class="no">【14】</div>
-<img alt="F91" src="gw01img/sb.png"/>
-<div class="meta">
-<div class="label">機体名</div>
-<div class="value">F91</div>
-<div class="label">形式番号</div>
-<div class="value model">F91</div>
-</div>
+  <div class="no-row">
+    <div class="no">【7】</div>
+    <button type="button" class="hint-btn" aria-label="ヒントを表示" data-no="7">?</button>
+  </div>
+  <div class="hint-popover" id="hint-7" role="dialog" aria-modal="false">
+    <button type="button" class="hint-close" aria-label="ヒントを閉じる">×</button>
+    <div class="hint-title">【7】ZZガンダム</div>
+    <div class="hint-text">ジュドー・アーシタの搭乗機。<br>Z計画によって開発されたガンダムの1機。<br>コードネームはθ(シータ)ガンダム。<br>実はZガンダムより開発は先。<br>3機による合体変形ガンダムであり、スパロボ味がある。<br>というかビルドファイターズトライではスパロボになってしまった。<br>メインカメラの直上にハイメガ粒子砲があるのは、どう考えても設計ミスではないのか？と思わざるを得ないガンダム。</div>
+  </div>
+  <img alt="ZZガンダム" src="gw01img/jd.png"/>
+  <div class="meta">
+    <div class="label">機体名</div>
+    <div class="value">ZZガンダム</div>
+    <div class="label">形式番号</div>
+    <div class="value model">MSZ-010</div>
+  </div>
 </div>
 <div class="card">
-<div class="no">【15】</div>
-<img alt="クロスボーンX1" src="gw01img/xb.png"/>
-<div class="meta">
-<div class="label">機体名</div>
-<div class="value">クロスボーンX1</div>
-<div class="label">形式番号</div>
-<div class="value model">XM-X1(F97)</div>
-</div>
-</div>
-<div class="card">
-<div class="no">【16】</div>
-<img alt="Vガンダム" src="gw01img/us.png"/>
-<div class="meta">
-<div class="label">機体名</div>
-<div class="value">Vガンダム</div>
-<div class="label">形式番号</div>
-<div class="value model">LM312V04</div>
-</div>
-</div>
-</div>
-</section>
-<section class="group">
-<h2>宇宙世紀終焉〜正暦〜R.C.</h2>
-<div class="grid cols-4">
-<div class="card">
-<div class="no">【17】</div>
-<img alt="ガイア・ギアα" src="gw01img/gg.png"/>
-<div class="meta">
-<div class="label">機体名</div>
-<div class="value">ガイア・ギアα</div>
-<div class="label">形式番号</div>
-<div class="value model">α000-0001</div>
-</div>
+  <div class="no-row">
+    <div class="no">【8】</div>
+    <button type="button" class="hint-btn" aria-label="ヒントを表示" data-no="8">?</button>
+  </div>
+  <div class="hint-popover" id="hint-8" role="dialog" aria-modal="false">
+    <button type="button" class="hint-close" aria-label="ヒントを閉じる">×</button>
+    <div class="hint-title">【8】Sガンダム</div>
+    <div class="hint-text">リョウ・ルーツの搭乗機。<br>Z計画によって開発されたガンダムの1機。<br>コードネームは ι(イオタ)ガンダム。<br>究極のガンダムを目指して製造された。<br>メインコンピュータには「ALICE」というAI搭載している。<br>映像化されてないが、ファンが非常に多いガンダム。<br>ガンプラ再販の際は争奪戦になる。<br>色々な意味で、多くの人にトラウマを植え付けたガンダムでもある。</div>
+  </div>
+  <img alt="Sガンダム" src="gw01img/al.png"/>
+  <div class="meta">
+    <div class="label">機体名</div>
+    <div class="value">Sガンダム</div>
+    <div class="label">形式番号</div>
+    <div class="value model">MSA-0011</div>
+  </div>
 </div>
 <div class="card">
-<div class="no">【18】</div>
-<img alt="G-SAVIOUR" src="gw01img/gs.png"/>
-<div class="meta">
-<div class="label">機体名</div>
-<div class="value">G-SAVIOUR</div>
-<div class="label">形式番号</div>
-<div class="value model">G-SAVIOUR</div>
-</div>
+  <div class="no-row">
+    <div class="no">【9】</div>
+    <button type="button" class="hint-btn" aria-label="ヒントを表示" data-no="9">?</button>
+  </div>
+  <div class="hint-popover" id="hint-9" role="dialog" aria-modal="false">
+    <button type="button" class="hint-close" aria-label="ヒントを閉じる">×</button>
+    <div class="hint-title">【9】νガンダム</div>
+    <div class="hint-text">アムロ・レイの最後の搭乗機。<br>ロンド・ベルのフラグシップ機。<br>背面のフィン・ファンネルが特徴的なニュータイプ専用機。<br>シャアから提供されたサイコフレームによって完成をみた。<br>ららぽーと福岡のガンダムはこのガンダム。<br>（色はららぽーと福岡専用色ではあるが）<br>パトレイバーやダンバインでも有名な出渕裕氏がデザイン。 <br>閃光のハサウェイでは量産型が、ゴリゴリとハサウェイのトラウマを抉る演出に観客ドン引きだった。</div>
+  </div>
+  <img alt="νガンダム" src="gw01img/am.png"/>
+  <div class="meta">
+    <div class="label">機体名</div>
+    <div class="value">νガンダム</div>
+    <div class="label">形式番号</div>
+    <div class="value model">RX-93</div>
+  </div>
+</div></div></section><section class="group"><h2>ラプラス事変〜マフティー動乱</h2><div class="grid cols-4">
+<div class="card">
+  <div class="no-row">
+    <div class="no">【10】</div>
+    <button type="button" class="hint-btn" aria-label="ヒントを表示" data-no="10">?</button>
+  </div>
+  <div class="hint-popover" id="hint-10" role="dialog" aria-modal="false">
+    <button type="button" class="hint-close" aria-label="ヒントを閉じる">×</button>
+    <div class="hint-title">【10】ユニコーンガンダム</div>
+    <div class="hint-text">バジーナ・リンクスの搭乗機。<br>UC計画によって開発された試作型モビルスーツ。<br>全身をサイコフレームで構成されているニュータイプ専用機。<br>モード変化によって変身するガンダム。<br>多少オカルトチック。<br>パチスロで有名になってしまい、あちこちでミーム化もされてしまった悲しいガンダム。</div>
+  </div>
+  <img alt="ユニコーンガンダム" src="gw01img/bn.png"/>
+  <div class="meta">
+    <div class="label">機体名</div>
+    <div class="value">ユニコーンガンダム</div>
+    <div class="label">形式番号</div>
+    <div class="value model">RX-0</div>
+  </div>
 </div>
 <div class="card">
-<div class="no">【19】</div>
-<img alt="∀ガンダム" src="gw01img/a.png"/>
-<div class="meta">
-<div class="label">機体名</div>
-<div class="value">∀ガンダム</div>
-<div class="label">形式番号</div>
-<div class="value model">System-∀99(WD-M01)</div>
-</div>
+  <div class="no-row">
+    <div class="no">【11】</div>
+    <button type="button" class="hint-btn" aria-label="ヒントを表示" data-no="11">?</button>
+  </div>
+  <div class="hint-popover" id="hint-11" role="dialog" aria-modal="false">
+    <button type="button" class="hint-close" aria-label="ヒントを閉じる">×</button>
+    <div class="hint-title">【11】ナラティブガンダム</div>
+    <div class="hint-text">ヨナ・バシュタの搭乗機。<br>サイコフレームの試作機として開発されたガンダム。<br>νガンダムより先に開発されている（らしい）。<br>単体では戦闘能力はほぼなく、様々な武装ユニットを接続して戦う拡張性の高いガンダム。<br>どうしてもフェネクスの方が（金色だし）目立ってしまっていて、主人公機だと認識があまりされてない悲しいガンダム。</div>
+  </div>
+  <img alt="ナラティブガンダム" src="gw01img/ntc.png"/>
+  <div class="meta">
+    <div class="label">機体名</div>
+    <div class="value">ナラティブガンダム</div>
+    <div class="label">形式番号</div>
+    <div class="value model">RX-9(RX-9/C)</div>
+  </div>
 </div>
 <div class="card">
-<div class="no">【20】</div>
-<img alt="G-セルフ" src="gw01img/gf.png"/>
-<div class="meta">
-<div class="label">機体名</div>
-<div class="value">G-セルフ</div>
-<div class="label">形式番号</div>
-<div class="value model">YG-111</div>
+  <div class="no-row">
+    <div class="no">【12】</div>
+    <button type="button" class="hint-btn" aria-label="ヒントを表示" data-no="12">?</button>
+  </div>
+  <div class="hint-popover" id="hint-12" role="dialog" aria-modal="false">
+    <button type="button" class="hint-close" aria-label="ヒントを閉じる">×</button>
+    <div class="hint-title">【12】ペーネロペー</div>
+    <div class="hint-text">レーン・エイムの搭乗機。<br>AE(アナハイム・エレクトロニクス)がガンダム開発20周年を記念して開発した試作型モビルスーツ。<br>オデュッセウスガンダム＋フライトユニットの構成。<br>ミノフスキークラフトを初めて搭載したMSで、飛行が単体で可能になった反面、大型化してしまっている。<br>フライト・フォーム時には鳥の鳴き声のような音を出して飛行する。<br>閃光のハサウェイではアリュゼウスの登場によりより目立たなくなってしまった上に、いいとこが見せれてない悲しいガンダム。</div>
+  </div>
+  <img alt="ペーネロペー" src="gw01img/ren.png"/>
+  <div class="meta">
+    <div class="label">機体名</div>
+    <div class="value">ペーネロペー</div>
+    <div class="label">形式番号</div>
+    <div class="value model">RX-104FF</div>
+  </div>
 </div>
+<div class="card">
+  <div class="no-row">
+    <div class="no">【13】</div>
+    <button type="button" class="hint-btn" aria-label="ヒントを表示" data-no="13">?</button>
+  </div>
+  <div class="hint-popover" id="hint-13" role="dialog" aria-modal="false">
+    <button type="button" class="hint-close" aria-label="ヒントを閉じる">×</button>
+    <div class="hint-title">【13】Ξガンダム</div>
+    <div class="hint-text">ハサウェイ・ノアの搭乗機。<br>反政府組織マフティーのためにAEが製造したガンダム。<br>機体内部にミノフスキークラフトを搭載しており、大型にはなってはいるが、単体で飛行が可能。<br>ある意味この時代のMSの完成系。<br>小説版はトリコロールカラーでガンダム顔だったが、劇場版では白基調でコワモテになってしまった。<br>カボチャの人が踊る鳴らない言葉もう一度描いてなミームの方が有名な悲しいガンダム。</div>
+  </div>
+  <img alt="Ξガンダム" src="gw01img/hs.png"/>
+  <div class="meta">
+    <div class="label">機体名</div>
+    <div class="value">Ξガンダム</div>
+    <div class="label">形式番号</div>
+    <div class="value model">RX-105</div>
+  </div>
+</div></div></section><section class="group"><h2>コスモ・バビロニア建国戦争〜ザンスカール戦争</h2><div class="grid cols-3">
+<div class="card">
+  <div class="no-row">
+    <div class="no">【14】</div>
+    <button type="button" class="hint-btn" aria-label="ヒントを表示" data-no="14">?</button>
+  </div>
+  <div class="hint-popover" id="hint-14" role="dialog" aria-modal="false">
+    <button type="button" class="hint-close" aria-label="ヒントを閉じる">×</button>
+    <div class="hint-title">【14】F91</div>
+    <div class="hint-text">シーブック・アノーの搭乗機。<br>サナリィが推進するフォーミュラー計画で製造されたガンダム。<br>大型化が進んでいたAEのガンダムに対して、サナリィは小型化・軽量化を突き進めた。(全高15mほど)<br>ファンネル系は搭載していないが、ヴェスパーやビームシールドなど高火力・高防御といった非常に性能が高い機体。<br>質量のある残像！で有名なガンダム。</div>
+  </div>
+  <img alt="F91" src="gw01img/sb.png"/>
+  <div class="meta">
+    <div class="label">機体名</div>
+    <div class="value">F91</div>
+    <div class="label">形式番号</div>
+    <div class="value model">F91</div>
+  </div>
 </div>
+<div class="card">
+  <div class="no-row">
+    <div class="no">【15】</div>
+    <button type="button" class="hint-btn" aria-label="ヒントを表示" data-no="15">?</button>
+  </div>
+  <div class="hint-popover" id="hint-15" role="dialog" aria-modal="false">
+    <button type="button" class="hint-close" aria-label="ヒントを閉じる">×</button>
+    <div class="hint-title">【15】クロスボーンX1</div>
+    <div class="hint-text">キンケドゥ・ナウ(シーブック・アノー)の搭乗機。<br>サナリィが他惑星(木星等)のでの運用に向けて開発したガンダム。<br>宇宙海賊クロスボーン・バガードによってX1〜X3が運用された。<br>作品の主人公であるトビア・アロナクスはX3に搭乗。<br>映像化されていないが、漫画が本編/鋼鉄の7人/ゴースト/DUST/X-11/LOVE&amp;PIECE/ゼーロイバーと30年以上も連載されているバケモノ作品。<br>ビルドファイターズトライでX1フルクロスが登場。<br>多くのファンが涙した（たぶん</div>
+  </div>
+  <img alt="クロスボーンX1" src="gw01img/xb.png"/>
+  <div class="meta">
+    <div class="label">機体名</div>
+    <div class="value">クロスボーンX1</div>
+    <div class="label">形式番号</div>
+    <div class="value model">XM-X1(F97)</div>
+  </div>
 </div>
-</section>
-<footer>© 創通・サンライズ・MBS</footer>
+<div class="card">
+  <div class="no-row">
+    <div class="no">【16】</div>
+    <button type="button" class="hint-btn" aria-label="ヒントを表示" data-no="16">?</button>
+  </div>
+  <div class="hint-popover" id="hint-16" role="dialog" aria-modal="false">
+    <button type="button" class="hint-close" aria-label="ヒントを閉じる">×</button>
+    <div class="hint-title">【16】Vガンダム</div>
+    <div class="hint-text">ウッソ・エヴィンの搭乗機。<br>リガ・ミリティアがV計画で開発した汎用化可変合体モビルスーツ。<br>かつてのガンダムのコンセプトを踏襲したコアブロックシステムを採用。<br>小型な上に、ミノフスキークラフトも搭載しており飛行も可能。<br>ゲリラ戦での運用を想定しており、なんと子供でも動かせる程に操縦は簡略化されている。<br>皆殺しの富野の名に相応しいガンダム。<br>リースホーンの最後の突撃は、涙なしでは観られない。</div>
+  </div>
+  <img alt="Vガンダム" src="gw01img/us.png"/>
+  <div class="meta">
+    <div class="label">機体名</div>
+    <div class="value">Vガンダム</div>
+    <div class="label">形式番号</div>
+    <div class="value model">LM312V04</div>
+  </div>
+</div></div></section><section class="group"><h2>宇宙世紀終焉〜正暦〜R.C.</h2><div class="grid cols-4">
+<div class="card">
+  <div class="no-row">
+    <div class="no">【17】</div>
+    <button type="button" class="hint-btn" aria-label="ヒントを表示" data-no="17">?</button>
+  </div>
+  <div class="hint-popover" id="hint-17" role="dialog" aria-modal="false">
+    <button type="button" class="hint-close" aria-label="ヒントを閉じる">×</button>
+    <div class="hint-title">【17】ガイア・ギアα</div>
+    <div class="hint-text">アフランシ・シャアの搭乗機。<br>メタトロンが開発した試作型モビルスーツ。<br>フレーム内にサイコミュシステムを搭載しており、ファンネルも使用可能。<br>閃光のハサウェイと共に、小説のみの作品で映像化されないであろう代表のひとつだったが、閃光のハサウェイが映像化されたので期待がでてきたけど多分無理。（一応ラジオドラマは制作された）<br>知っている人はかなりのマニアックなガンダム。</div>
+  </div>
+  <img alt="ガイア・ギアα" src="gw01img/gg.png"/>
+  <div class="meta">
+    <div class="label">機体名</div>
+    <div class="value">ガイア・ギアα</div>
+    <div class="label">形式番号</div>
+    <div class="value model">α000-0001</div>
+  </div>
+</div>
+<div class="card">
+  <div class="no-row">
+    <div class="no">【18】</div>
+    <button type="button" class="hint-btn" aria-label="ヒントを表示" data-no="18">?</button>
+  </div>
+  <div class="hint-popover" id="hint-18" role="dialog" aria-modal="false">
+    <button type="button" class="hint-close" aria-label="ヒントを閉じる">×</button>
+    <div class="hint-title">【18】G-SAVIOUR</div>
+    <div class="hint-text">マーク・カランの搭乗機。<br>セイバーシリーズの7番目の機体で、宇宙/地上/ホバーモードと３形態に換装できる。<br>ガンダム20周年記念作品として、カナダの制作会社との共同で制作されたドラマ。（当初はハリウッド制作、とPRされてた）<br>宇宙世紀ではない世界、という設定だったが、その後に宇宙世紀作品に改められた。<br>プラモが基本手に入らなガンダム。<br>定価1,650円なのだがメルカリとかで1万を越えていて手がなかなか出せない。</div>
+  </div>
+  <img alt="G-SAVIOUR" src="gw01img/gs.png"/>
+  <div class="meta">
+    <div class="label">機体名</div>
+    <div class="value">G-SAVIOUR</div>
+    <div class="label">形式番号</div>
+    <div class="value model">G-SAVIOUR</div>
+  </div>
+</div>
+<div class="card">
+  <div class="no-row">
+    <div class="no">【19】</div>
+    <button type="button" class="hint-btn" aria-label="ヒントを表示" data-no="19">?</button>
+  </div>
+  <div class="hint-popover" id="hint-19" role="dialog" aria-modal="false">
+    <button type="button" class="hint-close" aria-label="ヒントを閉じる">×</button>
+    <div class="hint-title">【19】∀ガンダム</div>
+    <div class="hint-text">ロラン・アセットの搭乗機。<br>山の中に眠っていた成人式の神像。黒歴史のガンダム。<br>作中では最初は見た目からホワイトドール、その後ヒゲ、ヒゲの機械人形等の呼ばれ方をしていた。<br>人工物の分子結合を破壊して砂状に分解する月光蝶によって、地球文明を破壊したある意味最強クラスのガンダム。<br>ブレードランナーのビジュアルコンセプトなどで有名なインダストリアルデザイナー。シド・ミード氏がデザインした。<br>発表時は批判が多かったが、今では大変人気なガンダム。<br>声優の朴璐美氏がブレイクし、声優を続ける契機になった作品。<br>このガンダムがなければハガレンもなかったのだ。</div>
+  </div>
+  <img alt="∀ガンダム" src="gw01img/a.png"/>
+  <div class="meta">
+    <div class="label">機体名</div>
+    <div class="value">∀ガンダム</div>
+    <div class="label">形式番号</div>
+    <div class="value model">System-∀99(WD-M01)</div>
+  </div>
+</div>
+<div class="card">
+  <div class="no-row">
+    <div class="no">【20】</div>
+    <button type="button" class="hint-btn" aria-label="ヒントを表示" data-no="20">?</button>
+  </div>
+  <div class="hint-popover" id="hint-20" role="dialog" aria-modal="false">
+    <button type="button" class="hint-close" aria-label="ヒントを閉じる">×</button>
+    <div class="hint-title">【20】G-セルフ</div>
+    <div class="hint-text">ベリル・ゼナムの搭乗機。<br>ドレット軍が開発した試作型モビルスーツ。<br>G系統の1機。<br>コックピットには生体認証機能が搭載されており、登録された搭乗者しか操縦できない。<br>パーフェクトパック装備時のフォトン・トルピートはまさに最恐兵器。<br>放出される反物質を閉じ込めた結晶に触れると、低温対消滅によって消滅する。こわい。<br>今のところ、富野監督最後のガンダム。<br>御大も高齢(84歳)なので新たな富野ガンダムは観られないかもしれない・・・。</div>
+  </div>
+  <img alt="G-セルフ" src="gw01img/gf.png"/>
+  <div class="meta">
+    <div class="label">機体名</div>
+    <div class="value">G-セルフ</div>
+    <div class="label">形式番号</div>
+    <div class="value model">YG-111</div>
+  </div>
+</div></div></section>
+  <footer>© 創通・サンライズ・MBS</footer>
+</div>
+<script>
+function clamp(value,min,max){ return Math.min(Math.max(value,min),max); }
+function closeHints(){ document.querySelectorAll(".hint-popover.show").forEach(el => el.classList.remove("show")); }
+function positionHint(button,popover){
+  const margin = 16;
+  const rect = button.getBoundingClientRect();
+  popover.classList.add("show");
+  const width = Math.min(460, window.innerWidth - margin * 2);
+  popover.style.width = width + "px";
+  const popRect = popover.getBoundingClientRect();
+  let left = rect.left - 42;
+  left = clamp(left, margin, window.innerWidth - popRect.width - margin);
+  let top = rect.bottom + 10;
+  if(top + popRect.height > window.innerHeight - margin) top = rect.top - popRect.height - 10;
+  top = clamp(top, margin, window.innerHeight - popRect.height - margin);
+  popover.style.left = left + "px";
+  popover.style.top = top + "px";
+}
+document.querySelectorAll(".hint-btn").forEach(button => {
+  button.addEventListener("click", event => {
+    event.stopPropagation();
+    const popover = document.getElementById("hint-" + button.dataset.no);
+    const wasOpen = popover.classList.contains("show");
+    closeHints();
+    if(!wasOpen) positionHint(button, popover);
+  });
+});
+document.querySelectorAll(".hint-close").forEach(button => {
+  button.addEventListener("click", event => {
+    event.stopPropagation();
+    button.closest(".hint-popover").classList.remove("show");
+  });
+});
+document.addEventListener("click", closeHints);
+document.addEventListener("keydown", event => { if(event.key === "Escape") closeHints(); });
+window.addEventListener("resize", closeHints);
+window.addEventListener("scroll", closeHints, true);
+</script>
 </body>
 </html>
