@@ -1,8 +1,9 @@
 <!DOCTYPE html>
+
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>グループワークその２　正解</title>
 <style>
   body {
@@ -68,11 +69,123 @@
   @media (max-width: 700px) {
     .grid.cols-7, .grid.cols-8, .grid.cols-10 { grid-template-columns: repeat(2, 1fr); }
   }
+
+  .slot-label-row{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin-bottom:8px;
+  }
+
+  .no-row{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin-bottom:6px;
+    justify-content:flex-start;
+  }
+
+  .hint-btn{
+    width:26px;
+    height:26px;
+    min-height:0;
+    padding:0;
+    border-radius:50%;
+    border:2px solid rgba(255,255,255,.72);
+    background:#f4f8ff;
+    color:#151820;
+    font-weight:900;
+    font-size:16px;
+    line-height:1;
+    box-shadow:0 3px 8px rgba(0,0,0,.22);
+  }
+
+  .hint-popover{
+    display:none;
+    position:fixed;
+    z-index:9999;
+    width:min(460px, calc(100vw - 32px));
+    max-height:min(360px, calc(100vh - 32px));
+    overflow:auto;
+    padding:14px 40px 14px 16px;
+    border:2px solid var(--gold, #ffd166);
+    border-radius:14px;
+    background:#fff9e8;
+    color:#7a2f14;
+    box-shadow:0 14px 34px rgba(0,0,0,.34);
+    font-size:14px;
+    line-height:1.7;
+    text-align:left;
+  }
+
+  .hint-popover.show{
+    display:block;
+  }
+
+  .hint-title{
+    font-weight:900;
+    font-size:15px;
+    margin-bottom:6px;
+  }
+
+  .hint-close{
+    position:absolute;
+    right:10px;
+    top:8px;
+    border:0;
+    background:transparent;
+    color:#7a2f14;
+    width:24px;
+    height:24px;
+    min-height:0;
+    padding:0;
+    font-size:22px;
+    line-height:1;
+    box-shadow:none;
+  }
+
 </style>
 </head>
 <body>
+<script>
+const hints = {
+  "1": "天才生化学者にしてスポーツ万能の本郷猛が変身する。<br>ショッカーに改造人間にされたが、洗脳される前に脱出。<br>天才らしく多彩な技で戦うため、技のライダー。<br>ちなみに本郷猛演じる藤岡弘。の息子、藤岡真威人も同役になったこともある。",
+  "2": "フリーカメラマンの一文字隼人が変身する。<br>柔道6段、空手5段の猛者。<br>本郷猛演じる藤岡弘。が撮影中に大怪我を負ったことで、急遽登場することになったのは有名な話。<br>力のライダー。",
+  "3": "本郷猛の後輩である風見史郎が変身する。<br>家族をデストロンに皆殺しにされ、自身もダブルライダーを庇い重傷を負ってしまう。<br>ダブルライダーの改造手術を受け蘇った。<br>昭和ライダーの中でも最高視聴率(38%)を記録した大人気ライダー。",
+  "4": "デストロンの科学者、結城丈二が変身する。<br>ヨロイ元帥に濡れ衣を着せられて処刑されそうになった為、デストロンを裏切りライダーとなった。<br>とはいえ高性能スーツ着ているだけなのでそんなに強くない。<br>ディケイドの劇場版では、GACKTが演じたりもした。",
+  "5": "沖縄の水産大学に通う大学生、神敬介が変身する。<br>当初は「セタップ！」で変身していたが、強化改造後は「大変身！」で変身するようになった。<br>ライダーの中でも殺意が高めな方に入るライダー。<br>父親と恋人をGOD機関に殺されたから理解はできるのだか、子供達への影響としてはちょっとアレな感じだったライダー。",
+  "6": "飛行機が南米アマゾンに墜落し、そのままアマゾンで育った山本大介が古代インカの秘術で変身する。<br>昭和ライダーの中で唯一昆虫がモチーフになっていない。<br>さらに学歴・職歴なし・無免許という唯一無二のライダーでもある。<br>色々な事情で全24話となっている。（打ち切りではない）",
+  "7": "ブラックサタンに殺された友人の敵討のために自ら改造手術を受けた、城茂が変身する。<br>口笛を吹きながら登場するという(当時的には)洒落ていて、かっこいいライダー。<br>女性相棒である電波人間タックルが登場する。（ライダーではない）",
+  "8": "大学生の筑波洋が変身する。<br>歴代ライダー初の単独での飛行能力をもつ空飛ぶライダー。<br>ライダー名は実は番組中盤から登場している。<br>それまでは単にライダー/仮面ライダーと呼ばれていた。<br>時速800km、高度1万mまで飛べるらしい。",
+  "9": "宇宙開発研究者かつ赤心少林拳の使い手、沖一也が変身する。<br>脳をのぞく肉体のほぼすべてを改造されている、惑星開拓用の改造人間。<br>惑星開拓用多機能ツール「ファイブハンド」と赤心少林拳で戦う。<br>バイクはなんとハーレーダビットソン、ごっつい。",
+  "10": "ブラジルの大学に通い、セスナパイロットでもある村雨良が変身する。<br>姉の取材のためにセスナ機で飛んでいたところを、バダンに捕えられ姉を殺された上に、自身も改造されてバダンの尖兵となった。<br>記憶を失っていたが、事故で取り戻した後バダンへの復讐のため戦う。<br>全身に多種多様な隠し武器をもっていることから全身兵器とも呼ばれる。",
+  "11": "創世王の後継者候補としてゴルゴムに改造された、大学生の南光太郎が変身する。<br>親友の秋月信彦も同じく候補者としてシャドームーンに改造され、殺し合うことになる。<br>何かあったら「ゴルゴムの仕業だ！」と決めつけるライダー。<br>その通りではあるのだが。",
+  "12": "クライシス帝国に宇宙空間に放りださせるが、そこで大量の太陽光を浴びて「太陽の子」「光の王子」となった南光太郎が変身する。<br>仲間が増えて前作より光太郎の性格も明るくなっている。<br>平成ライダーのように複数の形態をもっており、ロボライダー/バイオライダーに切り替えられる。<br>バイオライダーは歴代ライダーの中でも反則級で、いわゆるミーム化されている「もう全部あいつ一人でいいんじゃないかな」状態である。",
+  "13": "大学生にしてオートバイレーサーの風祭真が変身する。<br>テレビシリーズのライダーではなく、オリジナルビデオのみのライダー。<br>バッタの遺伝子を注入されており、ベルトや変身ポーズで返信するのではなく、感情の昂りで変身する。<br>原点に変えるべく、造形や話は不気味なホラー要素が多く含まれている。",
+  "14": "科学者の助手である麻生勝が変身する。<br>狂気に取り憑かれた望月博士によって、無理やりネオ生命体のプロトタイプとして改造されてしまう。<br>仮面ライダー20周年記念作品で、劇場版オリジナルライダー。<br>GAROで知られる雨宮慶太氏が監督。<br>生物感を残した形のデザインとなっている。",
+  "15": "自然保護を訴える環境カメラマンの瀬川耕司が変身する。<br>フォッグによって崖から突き落とされて死亡するが、地底人の改造手術をうけて蘇った。<br>歴代ライダーで初めて巨大化したライダー。<br>自身が殺されてはいるのだが、そのほかは特に何か失っていたりしないので、昭和ライダーの中では悲劇性がちょっと低め。",
+  "16": "冒険家の五代雄介が、古代遺跡で発掘した変身ベルトで変身する。<br>フォームチェンジやベルトの力で変身するなど、その後の平成ライダーの基礎となる部分が多い。<br>以降の平成ライダーと大きく違う点は、昭和ライダーのように登場するライダーは一人だけ、ということがある。<br>刑事が相棒ということもあり、刑事ドラマ的な回もある。<br>ちなみに作中では一度も「仮面ライダー」と呼ばれてない。",
+  "17": "記憶喪失の青年、津上翔一が変身ベルトの力で変身する。<br>前作に引き続き、警察組織の人間が重要な登場人物でもある。<br>複数ライダーの登場はこの作品から。<br>仮面ライダーG3は今でも人気が高い。<br>実は仮面ライダーシリーズの最終作の予定だったとのこと。<br>しかしながら視聴率が非常に良く（平成ライダーの中でも最高）、シリーズが継続することになった。",
+  "18": "ネットニュース配信会社の新人記者、城戸真司がカードデッキの力で変身する。<br>複数のライダー同士が戦う、バトルロワイアルとしても有名。<br>いわゆる悪役ライダーが登場するパターンを確立した作品。<br>（シャドームーン等もいたが、私利私欲的なライダーは今作から）<br>企画段階では50名のライダーが予定されていたらしい。",
+  "19": "フリーターとして全国を旅していた乾巧が、ギア(携帯電話)の力で変身する。<br>平成ライダーとして初の怪人側の人間ドラマを描いた作品。<br>仮面ライダーカイザ(草加雅人)のように賛否が分かれる登場人物も多く、子供向けの範囲を越えている。",
+  "20": "人類基盤史研究所のライダーシステムの候補者、剣崎一真がカードの力で変身する。<br>蘇った不死生命体から人類を守るために戦う職業ライダー。<br>セリフがいまいち聞き取れないことが多く、いわゆる「オンドゥル語」と揶揄されるような状況だった。<br>最終回も当時は賛否両論でビジネス的には厳しい結果となった。<br>現在では伏線回収の妙や、最高の鬱エンドといった点で評価されている。",
+  "21": "魔化魍から人々を守る「鬼」のヒビキ(日高仁志)が、音叉を用いて変身する。<br>古来「鬼」と呼ばれた者たちが、実は魔物から人々を守る組織の人間だった、という世界。<br>師匠と弟子がテーマで、少年の成長が強調されている。<br>放送途中でプロデューサーが交代すると、スタッフがほぼ全て入れ替わってしまい、別の番組が始まったかのような作風変化が起こり賛否両論に。",
+  "22": "何事も卒なくこなせてしまう、俺様キャラの天道総司がライダーシステムで変身する。<br>これまで以上にコメディ要素が多く、料理要素も多く盛り込まれた特徴ある作品。<br>水嶋ヒロが主役であり、たいへんたいへん保護者層から人気があった。",
+  "23": "不運体質の若者、野上良太郎がイマジンの力で変身する。<br>桃太郎、電車、タイムトラベル、という今までのライダーと比べてかなり特色のある作品。<br>また登場するライダー同士の仲が良いのも特徴。<br>佐藤健が主役であり、たいへんたいへん保護者層から人気があった。",
+  "24": "バイオリン工房を営む紅渡が、所謂吸血鬼の力で変身する。<br>現代編と父親が活躍する過去編の２つが舞台となっている。<br>重厚なストーリーは評価されているが、二つの時系列が入り乱れることは、週1放送の形では分かりづらさになってしまった感がある。<br>他のライダー作品よりも恋愛要素が強めであり、三角関係も。",
+  "25": "記憶喪失で自信家の、門矢士がカードの力で変身する。<br>平成ライダー10周年の記念作品的なライダー。<br>これまでの全てのライダーの力を、カードを通して行使できるチートライダー。<br>ライダーの世界を渡り歩き、すべてのライダーを倒す、世界の破壊者。<br>時々戦隊の世界にもお邪魔する通りすがりの仮面ライダー。<br>設定が超便利などで、その後の作品にもちょくちょく呼ばれている。",
+  "26": "ハーフボイルド(半人前)の私立探偵 左翔太郎と、謎多き青年のフィリップがメモリの力で変身する。<br>秘密結社ミュージアムから街を守る、二人で一人の仮面ライダー。<br>2話でひとつの事件を解決していくスタイルで、大変観やすい作品。<br>私が好きすぎるライダーなので書くことが多すぎて、逆にもう書けません。<br>観ましょう。<br>記念すべき菅田将暉のデビュー作。もう多分演じてくれないだろから寂しい。",
+  "27": "世界中を旅する無欲な青年、火野映司が欲望のメダルの力で変身する。<br>基本的にコメディやギャクシーンが多めな明るい作品なのだが、根底となるテーマが重く、善悪双方の観点を描ききった良作。<br>前作ぐらいからベルトと変身アイテムの争奪戦が苛烈になってきている。<br>次々と登場するメダルをヨドバシとかトイザらスとかで探し回る保護者の苦労は、言葉にとても表すことができない。",
+  "28": "学園の全員と友達になる！な高校生、如月弦太朗がスイッチの力で変身する。<br>宇宙開発が進んで、月に基地が建設されるようになった世界。<br>なのだが、舞台は高校のみ。ライダー初の学園モノである。<br>友情・絆をテーマとしたまさに青春ストーリー。<br>主役は福士蒼汰。菅田くんと違っていまでのライダーになってくれる。",
+  "29": "魔法使いの操真晴人が、魔法の力で変身する。<br>前作とは大きく異なり「絶望」がテーマなシリアスめの作品。<br>とはいえ絶望を乗り越えていく、という王道テーマでもある。<br>戦闘シーンのクオリティが高いが、指に指輪をはめている関係上パンチはしない。<br>銃とマーシャルアーツで戦っていくライダー。",
+  "30": "ダンサーだったが今はフリーターの葛葉紘汰が、果物の力で変身する。<br>いや果物ってなんやねん？だと思うけど果物の力で変身するライダーであり、戦国鎧武者なライダーである。<br>メインシナリオライターはFate/Zero、まど☆マギの虚淵玄。<br>不穏。<br>期待通り、序盤はライト目の話だったが中盤からシャレにならない感じになっていった。<br>テーマは「挫折」。これでもか！ってぐらい虚淵玄。",
+  "31": "エリート刑事の泊進ノ介が、シフトカー(小型の車型メカ)の力で変身する。<br>主人公が刑事なので、刑事ドラマ風の軸でストーリーが進んでいく。<br>また、「仮面ライダー」なのだがメインマシンは車。<br>比較的明るめの話でコメディ要素も多めではある。<br>勧善懲悪の話ではなく、登場人物それぞれに深いストーリーがあることも。<br>主役は竹内涼真。かっこいい。",
+  "32": "1話目で死亡する天空寺タケルが、過去の偉人の力で変身する。<br>いきなり死んでしまう系主人公。生き返るためのお話。<br>世界の偉人の力を借りて戦うので、子供達の教育にもとてもよろしい教育系ライダー。<br>命の大切さをテーマとしても扱っており、ますます教育系。",
+  "33": "小児科医で天才ゲーマの宝生永夢が、ゲームの力で変身する。<br>人間に感染するコンピュータウイルスにゲームの力で医者が立ち向かう、というコンセプト。<br>ライダー同士の戦いの方が多く、怪人は他ライダーよりも少なめ。<br>後半になるにつれ、戦闘力がインフレしていくところもなんとなくゲーム的。<br>発表当時は宮川大輔が主人公じゃないのか？と言われていた。",
+  "34": "記憶喪失な天才的物理学者の桐生戦兎が、様々な成分が封入されたボルトの力で変身する。<br>日本が火星からもたらされたなどの物体により３つに分割されてしまった世界。<br>日本が３つに分割された画面はよくネットミームに使われている。<br>登場する仮面ライダーが改造手術されている、という平成シリーズ以降ではあまりなかった設定も。",
+  "35": "王様になりたいという夢をもつ高校生の常磐ソウゴが、歴代ライダーと時空の力で変身する。<br>平成ライダー20周年記念かつ平成シリーズ最後のライダー。<br>顔にデカデカとライダー、とある素晴らしいデザイン。<br>モチーフは時計。<br>平成10周年の時と似ているところもあり、まさにお祭り的な節目な作品。<br>未来を変えるための戦い、という要素が軸で複雑なストーリーとなっている。"
+};
 
-  <script>
     (function () {
       const pass = prompt("パスワードを入力してください");
     
@@ -83,247 +196,412 @@
       }
     })();
     </script>
+<h1>グループワークその２（仮面ライダー）　正解</h1>
+<section class="group">
+<h2>昭和ライダー1期（栄光の7人ライダー）</h2>
+<div class="grid cols-7">
+<div class="card">
+<div class="no-row"><div class="no">【1】</div><button aria-label="ヒントを表示" class="hint-btn" data-no="1" type="button">?</button></div><div aria-modal="false" class="hint-popover" id="hint-1" role="dialog">
+<button aria-label="ヒントを閉じる" class="hint-close" type="button">×</button>
+<div class="hint-title">【1】1号</div>
+<div class="hint-text">天才生化学者にしてスポーツ万能の本郷猛が変身する。<br/>ショッカーに改造人間にされたが、洗脳される前に脱出。<br/>天才らしく多彩な技で戦うため、「技の1号」と呼ばれる。<br/>ちなみに本郷猛演じる藤岡弘。の息子、藤岡真威人も同役になったこともある。</div>
+</div>
+<img alt="1号" src="gw02img/hg.png"/>
+<div class="name">1号</div>
+</div>
+<div class="card">
+<div class="no-row"><div class="no">【2】</div><button aria-label="ヒントを表示" class="hint-btn" data-no="2" type="button">?</button></div><div aria-modal="false" class="hint-popover" id="hint-2" role="dialog">
+<button aria-label="ヒントを閉じる" class="hint-close" type="button">×</button>
+<div class="hint-title">【2】2号</div>
+<div class="hint-text">フリーカメラマンの一文字隼人が変身する。<br/>柔道6段、空手5段の猛者。<br/>本郷猛演じる藤岡弘。が撮影中に大怪我を負ったことで、急遽登場することになったのは有名な話。<br/>「技の1号」に対して「力の2号」と呼ばれる。</div>
+</div>
+<img alt="2号" src="gw02img/im.png"/>
+<div class="name">2号</div>
+</div>
+<div class="card">
+<div class="no-row"><div class="no">【3】</div><button aria-label="ヒントを表示" class="hint-btn" data-no="3" type="button">?</button></div><div aria-modal="false" class="hint-popover" id="hint-3" role="dialog">
+<button aria-label="ヒントを閉じる" class="hint-close" type="button">×</button>
+<div class="hint-title">【3】V3</div>
+<div class="hint-text">本郷猛の後輩である風見史郎が変身する。<br/>家族をデストロンに皆殺しにされ、自身もダブルライダーを庇い重傷を負ってしまう。<br/>ダブルライダーの改造手術を受け蘇った。<br/>昭和ライダーの中でも最高視聴率(38%)を記録した大人気ライダー。</div>
+</div>
+<img alt="V3" src="gw02img/ks.png"/>
+<div class="name">V3</div>
+</div>
+<div class="card">
+<div class="no-row"><div class="no">【4】</div><button aria-label="ヒントを表示" class="hint-btn" data-no="4" type="button">?</button></div><div aria-modal="false" class="hint-popover" id="hint-4" role="dialog">
+<button aria-label="ヒントを閉じる" class="hint-close" type="button">×</button>
+<div class="hint-title">【4】ライダーマン</div>
+<div class="hint-text">デストロンの科学者、結城丈二が変身する。<br/>ヨロイ元帥に濡れ衣を着せられて処刑されそうになった為、デストロンを裏切りライダーとなった。<br/>とはいえ高性能スーツ着ているだけなのでそんなに強くない。<br/>ディケイドの劇場版では、GACKTが演じたりもした。</div>
+</div>
+<img alt="ライダーマン" src="gw02img/yj.png"/>
+<div class="name">ライダーマン</div>
+</div>
+<div class="card">
+<div class="no-row"><div class="no">【5】</div><button aria-label="ヒントを表示" class="hint-btn" data-no="5" type="button">?</button></div><div aria-modal="false" class="hint-popover" id="hint-5" role="dialog">
+<button aria-label="ヒントを閉じる" class="hint-close" type="button">×</button>
+<div class="hint-title">【5】X</div>
+<div class="hint-text">沖縄の水産大学に通う大学生、神敬介が変身する。<br/>当初は「セタップ！」で変身していたが、強化改造後は「大変身！」で変身するようになった。<br/>ライダーの中でも殺意が高めな方に入るライダー。<br/>父親と恋人をGOD機関に殺されたから理解はできるのだか、子供達への影響としてはちょっとアレな感じだったライダー。</div>
+</div>
+<img alt="X" src="gw02img/jk.png"/>
+<div class="name">X</div>
+</div>
+<div class="card">
+<div class="no-row"><div class="no">【6】</div><button aria-label="ヒントを表示" class="hint-btn" data-no="6" type="button">?</button></div><div aria-modal="false" class="hint-popover" id="hint-6" role="dialog">
+<button aria-label="ヒントを閉じる" class="hint-close" type="button">×</button>
+<div class="hint-title">【6】アマゾン</div>
+<div class="hint-text">飛行機が南米アマゾンに墜落し、そのままアマゾンで育った山本大介が古代インカの秘術で変身する。<br/>昭和ライダーの中で唯一昆虫がモチーフになっていない。<br/>さらに学歴・職歴なし・無免許という唯一無二のライダーでもある。<br/>色々な事情で全24話となっている。（打ち切りではない）</div>
+</div>
+<img alt="アマゾン" src="gw02img/yd.png"/>
+<div class="name">アマゾン</div>
+</div>
+<div class="card">
+<div class="no-row"><div class="no">【7】</div><button aria-label="ヒントを表示" class="hint-btn" data-no="7" type="button">?</button></div><div aria-modal="false" class="hint-popover" id="hint-7" role="dialog">
+<button aria-label="ヒントを閉じる" class="hint-close" type="button">×</button>
+<div class="hint-title">【7】ストロンガー</div>
+<div class="hint-text">ブラックサタンに殺された友人の敵討のために自ら改造手術を受けた、城茂が変身する。<br/>口笛を吹きながら登場するという(当時的には)洒落ていたかっこいいライダーである。<br/>女性相棒である電波人間タックルが登場する。（ライダーではない）</div>
+</div>
+<img alt="ストロンガー" src="gw02img/js.png"/>
+<div class="name">ストロンガー</div>
+</div>
+</div>
+</section>
+<section class="group">
+<h2>昭和ライダー2期 / 昭和ライダー3期 / 昭和ライダー4期（ネオライダー）</h2>
+<div class="grid cols-8">
+<div class="card">
+<div class="no-row"><div class="no">【8】</div><button aria-label="ヒントを表示" class="hint-btn" data-no="8" type="button">?</button></div><div aria-modal="false" class="hint-popover" id="hint-8" role="dialog">
+<button aria-label="ヒントを閉じる" class="hint-close" type="button">×</button>
+<div class="hint-title">【8】スカイライダー</div>
+<div class="hint-text">大学生の筑波洋が変身する。<br/>歴代ライダー初の単独での飛行能力をもつ空飛ぶライダー。<br/>ライダー名は実は番組中盤から登場している。<br/>それまでは単にライダー/仮面ライダーと呼ばれていた。<br/>時速800km、高度1万mまで飛べるらしい。</div>
+</div>
+<img alt="スカイライダー" src="gw02img/th.png"/>
+<div class="name">スカイライダー</div>
+</div>
+<div class="card">
+<div class="no-row"><div class="no">【9】</div><button aria-label="ヒントを表示" class="hint-btn" data-no="9" type="button">?</button></div><div aria-modal="false" class="hint-popover" id="hint-9" role="dialog">
+<button aria-label="ヒントを閉じる" class="hint-close" type="button">×</button>
+<div class="hint-title">【9】スーパー1</div>
+<div class="hint-text">宇宙開発研究者かつ赤心少林拳の使い手、沖一也が変身する。<br/>脳をのぞく肉体のほぼすべてを改造されている、惑星開拓用の改造人間。<br/>惑星開拓用多機能ツール「ファイブハンド」と赤心少林拳で戦う。<br/>バイクはなんとハーレーダビットソン、ごっつい。</div>
+</div>
+<img alt="スーパー1" src="gw02img/ok.png"/>
+<div class="name">スーパー1</div>
+</div>
+<div class="card">
+<div class="no-row"><div class="no">【10】</div><button aria-label="ヒントを表示" class="hint-btn" data-no="10" type="button">?</button></div><div aria-modal="false" class="hint-popover" id="hint-10" role="dialog">
+<button aria-label="ヒントを閉じる" class="hint-close" type="button">×</button>
+<div class="hint-title">【10】ZX（ゼクロス）</div>
+<div class="hint-text">ブラジルの大学に通い、セスナパイロットでもある村雨良が変身する。<br/>姉の取材のためにセスナ機で飛んでいたところを、バダンに捕えられ姉を殺された上に、自身も改造されてバダンの尖兵となった。<br/>記憶を失っていたが、事故で取り戻した後バダンへの復讐のため戦う。<br/>全身に多種多様な隠し武器をもっていることから全身兵器とも呼ばれる。</div>
+</div>
+<img alt="ZX（ゼクロス）" src="gw02img/mr.png"/>
+<div class="name">ZX（ゼクロス）</div>
+</div>
+<div class="card">
+<div class="no-row"><div class="no">【11】</div><button aria-label="ヒントを表示" class="hint-btn" data-no="11" type="button">?</button></div><div aria-modal="false" class="hint-popover" id="hint-11" role="dialog">
+<button aria-label="ヒントを閉じる" class="hint-close" type="button">×</button>
+<div class="hint-title">【11】Black</div>
+<div class="hint-text">創世王の後継者候補としてゴルゴムに改造された、大学生の南光太郎が変身する。<br/>親友の秋月信彦も同じく候補者としてシャドームーンに改造され、殺し合うことになる。<br/>何かあったら「ゴルゴムの仕業だ！」と決めつけるライダー。<br/>その通りではあるのだが。</div>
+</div>
+<img alt="Black" src="gw02img/mk.png"/>
+<div class="name">Black</div>
+</div>
+<div class="card">
+<div class="no-row"><div class="no">【12】</div><button aria-label="ヒントを表示" class="hint-btn" data-no="12" type="button">?</button></div><div aria-modal="false" class="hint-popover" id="hint-12" role="dialog">
+<button aria-label="ヒントを閉じる" class="hint-close" type="button">×</button>
+<div class="hint-title">【12】Black RX</div>
+<div class="hint-text">クライシス帝国に宇宙空間に放りださせるが、そこで大量の太陽光を浴びて「太陽の子」「光の王子」となった南光太郎が変身する。<br/>仲間が増えて前作より光太郎の性格も明るくなっている。<br/>平成ライダーのように複数の形態をもっており、ロボライダー/バイオライダーに切り替えられる。<br/>バイオライダーは歴代ライダーの中でも反則級で、いわゆるミーム化されている「もう全部あいつ一人でいいんじゃないかな」状態である。</div>
+</div>
+<img alt="Black RX" src="gw02img/mk2.png"/>
+<div class="name">Black RX</div>
+</div>
+<div class="card">
+<div class="no-row"><div class="no">【13】</div><button aria-label="ヒントを表示" class="hint-btn" data-no="13" type="button">?</button></div><div aria-modal="false" class="hint-popover" id="hint-13" role="dialog">
+<button aria-label="ヒントを閉じる" class="hint-close" type="button">×</button>
+<div class="hint-title">【13】シン</div>
+<div class="hint-text">大学生にしてオートバイレーサーの風祭真が変身する。<br/>テレビシリーズのライダーではなく、オリジナルビデオのみのライダー。<br/>バッタの遺伝子を注入されており、ベルトや変身ポーズで返信するのではなく、感情の昂りで変身する。<br/>原点に変えるべく、造形や話は不気味なホラー要素が多く含まれている。</div>
+</div>
+<img alt="シン" src="gw02img/kas.png"/>
+<div class="name">シン</div>
+</div>
+<div class="card">
+<div class="no-row"><div class="no">【14】</div><button aria-label="ヒントを表示" class="hint-btn" data-no="14" type="button">?</button></div><div aria-modal="false" class="hint-popover" id="hint-14" role="dialog">
+<button aria-label="ヒントを閉じる" class="hint-close" type="button">×</button>
+<div class="hint-title">【14】ZO</div>
+<div class="hint-text">科学者の助手である麻生勝が変身する。<br/>狂気に取り憑かれた望月博士によって、無理やりネオ生命体のプロトタイプとして改造されてしまう。<br/>仮面ライダー20周年記念作品で、劇場版オリジナルライダー。<br/>GAROで知られる雨宮慶太氏が監督。<br/>生物感を残した形のデザインとなっている。</div>
+</div>
+<img alt="ZO" src="gw02img/am.png"/>
+<div class="name">ZO</div>
+</div>
+<div class="card">
+<div class="no-row"><div class="no">【15】</div><button aria-label="ヒントを表示" class="hint-btn" data-no="15" type="button">?</button></div><div aria-modal="false" class="hint-popover" id="hint-15" role="dialog">
+<button aria-label="ヒントを閉じる" class="hint-close" type="button">×</button>
+<div class="hint-title">【15】J</div>
+<div class="hint-text">自然保護を訴える環境カメラマンの瀬川耕司が変身する。<br/>フォッグによって崖から突き落とされて死亡するが、地底人の改造手術をうけて蘇った。<br/>歴代ライダーで初めて巨大化したライダー。<br/>自身が殺されてはいるのだが、そのほかは特に何か失っていたりしないので、昭和ライダーの中では悲劇性がちょっと低め。</div>
+</div>
+<img alt="J" src="gw02img/sk.png"/>
+<div class="name">J</div>
+</div>
+</div>
+</section>
+<section class="group">
+<h2>平成ライダー1期</h2>
+<div class="grid cols-10">
+<div class="card">
+<div class="no-row"><div class="no">【16】</div><button aria-label="ヒントを表示" class="hint-btn" data-no="16" type="button">?</button></div><div aria-modal="false" class="hint-popover" id="hint-16" role="dialog">
+<button aria-label="ヒントを閉じる" class="hint-close" type="button">×</button>
+<div class="hint-title">【16】クウガ</div>
+<div class="hint-text">冒険家の五代雄介が、古代遺跡で発掘した変身ベルトで変身する。<br/>フォームチェンジやベルトの力で変身するなど、その後の平成ライダーの基礎となる部分が多い。<br/>その後のライダーを大きく違うのは、昭和ライダーのように登場するライダーは一人だけ、ということがある。<br/>刑事が相棒ということもあり、刑事ドラマ的な回もある。<br/>ちなみに作中では一度も「仮面ライダー」と呼ばれてない。</div>
+</div>
+<img alt="クウガ" src="gw02img/gy.png"/>
+<div class="name">クウガ</div>
+</div>
+<div class="card">
+<div class="no-row"><div class="no">【17】</div><button aria-label="ヒントを表示" class="hint-btn" data-no="17" type="button">?</button></div><div aria-modal="false" class="hint-popover" id="hint-17" role="dialog">
+<button aria-label="ヒントを閉じる" class="hint-close" type="button">×</button>
+<div class="hint-title">【17】アギト</div>
+<div class="hint-text">記憶喪失の青年、津上翔一が変身ベルトの力で変身する。<br/>前作に引き続き、警察組織の人間が重要な登場人物でもある。<br/>複数ライダーの登場はこの作品から。<br/>仮面ライダーG3は今でも人気が高い。<br/>実は仮面ライダーシリーズの最終作の予定だったとのこと。<br/>しかしながら視聴率が非常に良く（平成ライダーの中でも最高）、シリーズが継続することになった。</div>
+</div>
+<img alt="アギト" src="gw02img/ts.png"/>
+<div class="name">アギト</div>
+</div>
+<div class="card">
+<div class="no-row"><div class="no">【18】</div><button aria-label="ヒントを表示" class="hint-btn" data-no="18" type="button">?</button></div><div aria-modal="false" class="hint-popover" id="hint-18" role="dialog">
+<button aria-label="ヒントを閉じる" class="hint-close" type="button">×</button>
+<div class="hint-title">【18】龍騎</div>
+<div class="hint-text">ネットニュース配信会社の新人記者、城戸真司がカードデッキの力で変身する。<br/>複数のライダー同士が戦う、バトルロワイアルとしても有名。<br/>いわゆる悪役ライダーが登場するパターンを確立した作品。<br/>（シャドームーン等もいたが、私利私欲的なライダーは今作から）<br/>企画段階では50名のライダーが予定されていたらしい。</div>
+</div>
+<img alt="龍騎" src="gw02img/kis.png"/>
+<div class="name">龍騎</div>
+</div>
+<div class="card">
+<div class="no-row"><div class="no">【19】</div><button aria-label="ヒントを表示" class="hint-btn" data-no="19" type="button">?</button></div><div aria-modal="false" class="hint-popover" id="hint-19" role="dialog">
+<button aria-label="ヒントを閉じる" class="hint-close" type="button">×</button>
+<div class="hint-title">【19】555（ファイズ）</div>
+<div class="hint-text">フリーターとして全国を旅していた乾巧が、ギア(携帯電話)の力で変身する。<br/>平成ライダーとして初の怪人側の人間ドラマを描いた作品。<br/>仮面ライダーカイザ(草加雅人)のように賛否が分かれる登場人物も多く、子供受けの範囲を越えている。</div>
+</div>
+<img alt="555（ファイズ）" src="gw02img/it.png"/>
+<div class="name">555（ファイズ）</div>
+</div>
+<div class="card">
+<div class="no-row"><div class="no">【20】</div><button aria-label="ヒントを表示" class="hint-btn" data-no="20" type="button">?</button></div><div aria-modal="false" class="hint-popover" id="hint-20" role="dialog">
+<button aria-label="ヒントを閉じる" class="hint-close" type="button">×</button>
+<div class="hint-title">【20】剣（ブレイド）</div>
+<div class="hint-text">人類基盤史研究所のライダーシステムの候補者、剣崎一真がカードの力で変身する。<br/>蘇った不死生命体から人類を守るために戦う職業ライダー。<br/>セリフがいまいち聞き取れないことが多く、いわゆる「オンドゥル語」と揶揄されるような状況だった。<br/>最終回も当時は賛否両論でビジネス的には厳しい結果となった。<br/>現在では伏線回収の妙や、最高の鬱エンドといった点で評価されている。</div>
+</div>
+<img alt="剣（ブレイド）" src="gw02img/kk.png"/>
+<div class="name">剣（ブレイド）</div>
+</div>
+<div class="card">
+<div class="no-row"><div class="no">【21】</div><button aria-label="ヒントを表示" class="hint-btn" data-no="21" type="button">?</button></div><div aria-modal="false" class="hint-popover" id="hint-21" role="dialog">
+<button aria-label="ヒントを閉じる" class="hint-close" type="button">×</button>
+<div class="hint-title">【21】響鬼</div>
+<div class="hint-text">魔化魍から人々を守る「鬼」のヒビキ(日高仁志)が、音叉を用いて変身する。<br/>古来「鬼」と呼ばれた者たちが、実は魔物から人々を守る組織の人間だった、という世界。<br/>師匠と弟子がテーマで、少年の成長が強調されている。<br/>放送途中でプロデューサーが交代すると、スタッフがほぼ全て入れ替わってしまい、別の番組が始まったかのような作風変化が起こり賛否両論に。</div>
+</div>
+<img alt="響鬼" src="gw02img/hh.png"/>
+<div class="name">響鬼</div>
+</div>
+<div class="card">
+<div class="no-row"><div class="no">【22】</div><button aria-label="ヒントを表示" class="hint-btn" data-no="22" type="button">?</button></div><div aria-modal="false" class="hint-popover" id="hint-22" role="dialog">
+<button aria-label="ヒントを閉じる" class="hint-close" type="button">×</button>
+<div class="hint-title">【22】カブト</div>
+<div class="hint-text">何事も卒なくこなせてしまう、俺様キャラの天道総司がライダーシステムで変身する。<br/>これまでのライダー以上にコメディ要素も多く、料理要素も多くあり特徴がある作品。<br/>水嶋ヒロが主役であり、たいへんたいへん保護者層から人気があった。</div>
+</div>
+<img alt="カブト" src="gw02img/tendo.png"/>
+<div class="name">カブト</div>
+</div>
+<div class="card">
+<div class="no-row"><div class="no">【23】</div><button aria-label="ヒントを表示" class="hint-btn" data-no="23" type="button">?</button></div><div aria-modal="false" class="hint-popover" id="hint-23" role="dialog">
+<button aria-label="ヒントを閉じる" class="hint-close" type="button">×</button>
+<div class="hint-title">【23】電王</div>
+<div class="hint-text">不運体質の若者、野上良太郎がイマジンの力で変身する。<br/>桃太郎、電車、タイムトラベル、という今までのライダーと比べてかなり特色のある作品。<br/>また登場するライダー同士の仲が良いのも特徴。<br/>佐藤健が主役であり、たいへんたいへん保護者層から人気があった。</div>
+</div>
+<img alt="電王" src="gw02img/ny.png"/>
+<div class="name">電王</div>
+</div>
+<div class="card">
+<div class="no-row"><div class="no">【24】</div><button aria-label="ヒントを表示" class="hint-btn" data-no="24" type="button">?</button></div><div aria-modal="false" class="hint-popover" id="hint-24" role="dialog">
+<button aria-label="ヒントを閉じる" class="hint-close" type="button">×</button>
+<div class="hint-title">【24】キバ</div>
+<div class="hint-text">バイオリン工房を営む紅渡が、所謂吸血鬼の力で変身する。<br/>現代編と父親が活躍する過去編の２つが舞台となっている。<br/>重厚なストーリーは評価されているが、二つの時系列が入り乱れることは、週1放送の形では分かりづらさになってしまった感がある。<br/>他のライダー作品よりも恋愛要素が強めであり、三角関係も。</div>
+</div>
+<img alt="キバ" src="gw02img/kw.png"/>
+<div class="name">キバ</div>
+</div>
+<div class="card">
+<div class="no-row"><div class="no">【25】</div><button aria-label="ヒントを表示" class="hint-btn" data-no="25" type="button">?</button></div><div aria-modal="false" class="hint-popover" id="hint-25" role="dialog">
+<button aria-label="ヒントを閉じる" class="hint-close" type="button">×</button>
+<div class="hint-title">【25】ディケイド</div>
+<div class="hint-text">記憶喪失で自信家の、門矢士がカードの力で変身する。<br/>平成ライダー10周年の記念作品的なライダー。<br/>これまでの全てのライダーの力を、カードを通りて行使できるチートライダー。<br/>ライダーの世界を渡り歩き、すべてのライダーを倒す、世界の破壊者。<br/>時々戦隊の世界にもお邪魔する通りすがりの仮面ライダー。<br/>設定が超便利などで、その後の作品にもちょくちょく呼ばれている。</div>
+</div>
+<img alt="ディケイド" src="gw02img/kt.png"/>
+<div class="name">ディケイド</div>
+</div>
+</div>
+</section>
+<section class="group">
+<h2>平成ライダー2期</h2>
+<div class="grid cols-10">
+<div class="card">
+<div class="no-row"><div class="no">【26】</div><button aria-label="ヒントを表示" class="hint-btn" data-no="26" type="button">?</button></div><div aria-modal="false" class="hint-popover" id="hint-26" role="dialog">
+<button aria-label="ヒントを閉じる" class="hint-close" type="button">×</button>
+<div class="hint-title">【26】W</div>
+<div class="hint-text">ハーフボイルド(半人前)の私立探偵 左翔太郎と、謎多き青年のフィリップがメモリの力で変身する。<br/>秘密結社ミュージアムから街を守る、二人で一人の仮面ライダー。<br/>2話でひとつの事件を解決していくスタイルで、大変観やすい作品。<br/>私が好きすぎるライダーなので書くことが多すぎて、逆にもう書けません。<br/>観ましょう。<br/>記念すべき菅田将暉のデビュー作。もう多分演じてくれないだろから寂しい。</div>
+</div>
+<img alt="W" src="gw02img/hf.png"/>
+<div class="name">W</div>
+</div>
+<div class="card">
+<div class="no-row"><div class="no">【27】</div><button aria-label="ヒントを表示" class="hint-btn" data-no="27" type="button">?</button></div><div aria-modal="false" class="hint-popover" id="hint-27" role="dialog">
+<button aria-label="ヒントを閉じる" class="hint-close" type="button">×</button>
+<div class="hint-title">【27】OOO（オーズ）</div>
+<div class="hint-text">世界中を旅する無欲な青年、火野映司が欲望のメダルの力で変身する。<br/>基本的にコメディやギャクシーンが多めな明るい作品なのだが、根底となるテーマが重く、善悪双方の観点を描ききった良作。<br/>前作ぐらいからベルトと変身アイテムの争奪戦が苛烈になってきている。<br/>次々と登場するメダルをヨドバシとかトイザらスとかで探し回る保護者の苦労は、言葉にとても表すことができない。</div>
+</div>
+<img alt="OOO（オーズ）" src="gw02img/he.png"/>
+<div class="name">OOO（オーズ）</div>
+</div>
+<div class="card">
+<div class="no-row"><div class="no">【28】</div><button aria-label="ヒントを表示" class="hint-btn" data-no="28" type="button">?</button></div><div aria-modal="false" class="hint-popover" id="hint-28" role="dialog">
+<button aria-label="ヒントを閉じる" class="hint-close" type="button">×</button>
+<div class="hint-title">【28】フォーゼ</div>
+<div class="hint-text">学園の全員と友達になる！な高校生、如月弦太朗がスイッチの力で変身する。<br/>宇宙開発は進んで、月に基地が建設されるようになった世界。<br/>なのだが、舞台は高校のみ。ライダー初の学園モノである。<br/>友情・絆をテーマとしたまさに青春ストーリー。<br/>主役は福士蒼汰。菅田くんと違っていまでのライダーになってくれる。</div>
+</div>
+<img alt="フォーゼ" src="gw02img/kg.png"/>
+<div class="name">フォーゼ</div>
+</div>
+<div class="card">
+<div class="no-row"><div class="no">【29】</div><button aria-label="ヒントを表示" class="hint-btn" data-no="29" type="button">?</button></div><div aria-modal="false" class="hint-popover" id="hint-29" role="dialog">
+<button aria-label="ヒントを閉じる" class="hint-close" type="button">×</button>
+<div class="hint-title">【29】ウィザード</div>
+<div class="hint-text">魔法使いの操真晴人が、魔法の力で変身する。<br/>前作とは大きく異なり「絶望」がテーマなシリアスめの作品。<br/>とはいえ絶望を乗り越えていく、という王道テーマでもある。<br/>戦闘シーンのクオリティが高いが、指に指輪をはめている関係上パンチはしない。<br/>銃とマーシャルアーツで戦っていくライダー。</div>
+</div>
+<img alt="ウィザード" src="gw02img/sh.png"/>
+<div class="name">ウィザード</div>
+</div>
+<div class="card">
+<div class="no-row"><div class="no">【30】</div><button aria-label="ヒントを表示" class="hint-btn" data-no="30" type="button">?</button></div><div aria-modal="false" class="hint-popover" id="hint-30" role="dialog">
+<button aria-label="ヒントを閉じる" class="hint-close" type="button">×</button>
+<div class="hint-title">【30】鎧武（ガイム）</div>
+<div class="hint-text">ダンサーだったが今はフリーターの葛葉紘汰が、果物の力で変身する。<br/>いや果物ってなんやねん？だと思うけど果物の力で変身するライダーであり、戦国鎧武者なライダーである。<br/>メインシナリオライターはFate/Zero、まど☆マギの虚淵玄。不穏。<br/>期待通り、序盤はライト目の話だったが中盤からシャレにならない感じになっていった。<br/>テーマは「挫折」。これでもか！ってぐらい虚淵玄モノである。</div>
+</div>
+<img alt="鎧武（ガイム）" src="gw02img/kko.png"/>
+<div class="name">鎧武（ガイム）</div>
+</div>
+<div class="card">
+<div class="no-row"><div class="no">【31】</div><button aria-label="ヒントを表示" class="hint-btn" data-no="31" type="button">?</button></div><div aria-modal="false" class="hint-popover" id="hint-31" role="dialog">
+<button aria-label="ヒントを閉じる" class="hint-close" type="button">×</button>
+<div class="hint-title">【31】ドライブ</div>
+<div class="hint-text">エリート刑事の泊進ノ介が、シフトカー(小型の車型メカ)の力で変身する。<br/>主人公が刑事なので、刑事ドラマ風の軸でストーリーが進んでいく。<br/>また、「仮面ライダー」なのだがメインマシンは車。<br/>比較的明るめの話でコメディ要素も多めではある。<br/>勧善懲悪の話ではなく、登場人物それぞれに深いストーリーがあることも。<br/>主役は竹内涼真。かっこいい。</div>
+</div>
+<img alt="ドライブ" src="gw02img/tos.png"/>
+<div class="name">ドライブ</div>
+</div>
+<div class="card">
+<div class="no-row"><div class="no">【32】</div><button aria-label="ヒントを表示" class="hint-btn" data-no="32" type="button">?</button></div><div aria-modal="false" class="hint-popover" id="hint-32" role="dialog">
+<button aria-label="ヒントを閉じる" class="hint-close" type="button">×</button>
+<div class="hint-title">【32】ゴースト</div>
+<div class="hint-text">1話目で死亡する天空寺タケルが、過去の偉人の力で変身する。<br/>いきなり死んでしまう系主人公。生き返るためのお話。<br/>世界の偉人の力を借りて戦うので、子供達の教育にもとてもよろしい教育系ライダー。<br/>命の大切さをテーマとしても扱っており、ますます教育系。</div>
+</div>
+<img alt="ゴースト" src="gw02img/tt.png"/>
+<div class="name">ゴースト</div>
+</div>
+<div class="card">
+<div class="no-row"><div class="no">【33】</div><button aria-label="ヒントを表示" class="hint-btn" data-no="33" type="button">?</button></div><div aria-modal="false" class="hint-popover" id="hint-33" role="dialog">
+<button aria-label="ヒントを閉じる" class="hint-close" type="button">×</button>
+<div class="hint-title">【33】エグゼイド</div>
+<div class="hint-text">小児科医で天才ゲーマの宝生永夢が、ゲームの力で変身する。<br/>人間に感染するコンピュータウイルスにゲームの力で医者が立ち向かう、というコンセプト。<br/>ライダー同士の戦いの方が多く、怪人は他ライダーよりも少なめ。<br/>後半になるにつれ、戦闘力がインフレしていくところもなんとなくゲーム的。<br/>発表当時は宮川大輔が主人公じゃないのか？と言われていた。</div>
+</div>
+<img alt="エグゼイド" src="gw02img/hoe.png"/>
+<div class="name">エグゼイド</div>
+</div>
+<div class="card">
+<div class="no-row"><div class="no">【34】</div><button aria-label="ヒントを表示" class="hint-btn" data-no="34" type="button">?</button></div><div aria-modal="false" class="hint-popover" id="hint-34" role="dialog">
+<button aria-label="ヒントを閉じる" class="hint-close" type="button">×</button>
+<div class="hint-title">【34】ビルド</div>
+<div class="hint-text">記憶喪失な天才的物理学者の桐生戦兎が、様々な成分が封入されたボルトの力で変身する。<br/>日本が火星からもたらされたなどの物体により３つに分割されてしまった世界。<br/>日本が３つに分割された画面はよくネットミームに使われている。<br/>登場する仮面ライダーが改造手術されている、という平成シリーズ以降ではあまりなかった設定も。</div>
+</div>
+<img alt="ビルド" src="gw02img/ksen.png"/>
+<div class="name">ビルド</div>
+</div>
+<div class="card">
+<div class="no-row"><div class="no">【35】</div><button aria-label="ヒントを表示" class="hint-btn" data-no="35" type="button">?</button></div><div aria-modal="false" class="hint-popover" id="hint-35" role="dialog">
+<button aria-label="ヒントを閉じる" class="hint-close" type="button">×</button>
+<div class="hint-title">【35】ジオウ</div>
+<div class="hint-text">王様になりたいという夢をもつ高校生の常磐ソウゴが、歴代ライダーと時空の力で変身する。<br/>平成ライダー20周年記念かつ平成シリーズ最後のライダー。<br/>顔にデカデカとライダー、とある素晴らしいデザイン。モチーフは時計。<br/>平成10周年の時と似ているところもあり、まさにお祭り的な節目な作品。<br/>未来を変えるための戦い、という要素が軸で複雑なストーリーとなっている。</div>
+</div>
+<img alt="ジオウ" src="gw02img/tokis.png"/>
+<div class="name">ジオウ</div>
+</div>
+</div>
+</section>
+<footer>(C)石森プロ・テレビ朝日・ADK EM・東映</footer>
+<script>
+function clamp(value, min, max){
+  return Math.min(Math.max(value, min), max);
+}
 
-  <h1>グループワークその２（仮面ライダー）　正解</h1>
-  
-    <section class="group">
-      <h2>昭和ライダー1期（栄光の7人ライダー）</h2>
-      <div class="grid cols-7">
-        
-        <div class="card">
-          <div class="no">【1】</div>
-          <img src="gw02img/hg.png" alt="1号">
-          <div class="name">1号</div>
-        </div>
-        
-        <div class="card">
-          <div class="no">【2】</div>
-          <img src="gw02img/im.png" alt="2号">
-          <div class="name">2号</div>
-        </div>
-        
-        <div class="card">
-          <div class="no">【3】</div>
-          <img src="gw02img/ks.png" alt="V3">
-          <div class="name">V3</div>
-        </div>
-        
-        <div class="card">
-          <div class="no">【4】</div>
-          <img src="gw02img/yj.png" alt="ライダーマン">
-          <div class="name">ライダーマン</div>
-        </div>
-        
-        <div class="card">
-          <div class="no">【5】</div>
-          <img src="gw02img/jk.png" alt="X">
-          <div class="name">X</div>
-        </div>
-        
-        <div class="card">
-          <div class="no">【6】</div>
-          <img src="gw02img/yd.png" alt="アマゾン">
-          <div class="name">アマゾン</div>
-        </div>
-        
-        <div class="card">
-          <div class="no">【7】</div>
-          <img src="gw02img/js.png" alt="ストロンガー">
-          <div class="name">ストロンガー</div>
-        </div>
-        
-      </div>
-    </section>
-    
-    <section class="group">
-      <h2>昭和ライダー2期 / 昭和ライダー3期 / 昭和ライダー4期（ネオライダー）</h2>
-      <div class="grid cols-8">
-        
-        <div class="card">
-          <div class="no">【8】</div>
-          <img src="gw02img/th.png" alt="スカイライダー">
-          <div class="name">スカイライダー</div>
-        </div>
-        
-        <div class="card">
-          <div class="no">【9】</div>
-          <img src="gw02img/ok.png" alt="スーパー1">
-          <div class="name">スーパー1</div>
-        </div>
-        
-        <div class="card">
-          <div class="no">【10】</div>
-          <img src="gw02img/mr.png" alt="ZX（ゼクロス）">
-          <div class="name">ZX（ゼクロス）</div>
-        </div>
-        
-        <div class="card">
-          <div class="no">【11】</div>
-          <img src="gw02img/mk.png" alt="Black">
-          <div class="name">Black</div>
-        </div>
-        
-        <div class="card">
-          <div class="no">【12】</div>
-          <img src="gw02img/mk2.png" alt="Black RX">
-          <div class="name">Black RX</div>
-        </div>
-        
-        <div class="card">
-          <div class="no">【13】</div>
-          <img src="gw02img/kas.png" alt="シン">
-          <div class="name">シン</div>
-        </div>
-        
-        <div class="card">
-          <div class="no">【14】</div>
-          <img src="gw02img/am.png" alt="ZO">
-          <div class="name">ZO</div>
-        </div>
-        
-        <div class="card">
-          <div class="no">【15】</div>
-          <img src="gw02img/sk.png" alt="J">
-          <div class="name">J</div>
-        </div>
-        
-      </div>
-    </section>
-    
-    <section class="group">
-      <h2>平成ライダー1期</h2>
-      <div class="grid cols-10">
-        
-        <div class="card">
-          <div class="no">【16】</div>
-          <img src="gw02img/gy.png" alt="クウガ">
-          <div class="name">クウガ</div>
-        </div>
-        
-        <div class="card">
-          <div class="no">【17】</div>
-          <img src="gw02img/ts.png" alt="アギト">
-          <div class="name">アギト</div>
-        </div>
-        
-        <div class="card">
-          <div class="no">【18】</div>
-          <img src="gw02img/kis.png" alt="龍騎">
-          <div class="name">龍騎</div>
-        </div>
-        
-        <div class="card">
-          <div class="no">【19】</div>
-          <img src="gw02img/it.png" alt="555（ファイズ）">
-          <div class="name">555（ファイズ）</div>
-        </div>
-        
-        <div class="card">
-          <div class="no">【20】</div>
-          <img src="gw02img/kk.png" alt="剣（ブレイド）">
-          <div class="name">剣（ブレイド）</div>
-        </div>
-        
-        <div class="card">
-          <div class="no">【21】</div>
-          <img src="gw02img/hh.png" alt="響鬼">
-          <div class="name">響鬼</div>
-        </div>
-        
-        <div class="card">
-          <div class="no">【22】</div>
-          <img src="gw02img/tendo.png" alt="カブト">
-          <div class="name">カブト</div>
-        </div>
-        
-        <div class="card">
-          <div class="no">【23】</div>
-          <img src="gw02img/ny.png" alt="電王">
-          <div class="name">電王</div>
-        </div>
-        
-        <div class="card">
-          <div class="no">【24】</div>
-          <img src="gw02img/kw.png" alt="キバ">
-          <div class="name">キバ</div>
-        </div>
-        
-        <div class="card">
-          <div class="no">【25】</div>
-          <img src="gw02img/kt.png" alt="ディケイド">
-          <div class="name">ディケイド</div>
-        </div>
-        
-      </div>
-    </section>
-    
-    <section class="group">
-      <h2>平成ライダー2期</h2>
-      <div class="grid cols-10">
-        
-        <div class="card">
-          <div class="no">【26】</div>
-          <img src="gw02img/hf.png" alt="W">
-          <div class="name">W</div>
-        </div>
-        
-        <div class="card">
-          <div class="no">【27】</div>
-          <img src="gw02img/he.png" alt="OOO（オーズ）">
-          <div class="name">OOO（オーズ）</div>
-        </div>
-        
-        <div class="card">
-          <div class="no">【28】</div>
-          <img src="gw02img/kg.png" alt="フォーゼ">
-          <div class="name">フォーゼ</div>
-        </div>
-        
-        <div class="card">
-          <div class="no">【29】</div>
-          <img src="gw02img/sh.png" alt="ウィザード">
-          <div class="name">ウィザード</div>
-        </div>
-        
-        <div class="card">
-          <div class="no">【30】</div>
-          <img src="gw02img/kko.png" alt="鎧武（ガイム）">
-          <div class="name">鎧武（ガイム）</div>
-        </div>
-        
-        <div class="card">
-          <div class="no">【31】</div>
-          <img src="gw02img/tos.png" alt="ドライブ">
-          <div class="name">ドライブ</div>
-        </div>
-        
-        <div class="card">
-          <div class="no">【32】</div>
-          <img src="gw02img/tt.png" alt="ゴースト">
-          <div class="name">ゴースト</div>
-        </div>
-        
-        <div class="card">
-          <div class="no">【33】</div>
-          <img src="gw02img/hoe.png" alt="エグゼイド">
-          <div class="name">エグゼイド</div>
-        </div>
-        
-        <div class="card">
-          <div class="no">【34】</div>
-          <img src="gw02img/ksen.png" alt="ビルド">
-          <div class="name">ビルド</div>
-        </div>
-        
-        <div class="card">
-          <div class="no">【35】</div>
-          <img src="gw02img/tokis.png" alt="ジオウ">
-          <div class="name">ジオウ</div>
-        </div>
-        
-      </div>
-    </section>
-    
-  <footer>(C)石森プロ・テレビ朝日・ADK EM・東映</footer>
-</body>
+function closeHints(){
+  document.querySelectorAll(".hint-popover.show").forEach(el => el.classList.remove("show"));
+}
+
+function positionHint(button, popover){
+  const margin = 16;
+  const rect = button.getBoundingClientRect();
+
+  popover.classList.add("show");
+
+  const width = Math.min(460, window.innerWidth - margin * 2);
+  popover.style.width = width + "px";
+
+  const popRect = popover.getBoundingClientRect();
+
+  let left = rect.left - 42;
+  left = clamp(left, margin, window.innerWidth - popRect.width - margin);
+
+  let top = rect.bottom + 10;
+  if(top + popRect.height > window.innerHeight - margin){
+    top = rect.top - popRect.height - 10;
+  }
+  top = clamp(top, margin, window.innerHeight - popRect.height - margin);
+
+  popover.style.left = left + "px";
+  popover.style.top = top + "px";
+}
+
+function bindHintButtons(){
+  document.querySelectorAll(".hint-btn").forEach(button => {
+    button.addEventListener("click", event => {
+      event.stopPropagation();
+      const popover = document.getElementById("hint-" + button.dataset.no);
+      const wasOpen = popover.classList.contains("show");
+      closeHints();
+      if(!wasOpen){
+        positionHint(button, popover);
+      }
+    });
+  });
+
+  document.querySelectorAll(".hint-close").forEach(button => {
+    button.addEventListener("click", event => {
+      event.stopPropagation();
+      button.closest(".hint-popover").classList.remove("show");
+    });
+  });
+}
+
+document.addEventListener("click", closeHints);
+document.addEventListener("keydown", e => {
+  if(e.key === "Escape") closeHints();
+});
+window.addEventListener("resize", closeHints);
+window.addEventListener("scroll", closeHints, true);
+
+
+document.querySelectorAll('.hint-popover').forEach(pop => {
+  const no = pop.id.replace('hint-','');
+  const textEl = pop.querySelector('.hint-text');
+  if(textEl && hints[no]){
+    textEl.innerHTML = hints[no];
+  }
+});
+
+bindHintButtons();</script></body>
 </html>
