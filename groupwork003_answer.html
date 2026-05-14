@@ -1,8 +1,9 @@
 <!DOCTYPE html>
+
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>グループワークその３（プリキュア）　正解</title>
 <style>
   :root {
@@ -111,11 +112,77 @@
   @media (max-width: 700px) {
     .grid { grid-template-columns: repeat(2, 1fr); }
   }
+
+
+  .slot-label-row{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin-bottom:8px;
+  }
+  .no-row{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin-bottom:8px;
+  }
+  .hint-btn{
+    width:26px;
+    height:26px;
+    min-height:0;
+    padding:0;
+    border-radius:50%;
+    border:2px solid rgba(245,163,211,.92);
+    background:#fff;
+    color:#7b2f72;
+    font-weight:900;
+    font-size:16px;
+    line-height:1;
+    box-shadow:0 3px 8px rgba(204,78,158,.18);
+    flex:0 0 auto;
+  }
+  .hint-popover{
+    display:none;
+    position:fixed;
+    z-index:9999;
+    width:min(460px, calc(100vw - 32px));
+    max-height:min(360px, calc(100vh - 32px));
+    overflow:auto;
+    padding:14px 40px 14px 16px;
+    border:2px solid var(--yellow, #ffd166);
+    border-radius:14px;
+    background:#fff9e8;
+    color:#7a2f14;
+    box-shadow:0 14px 34px rgba(0,0,0,.34);
+    font-size:14px;
+    line-height:1.7;
+    text-align:left;
+  }
+  .hint-popover.show{ display:block; }
+  .hint-title{
+    font-weight:900;
+    font-size:15px;
+    margin-bottom:6px;
+  }
+  .hint-close{
+    position:absolute;
+    right:10px;
+    top:8px;
+    border:0;
+    background:transparent;
+    color:#7a2f14;
+    width:24px;
+    height:24px;
+    min-height:0;
+    padding:0;
+    font-size:22px;
+    line-height:1;
+    box-shadow:none;
+  }
 </style>
 </head>
 <body>
-
-  <script>
+<script>
     (function () {
       const pass = prompt("パスワードを入力してください");
     
@@ -126,323 +193,441 @@
       }
     })();
     </script>
+<h1>グループワークその３（プリキュア）　次のプリキュアの名前とタイトルを答え、シリーズ順に並べよ</h1>
+<div class="grid">
+<div class="card">
+<div class="no-row"><div class="no">【1】</div><button aria-label="ヒントを表示" class="hint-btn" data-no="1" type="button">?</button></div><div aria-modal="false" class="hint-popover" id="hint-1" role="dialog">
+<button aria-label="ヒントを閉じる" class="hint-close" type="button">×</button>
+<div class="hint-title">【1】キュアブラック</div>
+<div class="hint-text">作品テーマは「光と闇・友情(バディ)」。<br/>コンセプトは「女の子だって暴れたい」。<br/>美墨なぎさがカードコミューンを使い変身する。<br/>偉大なる初代プリキュア、かつ最強プリキュア。<br/>題名通り、変身・必殺技発動は相方のキュアホワイトと二人が揃わないとできないという制約がある。<br/>とにかく拳と蹴りで全てを解決するスタイル。力のプリキュア。<br/>対してキュアホワイトは関節技を織り交ぜたりするので、技のプリキュアである。</div>
+</div>
+<img alt="キュアブラック" src="gw03img/nagisa.png"/>
+<div class="meta">
+<div class="label">名前</div>
+<div class="value">キュアブラック</div>
+<div class="label">タイトル</div>
+<div class="value">ふたりはプリキュア</div>
+<div class="label">声優</div>
+<div class="value">本名陽子</div>
+</div>
+</div>
+<div class="card">
+<div class="no-row"><div class="no">【2】</div><button aria-label="ヒントを表示" class="hint-btn" data-no="2" type="button">?</button></div><div aria-modal="false" class="hint-popover" id="hint-2" role="dialog">
+<button aria-label="ヒントを閉じる" class="hint-close" type="button">×</button>
+<div class="hint-title">【2】キュアブラック</div>
+<div class="hint-text">作品テーマは「命・絆」。<br/>美墨なぎさがハートフルコミューン(妖精変身型)を使い変身する。<br/>姿は前作と比べてヘソ出しがなくなり、フリルやラインが増えるなど少し豪華になっている。<br/>コスチュームデザインのコンセプトは「西部劇のガンマン」とのこと。<br/>基本オールスターズはこちらの姿で登場する。</div>
+</div>
+<img alt="キュアブラック" src="gw03img/mnagisa.png"/>
+<div class="meta">
+<div class="label">名前</div>
+<div class="value">キュアブラック</div>
+<div class="label">タイトル</div>
+<div class="value">ふたりはプリキュア Max Heart</div>
+<div class="label">声優</div>
+<div class="value">本名陽子</div>
+</div>
+</div>
+<div class="card">
+<div class="no-row"><div class="no">【3】</div><button aria-label="ヒントを表示" class="hint-btn" data-no="3" type="button">?</button></div><div aria-modal="false" class="hint-popover" id="hint-3" role="dialog">
+<button aria-label="ヒントを閉じる" class="hint-close" type="button">×</button>
+<div class="hint-title">【3】キュアブルーム</div>
+<div class="hint-text">作品テーマは「花鳥風月・自然」。<br/>日向咲がミックスコミューン(妖精変身型)を使い変身する。<br/>大地の精霊の力がベースで、イメージカラーは黄色ではなく金色とのこと。<br/>相方のキュアイーグレットとの友情度によって強さが変化する。<br/>前作までがあまりに肉弾戦すぎたので、攻撃を受けた際は自動的にバリア的なものが発生するようになった。<br/>前作までとおなじく相方のキュアイーグレットと二人が揃わないと変身や必殺技発動ができない。</div>
+</div>
+<img alt="キュアブルーム" src="gw03img/saki.png"/>
+<div class="meta">
+<div class="label">名前</div>
+<div class="value">キュアブルーム</div>
+<div class="label">タイトル</div>
+<div class="value">ふたりはプリキュア Splash☆Star</div>
+<div class="label">声優</div>
+<div class="value">樹元オリエ</div>
+</div>
+</div>
+<div class="card">
+<div class="no-row"><div class="no">【4】</div><button aria-label="ヒントを表示" class="hint-btn" data-no="4" type="button">?</button></div><div aria-modal="false" class="hint-popover" id="hint-4" role="dialog">
+<button aria-label="ヒントを閉じる" class="hint-close" type="button">×</button>
+<div class="hint-title">【4】キュアドリーム</div>
+<div class="hint-text">作品テーマは「夢・蝶・チーム」。<br/>夢原のぞみがピンキーキャッチュ(腕時計型)を使い変身する。<br/>いわゆるプリキュアの主人公カラーであるピンク(桃キュア)はこの時点から。<br/>今作から単独での変身・単独での必殺技発動が可能になった。<br/>(一応シャイニールミナスが単独変身できたが)<br/>デザインモチーフは「蝶」。<br/>声優はNARUTOのナルトやエウレカのレントンで有名な三瓶由布子。<br/>数少ない少女役のひとつ。</div>
+</div>
+<img alt="キュアドリーム" src="gw03img/nozomi.png"/>
+<div class="meta">
+<div class="label">名前</div>
+<div class="value">キュアドリーム</div>
+<div class="label">タイトル</div>
+<div class="value">Yes!プリキュア5</div>
+<div class="label">声優</div>
+<div class="value">三瓶由布子</div>
+</div>
+</div>
+<div class="card">
+<div class="no-row"><div class="no">【5】</div><button aria-label="ヒントを表示" class="hint-btn" data-no="5" type="button">?</button></div><div aria-modal="false" class="hint-popover" id="hint-5" role="dialog">
+<button aria-label="ヒントを閉じる" class="hint-close" type="button">×</button>
+<div class="hint-title">【5】キュアドリーム</div>
+<div class="hint-text">作品テーマは「希望・成長・薔薇」。<br/>夢原のぞみがキュアモ(携帯電話型)を使い変身する。<br/>前作とはデザインモチーフが異なり、今作は「薔薇」。<br/>前作では元気なイメージな姿だったが、今作は襟付きジャケットとなりカッコ良い方向に。<br/>初代に次いで人気が今でも高いプリキュアで、2023年には成人後のストーリーである「オトナプリキュア」がNHKで放送された。<br/>(※パラレル設定のスピンオフ扱い)</div>
+</div>
+<img alt="キュアドリーム" src="gw03img/ynozomi.png"/>
+<div class="meta">
+<div class="label">名前</div>
+<div class="value">キュアドリーム</div>
+<div class="label">タイトル</div>
+<div class="value">Yes!プリキュア5 GoGo!</div>
+<div class="label">声優</div>
+<div class="value">三瓶由布子</div>
+</div>
+</div>
+<div class="card">
+<div class="no-row"><div class="no">【6】</div><button aria-label="ヒントを表示" class="hint-btn" data-no="6" type="button">?</button></div><div aria-modal="false" class="hint-popover" id="hint-6" role="dialog">
+<button aria-label="ヒントを閉じる" class="hint-close" type="button">×</button>
+<div class="hint-title">【6】キュアピーチ</div>
+<div class="hint-text">作品テーマは「ダンス・フルーツ・幸福(四葉のクローバー)」。<br/>桃園ラブがリンクルン(携帯電話型)を使い変身する。<br/>キャラデザ的に大きな変化があったため色々と当時は物議を醸した。<br/>戦闘スタイルは飛び技的なものが多かった前作と比べて、初代寄りの拳で解決するタイプに戻った。<br/>あまりに気合の入り方が漢らしいため、「ラブ兄貴」と呼ばれることに。<br/>プリキュアといえばEDの3Dキャラダンスが特徴的だが、その形式になったのは今作から。<br/>振付師は今は亡きお笑いタレントの前田健氏。</div>
+</div>
+<img alt="キュアピーチ" src="gw03img/love.png"/>
+<div class="meta">
+<div class="label">名前</div>
+<div class="value">キュアピーチ</div>
+<div class="label">タイトル</div>
+<div class="value">フレッシュプリキュア!</div>
+<div class="label">声優</div>
+<div class="value">沖佳苗</div>
+</div>
+</div>
+<div class="card">
+<div class="no-row"><div class="no">【7】</div><button aria-label="ヒントを表示" class="hint-btn" data-no="7" type="button">?</button></div><div aria-modal="false" class="hint-popover" id="hint-7" role="dialog">
+<button aria-label="ヒントを閉じる" class="hint-close" type="button">×</button>
+<div class="hint-title">【7】キュアブロッサム</div>
+<div class="hint-text">作品テーマは「花・ファッション・心」。<br/>花咲つぼみがココロパフューム(香水瓶型)を使い変身する。<br/>デザインモチーフは「桜」。<br/>これまでの主人公は元気が良いことが共通項だったが、かなり内向的で敵幹部から「史上最弱のプリキュア」呼ばわりされた。<br/>逆に相方のキュアマリンは、歴代プリキュアの中でも色々と規格外なはっちゃけ具合のプリキュア。<br/>声優は水樹奈々。歌上手い。</div>
+</div>
+<img alt="キュアブロッサム" src="gw03img/tsubomi.png"/>
+<div class="meta">
+<div class="label">名前</div>
+<div class="value">キュアブロッサム</div>
+<div class="label">タイトル</div>
+<div class="value">ハートキャッチプリキュア!</div>
+<div class="label">声優</div>
+<div class="value">水樹奈々</div>
+</div>
+</div>
+<div class="card">
+<div class="no-row"><div class="no">【8】</div><button aria-label="ヒントを表示" class="hint-btn" data-no="8" type="button">?</button></div><div aria-modal="false" class="hint-popover" id="hint-8" role="dialog">
+<button aria-label="ヒントを閉じる" class="hint-close" type="button">×</button>
+<div class="hint-title">【8】キュアメロディ</div>
+<div class="hint-text">作品テーマは「音楽・友情」。<br/>北条響がキュアモジューレ(ブローチ型)を使い変身する。<br/>変身は相方のキュアリズムと二人揃わないとできない。<br/>これまでのプリキュアと異なり、相方のキュアリズムとは結構な割合で喧嘩をする。<br/>(基本的には仲の良い幼馴染)<br/>プリキュア初の敵味方死傷者ゼロの作品。<br/>東日本大震災の年の作品で、後半の内容に大きな影響を与えた。</div>
+</div>
+<img alt="キュアメロディ" src="gw03img/hibiki.png"/>
+<div class="meta">
+<div class="label">名前</div>
+<div class="value">キュアメロディ</div>
+<div class="label">タイトル</div>
+<div class="value">スイートプリキュア♪</div>
+<div class="label">声優</div>
+<div class="value">小清水亜美</div>
+</div>
+</div>
+<div class="card">
+<div class="no-row"><div class="no">【9】</div><button aria-label="ヒントを表示" class="hint-btn" data-no="9" type="button">?</button></div><div aria-modal="false" class="hint-popover" id="hint-9" role="dialog">
+<button aria-label="ヒントを閉じる" class="hint-close" type="button">×</button>
+<div class="hint-title">【9】キュアハッピー</div>
+<div class="hint-text">作品テーマは「絵本・おとぎ話・笑顔」。<br/>星空みゆきがスマイルパクト(コンパクト型)を使い変身する。<br/>いわゆる「アホの子」枠で歴代プリキュアの中でもかなり勉強が苦手。<br/>プリキュアの中で唯一、巨大ロボになってしまったりもしている。<br/>ちなみに変身時のポーズは「天地魔闘の構え」。<br/>震災の翌年でもあり、「被災地には毎週必ずプリキュアを視聴できる環境では無い子供達がいる」という理由からこれまでのシリーズでは定番だった追加戦士は存在しない。</div>
+</div>
+<img alt="キュアハッピー" src="gw03img/miyuki.png"/>
+<div class="meta">
+<div class="label">名前</div>
+<div class="value">キュアハッピー</div>
+<div class="label">タイトル</div>
+<div class="value">スマイルプリキュア!</div>
+<div class="label">声優</div>
+<div class="value">福圓美里</div>
+</div>
+</div>
+<div class="card">
+<div class="no-row"><div class="no">【10】</div><button aria-label="ヒントを表示" class="hint-btn" data-no="10" type="button">?</button></div><div aria-modal="false" class="hint-popover" id="hint-10" role="dialog">
+<button aria-label="ヒントを閉じる" class="hint-close" type="button">×</button>
+<div class="hint-title">【10】キュアエコー</div>
+<div class="hint-text">作品キーワードは「女の子は誰でもプリキュアになれる」。<br/>坂上あゆみが純粋な想いで変身する。<br/>妖精や変身アイテムの力を借りずに変身する唯一のプリキュア。<br/>正式なプリキュアなのか？はいまだに議論が交わされている。<br/>一応正式にカウントされたこともあるが、キュアモフルンと共に「映画のみに登場する特別なプリキュア」としての認識が一般的か。<br/>なお歴代プリキュアの中で唯一、一切戦わないプリキュアである。</div>
+</div>
+<img alt="キュアエコー" src="gw03img/ayumi.png"/>
+<div class="meta">
+<div class="label">名前</div>
+<div class="value">キュアエコー</div>
+<div class="label">タイトル</div>
+<div class="value">プリキュアオールスターズ NewStage</div>
+<div class="label">声優</div>
+<div class="value">能登麻美子</div>
+</div>
+</div>
+<div class="card">
+<div class="no-row"><div class="no">【11】</div><button aria-label="ヒントを表示" class="hint-btn" data-no="11" type="button">?</button></div><div aria-modal="false" class="hint-popover" id="hint-11" role="dialog">
+<button aria-label="ヒントを閉じる" class="hint-close" type="button">×</button>
+<div class="hint-title">【11】キュアハート</div>
+<div class="hint-text">作品テーマは「トランプ・愛」<br/>相田マナがラブリーコミューン(スマホ型)を使い変身する。<br/>初代以降久しぶりの、左右非対称コスチュームのプリキュア。<br/>生徒会長・成績優秀・スポーツ万能・強メンタル、と前作の主人公の対極にいるような存在。<br/>ちなみに今作のプリキュアはみな高スペック人間なのも特徴。<br/>将来の夢は総理大臣、だったのだが最終回で本当に総理大臣になってしまった。<br/>相方のキュアダイヤモンドの感情が重すぎる。</div>
+</div>
+<img alt="キュアハート" src="gw03img/mana.png"/>
+<div class="meta">
+<div class="label">名前</div>
+<div class="value">キュアハート</div>
+<div class="label">タイトル</div>
+<div class="value">ドキドキ!プリキュア</div>
+<div class="label">声優</div>
+<div class="value">生天目仁美</div>
+</div>
+</div>
+<div class="card">
+<div class="no-row"><div class="no">【12】</div><button aria-label="ヒントを表示" class="hint-btn" data-no="12" type="button">?</button></div><div aria-modal="false" class="hint-popover" id="hint-12" role="dialog">
+<button aria-label="ヒントを閉じる" class="hint-close" type="button">×</button>
+<div class="hint-title">【12】キュアラブリー</div>
+<div class="hint-text">作品テーマは「幸せ・おしゃれ」<br/>愛乃めぐみがプリチェンミラー(携帯ミラー型)を使い変身する。<br/>世界中にプリキュアがいて、多くの人がプリキュアに憧れているという世界。<br/>仮面ライダーのように複数のフォームを使って戦う。<br/>炎属性のプリキュアなのだが、主人公が炎属性なのは意外にもただ一人。<br/>シリーズ10周年の作品で記念的作品でもある。<br/>相方のキュアプリンセスはキュアマリンのようなプリキュアでは珍しいギャグ要員タイプ。</div>
+</div>
+<img alt="キュアラブリー" src="gw03img/megumi.png"/>
+<div class="meta">
+<div class="label">名前</div>
+<div class="value">キュアラブリー</div>
+<div class="label">タイトル</div>
+<div class="value">ハピネスチャージプリキュア!</div>
+<div class="label">声優</div>
+<div class="value">中島愛</div>
+</div>
+</div>
+<div class="card">
+<div class="no-row"><div class="no">【13】</div><button aria-label="ヒントを表示" class="hint-btn" data-no="13" type="button">?</button></div><div aria-modal="false" class="hint-popover" id="hint-13" role="dialog">
+<button aria-label="ヒントを閉じる" class="hint-close" type="button">×</button>
+<div class="hint-title">【13】キュアフローラ</div>
+<div class="hint-text">作品テーマは「プリンセス・夢」。<br/>春野はるかがプリンセスパフューム(香水瓶型)を使い変身する。<br/>盛り髪・金髪・ティアラとまさしくテーマ通りのお姫様姿。<br/>なのだが、戦闘スタイルは初代ばりの強力な蹴りを中心としたものでお姫様具合は減ってしまう。<br/>ちなみに攻撃がヒットすると打撃箇所から花吹雪が散る。<br/>作品全体もいわゆるノブレス・セレブリティな感じで統一されている。<br/>とはいえ王族・貴族というわけではなく「強く・優しく・美しく」の気品が軸となっている。<br/>強化フォームが5種類もある珍しいプリキュア。</div>
+</div>
+<img alt="キュアフローラ" src="gw03img/haruka.png"/>
+<div class="meta">
+<div class="label">名前</div>
+<div class="value">キュアフローラ</div>
+<div class="label">タイトル</div>
+<div class="value">Go!プリンセスプリキュア</div>
+<div class="label">声優</div>
+<div class="value">嶋村侑</div>
+</div>
+</div>
+<div class="card">
+<div class="no-row"><div class="no">【14】</div><button aria-label="ヒントを表示" class="hint-btn" data-no="14" type="button">?</button></div><div aria-modal="false" class="hint-popover" id="hint-14" role="dialog">
+<button aria-label="ヒントを閉じる" class="hint-close" type="button">×</button>
+<div class="hint-title">【14】キュアミラクル</div>
+<div class="hint-text">作品テーマは「魔法使い・手を繋ぐ」。<br/>朝日奈みらいが妖精のモフルンから力を借りて変身する。<br/>基本的に、妖精のモフルンと相方のキュアマジカルが揃わないと変身できない。<br/>ハピプリと同じく複数のフォーム/スタイルを使って戦う。<br/>先輩たちのような肉弾戦中心ではなく、テーマらしく魔法的なものや一撃必殺的な戦いをする。<br/>初めてタイトルに漢字が使われたプリキュア。<br/>また「オトナプリキュア」とは異なり、正式な続編(全12話)が2025年に放送された。</div>
+</div>
+<img alt="キュアミラクル" src="gw03img/mirai.png"/>
+<div class="meta">
+<div class="label">名前</div>
+<div class="value">キュアミラクル</div>
+<div class="label">タイトル</div>
+<div class="value">魔法つかいプリキュア!</div>
+<div class="label">声優</div>
+<div class="value">高橋李依</div>
+</div>
+</div>
+<div class="card">
+<div class="no-row"><div class="no">【15】</div><button aria-label="ヒントを表示" class="hint-btn" data-no="15" type="button">?</button></div><div aria-modal="false" class="hint-popover" id="hint-15" role="dialog">
+<button aria-label="ヒントを閉じる" class="hint-close" type="button">×</button>
+<div class="hint-title">【15】キュアホイップ</div>
+<div class="hint-text">作品テーマは「スイーツ・アニマル・光と闇」。<br/>宇佐美いちかがスイーツパクト(コンパクト型)を使って変身する。<br/>モチーフ通りの長いウサミミが特徴のプリキュア。<br/>ウサギらしく脚力と聴力が高く、それらを活かした戦い方をする。<br/>主人公にしては珍しくギャグ要員の要素が強い。<br/>個性の強さが作品の軸としてもあり、登場するプリキュアたちは他の作品と異なりコスチュームに統一性がない。</div>
+</div>
+<img alt="キュアホイップ" src="gw03img/ichika.png"/>
+<div class="meta">
+<div class="label">名前</div>
+<div class="value">キュアホイップ</div>
+<div class="label">タイトル</div>
+<div class="value">キラキラ☆プリキュアアラモード</div>
+<div class="label">声優</div>
+<div class="value">美山加恋</div>
+</div>
+</div>
+<div class="card">
+<div class="no-row"><div class="no">【16】</div><button aria-label="ヒントを表示" class="hint-btn" data-no="16" type="button">?</button></div><div aria-modal="false" class="hint-popover" id="hint-16" role="dialog">
+<button aria-label="ヒントを閉じる" class="hint-close" type="button">×</button>
+<div class="hint-title">【16】キュアエール</div>
+<div class="hint-text">作品テーマは「母性・子育て・仕事」。<br/>野乃はながプリハート(スマホ型)を使い変身する。<br/>初のスニーカーを履いたプリキュアでもある。<br/>シリーズ15周年の作品。過去作のオマージュが随所に見られる。<br/>過去作で妖精のお世話(育児)はあったものの、人間の赤ちゃんのお世話をテーマにしたのは初めて。<br/>最終回では大人になったはなが出産するシーンが描かれて反響を呼んだ。</div>
+</div>
+<img alt="キュアエール" src="gw03img/hana.png"/>
+<div class="meta">
+<div class="label">名前</div>
+<div class="value">キュアエール</div>
+<div class="label">タイトル</div>
+<div class="value">HUGっと!プリキュア</div>
+<div class="label">声優</div>
+<div class="value">引坂理絵</div>
+</div>
+</div>
+<div class="card">
+<div class="no-row"><div class="no">【17】</div><button aria-label="ヒントを表示" class="hint-btn" data-no="17" type="button">?</button></div><div aria-modal="false" class="hint-popover" id="hint-17" role="dialog">
+<button aria-label="ヒントを閉じる" class="hint-close" type="button">×</button>
+<div class="hint-title">【17】キュアスター</div>
+<div class="hint-text">作品テーマは「宇宙・星座・多様性」。<br/>星奈ひかるがスターカラーペンダント(ペンダント型)を使って変身する。<br/>プリキュア名に作品名が入るのは実は初めて。<br/>作品名らしく星座の名前が入った必殺技を使う。<br/>地球以外で初変身し、宇宙での戦いも多いプリキュア。<br/>前作より明るい雰囲気の作品となっている。<br/>褐色肌のプリキュアや宇宙人のプリキュアなどなど多様性が意識されている。</div>
+</div>
+<img alt="キュアスター" src="gw03img/hikaru.png"/>
+<div class="meta">
+<div class="label">名前</div>
+<div class="value">キュアスター</div>
+<div class="label">タイトル</div>
+<div class="value">スター☆トゥインクルプリキュア</div>
+<div class="label">声優</div>
+<div class="value">成瀬瑛美</div>
+</div>
+</div>
+<div class="card">
+<div class="no-row"><div class="no">【18】</div><button aria-label="ヒントを表示" class="hint-btn" data-no="18" type="button">?</button></div><div aria-modal="false" class="hint-popover" id="hint-18" role="dialog">
+<button aria-label="ヒントを閉じる" class="hint-close" type="button">×</button>
+<div class="hint-title">【18】キュアグレース</div>
+<div class="hint-text">作品テーマは「お医者さん・思いやり・生きる」。<br/>花寺のどかがヒーリングステッキ(ステッキ型)を使い変身する。<br/>長期にわたる入院生活を経て、ようやく退院し引っ越してきたところから物語が始まる。<br/>プリキュア全員がなんらかの医療・医療従事者との関わりがある作品。<br/>生きることをテーマとしているので、これまでのシリーズでは避けられてきた「死ぬ」という言葉も自然に使われている。<br/>こちらも強化フォームが5種類もある珍しいプリキュア。</div>
+</div>
+<img alt="キュアグレース" src="gw03img/nodoka.png"/>
+<div class="meta">
+<div class="label">名前</div>
+<div class="value">キュアグレース</div>
+<div class="label">タイトル</div>
+<div class="value">ヒーリングっど♥プリキュア</div>
+<div class="label">声優</div>
+<div class="value">悠木碧</div>
+</div>
+</div>
+<div class="card">
+<div class="no-row"><div class="no">【19】</div><button aria-label="ヒントを表示" class="hint-btn" data-no="19" type="button">?</button></div><div aria-modal="false" class="hint-popover" id="hint-19" role="dialog">
+<button aria-label="ヒントを閉じる" class="hint-close" type="button">×</button>
+<div class="hint-title">【19】キュアサマー</div>
+<div class="hint-text">作品テーマは「夏・海・コスメ・一番大事なこと」。<br/>夏海まなつがトロピカルパクト(パクト型)を使い変身する。<br/>モチーフの常夏らしい、セーラ服的な白を基調としたプリキュア。<br/>基本、白がイメージカラーのプリキュアはいわゆる相方つまり「2人目」のポジションだったが、今作は主人公である。<br/>コロナ禍の最中でもあり、視聴者に元気を与えることを目的としてかなり明るめの雰囲気になっている。<br/>声優はファイルーズあい、まさに雰囲気にぴったり。</div>
+</div>
+<img alt="キュアサマー" src="gw03img/manatsu.png"/>
+<div class="meta">
+<div class="label">名前</div>
+<div class="value">キュアサマー</div>
+<div class="label">タイトル</div>
+<div class="value">トロピカル〜ジュ!プリキュア</div>
+<div class="label">声優</div>
+<div class="value">ファイルーズあい</div>
+</div>
+</div>
+<div class="card">
+<div class="no-row"><div class="no">【20】</div><button aria-label="ヒントを表示" class="hint-btn" data-no="20" type="button">?</button></div><div aria-modal="false" class="hint-popover" id="hint-20" role="dialog">
+<button aria-label="ヒントを閉じる" class="hint-close" type="button">×</button>
+<div class="hint-title">【20】キュアプレシャス</div>
+<div class="hint-text">作品テーマは「料理(ごはん)・ありがとう・シェア」。<br/>和実ゆいが妖精の力を借りて変身する。<br/>料理がテーマのため、エプロンをつけたコスチュームになっている。<br/>勾玉風の装飾や足袋っぽいヒールなど、「和」を感じさせる。<br/>カロリーをパンチに変換して攻撃するという、全人類が夢見る力で戦う。<br/>コロナ禍での黙食に対して、アニメの中だけでも一緒に食事をする楽しさを伝えたい、という思いも。<br/>(プリアラの「作る」に対して今作は「食べる」がメイン)</div>
+</div>
+<img alt="キュアプレシャス" src="gw03img/yui.png"/>
+<div class="meta">
+<div class="label">名前</div>
+<div class="value">キュアプレシャス</div>
+<div class="label">タイトル</div>
+<div class="value">デリシャスパーティ♡プリキュア</div>
+<div class="label">声優</div>
+<div class="value">菱川花菜</div>
+</div>
+</div>
+<div class="card">
+<div class="no-row"><div class="no">【21】</div><button aria-label="ヒントを表示" class="hint-btn" data-no="21" type="button">?</button></div><div aria-modal="false" class="hint-popover" id="hint-21" role="dialog">
+<button aria-label="ヒントを閉じる" class="hint-close" type="button">×</button>
+<div class="hint-title">【21】キュアスカイ</div>
+<div class="hint-text">作品テーマは「空・神話・ヒーロー」。<br/>ソラ・ハレワタールがミラージュペン(ペン型)を使い変身する。<br/>シリーズ初の「青キュア」主人公。<br/>そしてシリーズ初の「異世界人」主人公。<br/>シリーズ20周年の作品で様々な挑戦がされている。<br/>純粋な大人のプリキュア(18歳)、赤ちゃんのプリキュア、そして男性のプリキュア、とシリーズ初がてんこ盛りである。</div>
+</div>
+<img alt="キュアスカイ" src="gw03img/sora.png"/>
+<div class="meta">
+<div class="label">名前</div>
+<div class="value">キュアスカイ</div>
+<div class="label">タイトル</div>
+<div class="value">ひろがるスカイ!プリキュア</div>
+<div class="label">声優</div>
+<div class="value">関根明良</div>
+</div>
+</div>
+<div class="card">
+<div class="no-row"><div class="no">【22】</div><button aria-label="ヒントを表示" class="hint-btn" data-no="22" type="button">?</button></div><div aria-modal="false" class="hint-popover" id="hint-22" role="dialog">
+<button aria-label="ヒントを閉じる" class="hint-close" type="button">×</button>
+<div class="hint-title">【22】キュアワンダフル</div>
+<div class="hint-text">作品テーマは「動物・友達」。<br/>犬飼こむぎがワンダフルパクト(コンパクト型)を使い変身する。<br/>前作は純粋な異世界人が主人公だったが、今作は純粋な「犬(パピヨン犬)」が主人公。<br/>飼い主であるキュアフレンディ(犬飼いろは)とのダブル主人公のような形にはなっている。<br/>タイトルがすべてひらがなになるのは何気に初めて。<br/>敵に一切攻撃をしない、が特徴のプリキュア。</div>
+</div>
+<img alt="キュアワンダフル" src="gw03img/komugi.png"/>
+<div class="meta">
+<div class="label">名前</div>
+<div class="value">キュアワンダフル</div>
+<div class="label">タイトル</div>
+<div class="value">わんだふるぷりきゅあ!</div>
+<div class="label">声優</div>
+<div class="value">長縄まりあ</div>
+</div>
+</div>
+<div class="card">
+<div class="no-row"><div class="no">【23】</div><button aria-label="ヒントを表示" class="hint-btn" data-no="23" type="button">?</button></div><div aria-modal="false" class="hint-popover" id="hint-23" role="dialog">
+<button aria-label="ヒントを閉じる" class="hint-close" type="button">×</button>
+<div class="hint-title">【23】キュアアイドル</div>
+<div class="hint-text">作品テーマは「アイドル・ファン」。<br/>咲良うたがアイドルハートブローチ(ブローチ型)を使い変身する。<br/>防御という言葉が存在しないプリキュア、薩摩武士。<br/>何気にプリキュアでアイドルをテーマにしたのは初めて。<br/>過去作でアイドル活動をするプリキュアはいたが、全体テーマとしては初であり、今まで避けてきたとのこと。<br/>普通の中学生が妖精の力で変身する、という原点回帰したプリキュアでもある。</div>
+</div>
+<img alt="キュアアイドル" src="gw03img/uta.png"/>
+<div class="meta">
+<div class="label">名前</div>
+<div class="value">キュアアイドル</div>
+<div class="label">タイトル</div>
+<div class="value">キミとアイドルプリキュア♪</div>
+<div class="label">声優</div>
+<div class="value">松岡美里</div>
+</div>
+</div>
+<div class="card">
+<div class="no-row"><div class="no">【24】</div><button aria-label="ヒントを表示" class="hint-btn" data-no="24" type="button">?</button></div><div aria-modal="false" class="hint-popover" id="hint-24" role="dialog">
+<button aria-label="ヒントを閉じる" class="hint-close" type="button">×</button>
+<div class="hint-title">【24】キュアアンサー</div>
+<div class="hint-text">作品テーマは「名探偵・タイムトラベル・本当の答え」。<br/>明智あんながジュエルキュアウォッチ(懐中時計)を使い変身する。<br/>もう一人の主人公であるキュアミスティックと同時変身するが、揃ってないと変身できないという訳ではない。<br/>イメージカラーは「紫」、ということで初の「紫キュア」主人公。<br/>同時変身はまほプリ以来の10年ぶり。<br/>舞台はタイムスリップした1999年。<br/>敵対組織は「怪盗団ファントム」で、どうしても某ゲームの心の怪盗団を思い起こさせる。</div>
+</div>
+<img alt="キュアアンサー" src="gw03img/annna.png"/>
+<div class="meta">
+<div class="label">名前</div>
+<div class="value">キュアアンサー</div>
+<div class="label">タイトル</div>
+<div class="value">名探偵プリキュア!</div>
+<div class="label">声優</div>
+<div class="value">千賀光莉</div>
+</div>
+</div>
+</div>
+<footer>©ABC-A・東映アニメーション</footer>
+<script>
+function clamp(value, min, max){
+  return Math.min(Math.max(value, min), max);
+}
+function closeHints(){
+  document.querySelectorAll(".hint-popover.show").forEach(el => el.classList.remove("show"));
+}
+function positionHint(button, popover){
+  const margin = 16;
+  const rect = button.getBoundingClientRect();
+  popover.classList.add("show");
+  const width = Math.min(460, window.innerWidth - margin * 2);
+  popover.style.width = width + "px";
+  const popRect = popover.getBoundingClientRect();
+  let left = rect.left - 42;
+  left = clamp(left, margin, window.innerWidth - popRect.width - margin);
+  let top = rect.bottom + 10;
+  if(top + popRect.height > window.innerHeight - margin){
+    top = rect.top - popRect.height - 10;
+  }
+  top = clamp(top, margin, window.innerHeight - popRect.height - margin);
+  popover.style.left = left + "px";
+  popover.style.top = top + "px";
+}
+function bindHintButtons(){
+  document.querySelectorAll(".hint-btn").forEach(button => {
+    button.addEventListener("click", event => {
+      event.stopPropagation();
+      const popover = document.getElementById("hint-" + button.dataset.no);
+      const wasOpen = popover.classList.contains("show");
+      closeHints();
+      if(!wasOpen) positionHint(button, popover);
+    });
+  });
+  document.querySelectorAll(".hint-close").forEach(button => {
+    button.addEventListener("click", event => {
+      event.stopPropagation();
+      button.closest(".hint-popover").classList.remove("show");
+    });
+  });
+}
+document.addEventListener("click", closeHints);
+document.addEventListener("keydown", e => {
+  if(e.key === "Escape") closeHints();
+});
+window.addEventListener("resize", closeHints);
+window.addEventListener("scroll", closeHints, true);
 
-  <h1>グループワークその３（プリキュア）　次のプリキュアの名前とタイトルを答え、シリーズ順に並べよ</h1>
-  <div class="grid">
-    
-      <div class="card">
-        <div class="no">【1】</div>
-        <img src="gw03img/nagisa.png" alt="キュアブラック">
-        <div class="meta">
-          <div class="label">名前</div>
-          <div class="value">キュアブラック</div>
-          <div class="label">タイトル</div>
-          <div class="value">ふたりはプリキュア</div>
-          <div class="label">声優</div>
-          <div class="value">本名陽子</div>
-        </div>
-      </div>
-    
-      <div class="card">
-        <div class="no">【2】</div>
-        <img src="gw03img/mnagisa.png" alt="キュアブラック">
-        <div class="meta">
-          <div class="label">名前</div>
-          <div class="value">キュアブラック</div>
-          <div class="label">タイトル</div>
-          <div class="value">ふたりはプリキュア Max Heart</div>
-          <div class="label">声優</div>
-          <div class="value">本名陽子</div>
-        </div>
-      </div>
-    
-      <div class="card">
-        <div class="no">【3】</div>
-        <img src="gw03img/saki.png" alt="キュアブルーム">
-        <div class="meta">
-          <div class="label">名前</div>
-          <div class="value">キュアブルーム</div>
-          <div class="label">タイトル</div>
-          <div class="value">ふたりはプリキュア Splash☆Star</div>
-          <div class="label">声優</div>
-          <div class="value">樹元オリエ</div>
-        </div>
-      </div>
-    
-      <div class="card">
-        <div class="no">【4】</div>
-        <img src="gw03img/nozomi.png" alt="キュアドリーム">
-        <div class="meta">
-          <div class="label">名前</div>
-          <div class="value">キュアドリーム</div>
-          <div class="label">タイトル</div>
-          <div class="value">Yes!プリキュア5</div>
-          <div class="label">声優</div>
-          <div class="value">三瓶由布子</div>
-        </div>
-      </div>
-    
-      <div class="card">
-        <div class="no">【5】</div>
-        <img src="gw03img/ynozomi.png" alt="キュアドリーム">
-        <div class="meta">
-          <div class="label">名前</div>
-          <div class="value">キュアドリーム</div>
-          <div class="label">タイトル</div>
-          <div class="value">Yes!プリキュア5 GoGo!</div>
-          <div class="label">声優</div>
-          <div class="value">三瓶由布子</div>
-        </div>
-      </div>
-    
-      <div class="card">
-        <div class="no">【6】</div>
-        <img src="gw03img/love.png" alt="キュアピーチ">
-        <div class="meta">
-          <div class="label">名前</div>
-          <div class="value">キュアピーチ</div>
-          <div class="label">タイトル</div>
-          <div class="value">フレッシュプリキュア!</div>
-          <div class="label">声優</div>
-          <div class="value">沖佳苗</div>
-        </div>
-      </div>
-    
-      <div class="card">
-        <div class="no">【7】</div>
-        <img src="gw03img/tsubomi.png" alt="キュアブロッサム">
-        <div class="meta">
-          <div class="label">名前</div>
-          <div class="value">キュアブロッサム</div>
-          <div class="label">タイトル</div>
-          <div class="value">ハートキャッチプリキュア!</div>
-          <div class="label">声優</div>
-          <div class="value">水樹奈々</div>
-        </div>
-      </div>
-    
-      <div class="card">
-        <div class="no">【8】</div>
-        <img src="gw03img/hibiki.png" alt="キュアメロディ">
-        <div class="meta">
-          <div class="label">名前</div>
-          <div class="value">キュアメロディ</div>
-          <div class="label">タイトル</div>
-          <div class="value">スイートプリキュア♪</div>
-          <div class="label">声優</div>
-          <div class="value">小清水亜美</div>
-        </div>
-      </div>
-    
-      <div class="card">
-        <div class="no">【9】</div>
-        <img src="gw03img/miyuki.png" alt="キュアハッピー">
-        <div class="meta">
-          <div class="label">名前</div>
-          <div class="value">キュアハッピー</div>
-          <div class="label">タイトル</div>
-          <div class="value">スマイルプリキュア!</div>
-          <div class="label">声優</div>
-          <div class="value">福圓美里</div>
-        </div>
-      </div>
-    
-      <div class="card">
-        <div class="no">【10】</div>
-        <img src="gw03img/ayumi.png" alt="キュアエコー">
-        <div class="meta">
-          <div class="label">名前</div>
-          <div class="value">キュアエコー</div>
-          <div class="label">タイトル</div>
-          <div class="value">プリキュアオールスターズ NewStage</div>
-          <div class="label">声優</div>
-          <div class="value">能登麻美子</div>
-        </div>
-      </div>
-    
-      <div class="card">
-        <div class="no">【11】</div>
-        <img src="gw03img/mana.png" alt="キュアハート">
-        <div class="meta">
-          <div class="label">名前</div>
-          <div class="value">キュアハート</div>
-          <div class="label">タイトル</div>
-          <div class="value">ドキドキ!プリキュア</div>
-          <div class="label">声優</div>
-          <div class="value">生天目仁美</div>
-        </div>
-      </div>
-    
-      <div class="card">
-        <div class="no">【12】</div>
-        <img src="gw03img/megumi.png" alt="キュアラブリー">
-        <div class="meta">
-          <div class="label">名前</div>
-          <div class="value">キュアラブリー</div>
-          <div class="label">タイトル</div>
-          <div class="value">ハピネスチャージプリキュア!</div>
-          <div class="label">声優</div>
-          <div class="value">中島愛</div>
-        </div>
-      </div>
-    
-      <div class="card">
-        <div class="no">【13】</div>
-        <img src="gw03img/haruka.png" alt="キュアフローラ">
-        <div class="meta">
-          <div class="label">名前</div>
-          <div class="value">キュアフローラ</div>
-          <div class="label">タイトル</div>
-          <div class="value">Go!プリンセスプリキュア</div>
-          <div class="label">声優</div>
-          <div class="value">嶋村侑</div>
-        </div>
-      </div>
-    
-      <div class="card">
-        <div class="no">【14】</div>
-        <img src="gw03img/mirai.png" alt="キュアミラクル">
-        <div class="meta">
-          <div class="label">名前</div>
-          <div class="value">キュアミラクル</div>
-          <div class="label">タイトル</div>
-          <div class="value">魔法つかいプリキュア!</div>
-          <div class="label">声優</div>
-          <div class="value">高橋李依</div>
-        </div>
-      </div>
-    
-      <div class="card">
-        <div class="no">【15】</div>
-        <img src="gw03img/ichika.png" alt="キュアホイップ">
-        <div class="meta">
-          <div class="label">名前</div>
-          <div class="value">キュアホイップ</div>
-          <div class="label">タイトル</div>
-          <div class="value">キラキラ☆プリキュアアラモード</div>
-          <div class="label">声優</div>
-          <div class="value">美山加恋</div>
-        </div>
-      </div>
-    
-      <div class="card">
-        <div class="no">【16】</div>
-        <img src="gw03img/hana.png" alt="キュアエール">
-        <div class="meta">
-          <div class="label">名前</div>
-          <div class="value">キュアエール</div>
-          <div class="label">タイトル</div>
-          <div class="value">HUGっと!プリキュア</div>
-          <div class="label">声優</div>
-          <div class="value">引坂理絵</div>
-        </div>
-      </div>
-    
-      <div class="card">
-        <div class="no">【17】</div>
-        <img src="gw03img/hikaru.png" alt="キュアスター">
-        <div class="meta">
-          <div class="label">名前</div>
-          <div class="value">キュアスター</div>
-          <div class="label">タイトル</div>
-          <div class="value">スター☆トゥインクルプリキュア</div>
-          <div class="label">声優</div>
-          <div class="value">成瀬瑛美</div>
-        </div>
-      </div>
-    
-      <div class="card">
-        <div class="no">【18】</div>
-        <img src="gw03img/nodoka.png" alt="キュアグレース">
-        <div class="meta">
-          <div class="label">名前</div>
-          <div class="value">キュアグレース</div>
-          <div class="label">タイトル</div>
-          <div class="value">ヒーリングっど♥プリキュア</div>
-          <div class="label">声優</div>
-          <div class="value">悠木碧</div>
-        </div>
-      </div>
-    
-      <div class="card">
-        <div class="no">【19】</div>
-        <img src="gw03img/manatsu.png" alt="キュアサマー">
-        <div class="meta">
-          <div class="label">名前</div>
-          <div class="value">キュアサマー</div>
-          <div class="label">タイトル</div>
-          <div class="value">トロピカル〜ジュ!プリキュア</div>
-          <div class="label">声優</div>
-          <div class="value">ファイルーズあい</div>
-        </div>
-      </div>
-    
-      <div class="card">
-        <div class="no">【20】</div>
-        <img src="gw03img/yui.png" alt="キュアプレシャス">
-        <div class="meta">
-          <div class="label">名前</div>
-          <div class="value">キュアプレシャス</div>
-          <div class="label">タイトル</div>
-          <div class="value">デリシャスパーティ♡プリキュア</div>
-          <div class="label">声優</div>
-          <div class="value">菱川花菜</div>
-        </div>
-      </div>
-    
-      <div class="card">
-        <div class="no">【21】</div>
-        <img src="gw03img/sora.png" alt="キュアスカイ">
-        <div class="meta">
-          <div class="label">名前</div>
-          <div class="value">キュアスカイ</div>
-          <div class="label">タイトル</div>
-          <div class="value">ひろがるスカイ!プリキュア</div>
-          <div class="label">声優</div>
-          <div class="value">関根明良</div>
-        </div>
-      </div>
-    
-      <div class="card">
-        <div class="no">【22】</div>
-        <img src="gw03img/komugi.png" alt="キュアワンダフル">
-        <div class="meta">
-          <div class="label">名前</div>
-          <div class="value">キュアワンダフル</div>
-          <div class="label">タイトル</div>
-          <div class="value">わんだふるぷりきゅあ!</div>
-          <div class="label">声優</div>
-          <div class="value">長縄まりあ</div>
-        </div>
-      </div>
-    
-      <div class="card">
-        <div class="no">【23】</div>
-        <img src="gw03img/uta.png" alt="キュアアイドル">
-        <div class="meta">
-          <div class="label">名前</div>
-          <div class="value">キュアアイドル</div>
-          <div class="label">タイトル</div>
-          <div class="value">キミとアイドルプリキュア♪</div>
-          <div class="label">声優</div>
-          <div class="value">松岡美里</div>
-        </div>
-      </div>
-    
-      <div class="card">
-        <div class="no">【24】</div>
-        <img src="gw03img/annna.png" alt="キュアアンサー">
-        <div class="meta">
-          <div class="label">名前</div>
-          <div class="value">キュアアンサー</div>
-          <div class="label">タイトル</div>
-          <div class="value">名探偵プリキュア!</div>
-          <div class="label">声優</div>
-          <div class="value">千賀光莉</div>
-        </div>
-      </div>
-    
-  </div>
-  <footer>©ABC-A・東映アニメーション</footer>
-</body>
+bindHintButtons();</script></body>
 </html>
