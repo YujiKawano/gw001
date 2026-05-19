@@ -447,6 +447,36 @@
     box-shadow:none;
   }
 
+
+  .slot.correct{
+    border-color:#6ee7b7 !important;
+    box-shadow:0 0 0 4px rgba(110,231,183,.22);
+  }
+
+  .slot.incorrect{
+    border-color:#ff6b6b !important;
+    box-shadow:0 0 0 4px rgba(255,107,107,.18);
+  }
+
+  .result-badge{
+    margin-top:6px;
+    text-align:center;
+    font-weight:900;
+    font-size:13px;
+    border-radius:10px;
+    padding:4px 6px;
+  }
+
+  .result-ok{
+    background:rgba(110,231,183,.16);
+    color:#1f8a68;
+  }
+
+  .result-ng{
+    background:rgba(255,107,107,.16);
+    color:#e24d4d;
+  }
+
 </style>
 </head>
 
@@ -469,6 +499,7 @@
         <h1>プリキュアをシリーズ順に並べよ</h1>
       </div>
       <div class="actions">
+        <button id="checkBtn" type="button">答え合わせ</button>
         <button id="resetBtn" type="button">リセット</button>
         <a class="answer-link-btn" href="groupwork003_answer.html" target="_blank" rel="noopener">解答へ</a>
       </div>
@@ -492,6 +523,7 @@
         <div>
           <h2>シリーズ順に並べる</h2>
         </div>
+        <div id="scoreBoard" style="font-weight:900;color:#ffd166;margin-bottom:10px;font-size:18px;">未採点</div>
         <div class="legend">
           <span>クリック配置対応</span>
           <span>ドラッグ対応</span>
@@ -536,8 +568,53 @@ const hints = {
   "21": "作品テーマは「空・神話・ヒーロー」。<br>ソラ・ハレワタールがミラージュペン(ペン型)を使い変身する。<br>シリーズ初の「青キュア」主人公。<br>そしてシリーズ初の「異世界人」主人公。<br>シリーズ20周年の作品で様々な挑戦がされている。<br>純粋な大人のプリキュア(18歳)、赤ちゃんのプリキュア、そして男性のプリキュア、とシリーズ初がてんこ盛りである。",
   "22": "作品テーマは「動物・友達」。<br>犬飼こむぎがワンダフルパクト(コンパクト型)を使い変身する。<br>前作は純粋な異世界人が主人公だったが、今作は純粋な「犬(パピヨン犬)」が主人公。<br>飼い主であるキュアフレンディ(犬飼いろは)とのダブル主人公のような形にはなっている。<br>タイトルがすべてひらがなになるのは何気に初めて。<br>敵に一切攻撃をしない、が特徴のプリキュア。",
   "23": "作品テーマは「アイドル・ファン」。<br>咲良うたがアイドルハートブローチ(ブローチ型)を使い変身する。<br>防御という言葉が存在しないプリキュア、薩摩武士。<br>何気にプリキュアでアイドルをテーマにしたのは初めて。<br>過去作でアイドル活動をするプリキュアはいたが、全体テーマとしては初であり、今まで避けてきたとのこと。<br>普通の中学生が妖精の力で変身する、という原点回帰したプリキュアでもある。",
-  "24": "作品テーマは「名探偵・タイムトラベル・本当の答え」。<br>明智あんながジュエルキュアウォッチ(懐中時計)を使い変身する。<br>もう一人の主人公であるキュアミスティックと同時変身するが、揃ってないと変身できないという訳ではない。<br>イメージカラーは「紫」、ということで初の「紫キュア」主人公。<br>同時変身はまほプリ以来の10年ぶり。<br>舞台はタイムスリップした1999年。<br>敵対組織は「怪盗団ファントム」で、どうしても某ゲームの心の怪盗団を思い起こさせる。"
+  "24": "作品テーマは「名探偵・タイムトラベル・本当の答え」。<br>ジュエルキュアウォッチ(懐中時計)を使い変身する。<br>もう一人の主人公であるキュアミスティックと同時変身するが、揃ってないと変身できないという訳ではない。<br>イメージカラーは「紫」、ということで初の「紫キュア」主人公。<br>同時変身はまほプリ以来の10年ぶり。<br>舞台はタイムスリップした1999年。<br>敵対組織は「怪盗団ファントム」で、どうしても某ゲームの心の怪盗団を思い起こさせる。"
 };
+
+
+const correctOrder = ["p01","p02","p03","p04","p05","p06","p07","p08","p09","p10","p11","p12","p13","p14","p15","p16","p17","p18","p19","p20","p21","p22","p23","p24"];
+
+function clearResults(){
+  document.querySelectorAll(".slot").forEach(slot => {
+    slot.classList.remove("correct","incorrect");
+    const badge = slot.querySelector(".result-badge");
+    if(badge) badge.remove();
+  });
+}
+
+function checkAnswers(){
+  clearResults();
+
+  let correct = 0;
+
+  document.querySelectorAll(".slot").forEach((slot, idx) => {
+    const body = slot.querySelector(".slot-body");
+    const card = body.querySelector(".card");
+
+    const badge = document.createElement("div");
+    badge.className = "result-badge";
+
+    if(card && card.dataset.id === correctOrder[idx]){
+      slot.classList.add("correct");
+      badge.classList.add("result-ok");
+      badge.textContent = "正解";
+      correct++;
+    }else{
+      slot.classList.add("incorrect");
+      badge.classList.add("result-ng");
+      badge.textContent = "不正解";
+    }
+
+    slot.appendChild(badge);
+  });
+
+  const board = document.getElementById("scoreBoard");
+  board.textContent = `正解数：${correct} / ${correctOrder.length}`;
+
+  if(correct === correctOrder.length){
+    board.textContent += "　🎉 全問正解！";
+  }
+}
 
 const answerGrid = document.getElementById("answerGrid");
 const pool = document.getElementById("pool");
@@ -780,6 +857,8 @@ function buildAnswerArea(){
 }
 
 function resetAll(){
+  clearResults();
+  document.getElementById("scoreBoard").textContent = "未採点";
   answerGrid.querySelectorAll(".slot").forEach(slot => {
     const body = slot.querySelector(".slot-body");
     const card = body.querySelector(".card");
@@ -808,6 +887,7 @@ initialItems.forEach(item => pool.appendChild(createCard(item)));
 shufflePool();
 updateSelectedStatus();
 bindHintButtons();
+document.getElementById("checkBtn").addEventListener("click", checkAnswers);
 resetBtn.addEventListener("click", resetAll);
 </script>
 </body>

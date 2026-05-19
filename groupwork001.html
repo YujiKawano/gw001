@@ -471,6 +471,36 @@
       min-height:238px;
     }
   }
+
+  .slot.correct{
+    border-color:#6ee7b7 !important;
+    box-shadow:0 0 0 4px rgba(110,231,183,.22);
+  }
+
+  .slot.incorrect{
+    border-color:#ff6b6b !important;
+    box-shadow:0 0 0 4px rgba(255,107,107,.18);
+  }
+
+  .result-badge{
+    margin-top:6px;
+    text-align:center;
+    font-weight:900;
+    font-size:13px;
+    border-radius:10px;
+    padding:4px 6px;
+  }
+
+  .result-ok{
+    background:rgba(110,231,183,.16);
+    color:#6ee7b7;
+  }
+
+  .result-ng{
+    background:rgba(255,107,107,.16);
+    color:#ff8b8b;
+  }
+
 </style>
 </head>
 
@@ -493,6 +523,7 @@
         <h1>ガンダム機体名を答え、宇宙世紀の年代順に並べよ</h1>
               </div>
       <div class="actions">
+        <button id="checkBtn" type="button">答え合わせ</button>
         <button id="resetBtn" type="button">リセット</button>
         <a class="answer-link-btn" href="groupwork001_answer.html" target="_blank" rel="noopener">解答へ</a>
       </div>
@@ -516,6 +547,7 @@
         <div>
           <h2>年代順に並べる</h2>
                   </div>
+        <div id="scoreBoard" style="font-weight:900;color:#ffd166;margin-bottom:10px;font-size:18px;">未採点</div>
         <div class="legend">
           <span>クリック配置対応</span>
           <span>ドラッグ対応</span>
@@ -583,6 +615,56 @@ const hints = {
   "19": "ロラン・アセットの搭乗機。<br>山の中に眠っていた成人式の神像。黒歴史のガンダム。<br>作中では最初は見た目からホワイトドール、その後ヒゲ、ヒゲの機械人形等の呼ばれ方をしていた。<br>人工物の分子結合を破壊して砂状に分解する月光蝶によって、地球文明を破壊したある意味最強クラスのガンダム。<br>ブレードランナーのビジュアルコンセプトなどで有名なインダストリアルデザイナー。シド・ミード氏がデザインした。<br>発表時は批判が多かったが、今では大変人気なガンダム。<br>声優の朴璐美氏がブレイクし、声優を続ける契機になった作品。<br>このガンダムがなければハガレンもなかったのだ。",
   "20": "ベリル・ゼナムの搭乗機。<br>ドレット軍が開発した試作型モビルスーツ。<br>G系統の1機。<br>コックピットには生体認証機能が搭載されており、登録された搭乗者しか操縦できない。<br>パーフェクトパック装備時のフォトン・トルピートはまさに最恐兵器。<br>放出される反物質を閉じ込めた結晶に触れると、低温対消滅によって消滅する。こわい。<br>今のところ、富野監督最後のガンダム。<br>御大も高齢(84歳)なので新たな富野ガンダムは観られないかもしれない・・・。"
 };
+
+
+const correctOrder = [
+  "g01","g02","g03","g04","g05",
+  "g06","g07","g08","g09","g10",
+  "g11","g12","g13","g14","g15",
+  "g16","g17","g18","g19","g20"
+];
+
+function clearResults(){
+  document.querySelectorAll(".slot").forEach(slot => {
+    slot.classList.remove("correct","incorrect");
+    const badge = slot.querySelector(".result-badge");
+    if(badge) badge.remove();
+  });
+}
+
+function checkAnswers(){
+  clearResults();
+
+  let correct = 0;
+
+  document.querySelectorAll(".slot").forEach((slot, idx) => {
+    const body = slot.querySelector(".slot-body");
+    const card = body.querySelector(".card");
+
+    const badge = document.createElement("div");
+    badge.className = "result-badge";
+
+    if(card && card.dataset.id === correctOrder[idx]){
+      slot.classList.add("correct");
+      badge.classList.add("result-ok");
+      badge.textContent = "正解";
+      correct++;
+    }else{
+      slot.classList.add("incorrect");
+      badge.classList.add("result-ng");
+      badge.textContent = "不正解";
+    }
+
+    slot.appendChild(badge);
+  });
+
+  const board = document.getElementById("scoreBoard");
+  board.textContent = `正解数：${correct} / ${correctOrder.length}`;
+
+  if(correct === correctOrder.length){
+    board.textContent += "　🎉 全問正解！";
+  }
+}
 
 const answerGrid = document.getElementById("answerGrid");
 const pool = document.getElementById("pool");
@@ -827,6 +909,8 @@ function buildAnswerArea(){
 }
 
 function resetAll(){
+  clearResults();
+  document.getElementById("scoreBoard").textContent = "未採点";
   answerGrid.querySelectorAll(".slot").forEach(slot => {
     const body = slot.querySelector(".slot-body");
     const card = body.querySelector(".card");
@@ -854,6 +938,7 @@ buildAnswerArea();
 initialItems.forEach(item => pool.appendChild(createCard(item)));
 shufflePool();
 updateSelectedStatus();
+document.getElementById("checkBtn").addEventListener("click", checkAnswers);
 resetBtn.addEventListener("click", resetAll);
 document.addEventListener("click", () => {
   document.querySelectorAll(".hint-popover.show").forEach(el => el.classList.remove("show"));
